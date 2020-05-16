@@ -1,0 +1,70 @@
+.c-channel {
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+
+  &__title {
+    @include hash();
+  }
+
+  &__scrollbar {
+    position: relative;
+    height: calc(100vh - 11.5rem);
+    width: 100%;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
+    width: 16rem;
+    background: clr(bg, d-1);
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+
+    @include media-breakpoint-up(md) {
+      position: relative;
+    }
+
+    @include media-breakpoint-up(lg) {
+      width: 20rem;
+    }
+
+    @include media-breakpoint-up(xxl) {
+      width: 25rem;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: 1px;
+      border-right: 1px solid clr(bg, d-1, 7);
+      top: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 2;
+    }
+
+    &:after {
+      opacity: .5;
+      @include gradientHorizontal();
+      transform: rotate(180deg);
+      content: '';
+      position: absolute;
+      width: .75rem;
+      top: 0;
+      bottom: 0;
+      right: -.75rem;
+      z-index: 2;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+  }
+}

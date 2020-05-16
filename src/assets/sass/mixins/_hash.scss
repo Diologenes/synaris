@@ -1,0 +1,9 @@
+@mixin hash($opacity: .5) {
+  &:before {
+	margin-right: .5rem;
+	opacity: .5;
+	content: '#';
+	font-style: italic;
+	color: clr(txt);
+  }
+}

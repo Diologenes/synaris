@@ -1,0 +1,20 @@
+@mixin activeNavigator() {
+  &:before {
+	@include transitionAll(300ms);
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	background: clr(clr);
+	transform: scale(.5);
+	width: 0;
+  }
+
+  &.active {
+	&:before {
+	  transform: scale(1);
+	  width: .25rem;
+	}
+  }
+}

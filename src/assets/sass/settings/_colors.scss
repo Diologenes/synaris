@@ -1,0 +1,48 @@
+$color-palette: (
+        'bg': (
+                'base': #393d46,
+                'd-1': #31343c,
+                'd-2': #28292f,
+                'd-3': #191a1e,
+                'l-1': #41444f,
+        ),
+        'txt': (
+                'base': #8899aa,
+                'alt': #ffffff,
+                'dark': #636f7c,
+        ),
+        'clr': (
+                'base': #fe5e44,
+                'info': #fec052,
+                'alt': #2cc799,
+                'alt-2': #2ec4c9,
+                'error': #ea5163
+        )
+);
+
+
+// clr
+@function clr($name: 'txt', $variant: 'base', $lvl: 0, $mode: 'b') {
+  $color: null;
+
+  // Get the color spectrum
+  $color-spectrum: map-get($color-palette, $name);
+
+  // Get the color variant
+  @if $color-spectrum {
+    $color: map-get($color-spectrum, $variant);
+  }
+
+  // tints
+  @if $lvl > 0 {
+    @if $mode == b {
+      $color-interval: 2%;
+      @return mix(black, $color, $lvl * $color-interval);
+    } @else if ($mode == w) {
+      $color-interval: 2%;
+      @return mix(white, $color, $lvl * $color-interval);
+    }
+  }
+
+  @return $color;
+}
