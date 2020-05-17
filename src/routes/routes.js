@@ -33,12 +33,12 @@ export const router = new VueRouter({
 				{
 					path: '/search',
 					name: 'search',
-					component: search,
+					component: search
 				},
 				{
 					path: '/settings',
 					name: 'settings',
-					component: settings,
+					component: settings
 				}
 			]
 		}
