@@ -1,5 +1,5 @@
 <template>
-  <div class="layout__page">
+  <div class="c-page c-page__default">
     
 		<div class="c-channel">
 			<div class="c-channel__content">
