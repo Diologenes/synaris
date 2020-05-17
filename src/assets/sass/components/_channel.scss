@@ -12,6 +12,12 @@
     height: calc(100vh - 11.5rem);
     width: 100%;
   }
+  
+  &__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+  }
 
   &__items {
     display: flex;
@@ -62,9 +68,4 @@
     }
   }
 
-  &__content {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: row;
-  }
 }

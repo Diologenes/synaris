@@ -4,7 +4,9 @@
 		<div class="c-channel">
 			<div class="c-channel__content">
 				<div class="c-channel__items">
-					test
+					New Channel
+
+
 				</div>
 			</div>
 		</div>
