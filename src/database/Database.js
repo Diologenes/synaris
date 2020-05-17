@@ -10,7 +10,7 @@ export default class Database {
 
 	// check db connection on start
 	checkConnection() {
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			fs.access(this.dbPath, fs.F_OK, (err) => {
 				if (err) {
 					this.createDatabase().then(() => {
@@ -25,22 +25,18 @@ export default class Database {
 
 	// create database
 	createDatabase() {
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			let db = new sqlite3.Database(this.dbPath, (err) => {
-				if (err) {
-					reject(err)
-				} else {
-					const sqlTables = [
-						'CREATE TABLE "libraries" ("id"	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"uuid" TEXT UNIQUE,"group" INTEGER,"title"	TEXT,"sorting" INTEGER);',
-						'CREATE TABLE "article" ("id" INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, "uuid" TEXT UNIQUE, "title" TEXT, "content" TEXT, "labels" TEXT);'
-					]
-					// iterate through table creation
-					sqlTables.forEach((value) => {
-						console.log(value)
-						db.run(value)
-					})
-					resolve(db)
-				}
+				const sqlTables = [
+					'CREATE TABLE "libraries" ("id"	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"uuid" TEXT UNIQUE,"group" INTEGER,"title"	TEXT,"sorting" INTEGER);',
+					'CREATE TABLE "article" ("id" INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, "uuid" TEXT UNIQUE, "title" TEXT, "content" TEXT, "labels" TEXT);'
+				]
+				// iterate through table creation
+				sqlTables.forEach((value) => {
+					console.log(value)
+					db.run(value)
+				})
+				resolve(db)
 			})
 		})
 	}
