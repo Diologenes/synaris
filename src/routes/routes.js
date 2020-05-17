@@ -5,9 +5,10 @@ Vue.use(VueRouter)
 
 // import routes
 import index from '@/routes/Index'
-import mode from '@/routes/Mode'
 import library from '@/routes/Library'
 import article from '@/routes/Article'
+import search from '@/routes/Search'
+import settings from '@/routes/Settings'
 
 // route definitions
 export const router = new VueRouter({
@@ -18,23 +19,26 @@ export const router = new VueRouter({
 			component: index,
 			children: [
 				{
-					path: '/:mode',
-					name: 'mode',
-					component: mode,
+					path: '/library',
+					name: 'library',
+					component: library,
 					children: [
 						{
-							path: '/:library',
-							name: 'library',
-							component: library,
-							children: [
-								{
-									path: '/:article',
-									name: 'article',
-									component: article
-								}
-							]
+							path: '/:article',
+							name: 'article',
+							component: article
 						}
 					]
+				},
+				{
+					path: '/search',
+					name: 'search',
+					component: search,
+				},
+				{
+					path: '/settings',
+					name: 'settings',
+					component: settings,
 				}
 			]
 		}
