@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Database from '@/database/Database'
 
 Vue.use(VueRouter)
 
 // import routes
-import index from '@/routes/modules/Index'
-import library from '@/routes/modules/Library'
-import article from '@/routes/modules/Article'
-import search from '@/routes/modules/Search'
-import settings from '@/routes/modules/Settings'
+import index from '@/routes/pages/Index'
+import library from '@/routes/pages/Library'
+import article from '@/routes/pages/Article'
+import search from '@/routes/pages/Search'
+import settings from '@/routes/pages/Settings'
 
 // route definitions
 export const router = new VueRouter({
@@ -43,4 +44,18 @@ export const router = new VueRouter({
 			]
 		}
 	]
+})
+
+
+// before each router entry is resolved
+router.beforeEach((to, from, next) => {
+
+	if (from.name === null) {
+		const db = new Database();
+		db.checkConnection().then(() => {
+			next()
+		});
+	} else {
+		next()
+	}
 })

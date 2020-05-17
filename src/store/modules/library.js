@@ -1,7 +1,7 @@
 // default state
 const getDefaultState = () => {
 	return {
-		channels: null,
+		libraries: null,
 		selected: null
 	}
 }
@@ -13,8 +13,8 @@ const state = getDefaultState()
 const getters = {
 
 	// get workspaces
-	channels(state) {
-		return state.channels
+	libraries(state) {
+		return state.libraries
 	},
 
 	// get selected
@@ -34,7 +34,7 @@ const mutations = {
 
 	// channels
 	channels(state, value) {
-		state.channels = value
+		state.libraries = value
 	},
 
 	// selected
