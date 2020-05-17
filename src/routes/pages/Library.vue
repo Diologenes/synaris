@@ -23,7 +23,19 @@
 </template>
 
 <script>
+import Database from '@/database/Database'
+
+
 export default {
-	components: {}
+	components: {},
+	methods: {
+		
+		createChannel() {
+			console.log('submit')
+			const db = new Database()
+			db.addLibrary()
+		}
+
+	}
 }
 </script>

@@ -40,4 +40,15 @@ export default class Database {
 			})
 		})
 	}
+
+	addLibrary() {
+		let db = new sqlite3.Database(this.dbPath)
+		db.run(`INSERT INTO libraries(title,sorting) VALUES('2', 3)`, function(err) {
+			if (err) {
+			  return console.log(err.message);
+			}
+			// get the last insert id
+			console.log(`A row has been inserted with rowid ${this.lastID}`);
+		  });
+	}
 }
