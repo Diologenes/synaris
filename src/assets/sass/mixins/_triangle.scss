@@ -1,0 +1,14 @@
+@mixin triangleBox($clr: '', $size: .5rem, $posRight: .9rem) {
+  top: calc(100% + #{$size} + .5rem);
+  &:before {
+	content: '';
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 $size $size $size;
+	border-color: transparent transparent $clr transparent;
+	position: absolute;
+	top: -#{$size};
+	right: $posRight;
+  }
+}

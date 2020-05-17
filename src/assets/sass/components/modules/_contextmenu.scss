@@ -1,0 +1,123 @@
+.c-contextmenu {
+  position: relative;
+
+  &--active {
+    .c-contextmenu__container {
+      z-index: 10;
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  &__container {
+    position: absolute;
+    right: -.5rem;
+    min-width: 15rem;
+    min-height: 3rem;
+    background: clr(bg, base, 2, w);
+    border-radius: $border-radius-1;
+    box-shadow: 0 0 30px 0 rgba(clr(bg, d-2), .9);
+    @include triangleBox(clr(bg, base, 2, w));
+    @include transitionAll();
+    @include transitionCubic();
+    z-index: -1;
+    transform: scale(0);
+    opacity: 0;
+
+    &--size {
+      &-medium {
+        min-width: 18rem;
+      }
+
+      &-large {
+        min-width: 24rem;
+      }
+
+      &-xlarge {
+        min-width: 30rem;
+      }
+    }
+
+    &-inner {
+      padding: 1rem 1rem;
+      display: flex;
+      width: 100%;
+      position: relative;
+    }
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+
+    &-item {
+      &--divider {
+        padding: .5rem 0;
+
+        &:before {
+          display: block;
+          content: '';
+          width: 100%;
+          height: 1px;
+          background: clr(bg, base, 4, w);
+        }
+      }
+    }
+
+    &-tooltip {
+      display: inline-flex;
+      width: 1rem;
+      height: 1rem;
+      color: clr('txt', dark);
+      align-self: flex-end;
+      justify-self: flex-end;
+      flex: 0;
+    }
+
+    &-link {
+      @include textStyle(contextMenu);
+      @include transitionAll();
+      color: clr(txt);
+      display: flex;
+      padding: .5rem .5rem;
+      position: relative;
+      cursor: pointer;
+      justify-content: space-between;
+
+      &--has-icon {
+        padding-left: 2.5rem;
+
+        &:before {
+          color: clr(txt);
+          left: .75rem;
+          top: .8rem;
+          position: absolute;
+          font-size: .85rem;
+          opacity: .5;
+          @include transitionAll();
+        }
+      }
+
+
+      &:hover {
+        color: clr(txt, alt);
+        text-decoration: none;
+        background: clr(bg, d-1);
+
+        &:before {
+          color: clr(clr);
+          opacity: 1;
+        }
+
+      }
+    }
+  }
+
+  &__scrollbar {
+    max-height: 325px;
+    position: relative;
+  }
+
+}

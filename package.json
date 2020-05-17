@@ -30,7 +30,8 @@
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.1",
     "style-resources-loader": "^1.3.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vue2-perfect-scrollbar": "^1.5.0"
   },
   "eslintConfig": {
     "root": true,
