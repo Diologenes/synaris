@@ -22,7 +22,10 @@
 
 // plugins
 
-// components
-@import "components/page";
-@import "components/panel";
-@import "components/channel";
+// page components
+@import "components/page/page";
+@import "components/page/panel";
+@import "components/page/library";
+
+// module components
+@import "components/modules/panelBox";
