@@ -1,0 +1,161 @@
+.u-icon {
+
+  &--arrow-left {
+    @include iconFont('\0042');
+    &:before {
+      transform: scaleX(-1);
+    }
+  }
+
+  &--arrow-right {
+    @include iconFont('\0042');
+  }
+
+  &--double-arrow-left {
+    @include iconFont('\002b');
+    &:before {
+      transform: scaleX(-1);
+    }
+  }
+
+  &--double-arrow-right {
+    @include iconFont('\002b');
+  }
+
+  &--more {
+    @include iconFont('\0058');
+  }
+
+  &--filter {
+    @include iconFont('\0053');
+  }
+
+  &--settings {
+    @include iconFont('\004b');
+  }
+
+  &--team {
+    @include iconFont('\0054');
+  }
+
+  &--unlock {
+    @include iconFont('\0077');
+  }
+
+  &--revert {
+    @include iconFont('\0024');
+  }
+
+  &--camera {
+    @include iconFont('\0026');
+  }
+
+  &--image {
+    @include iconFont('\0027');
+  }
+
+  &--profile {
+    @include iconFont('\0069');
+  }
+
+  &--delete {
+    @include iconFont('\0068');
+  }
+
+  &--menu {
+    @include iconFont('\0050');
+  }
+
+  &--star {
+    @include iconFont('\0063');
+  }
+
+  &--mail {
+    @include iconFont('\0051');
+  }
+
+  &--edit {
+    @include iconFont('\006a');
+  }
+
+  &--download {
+    @include iconFont('\004f');
+  }
+
+  &--label {
+    @include iconFont('\0064');
+  }
+
+  &--copy {
+    @include iconFont('\0078');
+  }
+
+  &--lock {
+    @include iconFont('\0077');
+  }
+
+  &--move {
+    @include iconFont('\0073');
+  }
+
+  &--text {
+    @include iconFont('\0074');
+  }
+
+  &--power {
+    @include iconFont('\006b');
+  }
+
+  &--money {
+    @include iconFont('\0079');
+  }
+
+  &--file {
+    @include iconFont('\006e');
+  }
+
+  &--burger {
+    @include iconFont('\0041');
+  }
+
+  &--menu {
+    @include iconFont('\0050');
+  }
+
+  &--checked {
+    @include iconFont('\006f');
+  }
+
+  &--close {
+    @include iconFont('\0025');
+  }
+
+  &--info {
+    @include iconFont('\0052');
+  }
+
+  &--win-minimize {
+    @include iconFont('\0028');
+  }
+
+  &--win-window {
+    @include iconFont('\0029');
+  }
+
+  &--win-fullscreen {
+    @include iconFont('\002a');
+  }
+
+  &--package {
+    @include iconFont('\0043');
+  }
+
+  &--search {
+    @include iconFont('\0038');
+  }
+
+  &--bookmark {
+    @include iconFont('\006d');
+  }
+}
+

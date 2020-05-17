@@ -3,27 +3,15 @@
 		<div class="c-panel">
 			<div class="c-panel__list">
 				<div class="c-panel__gradient"></div>
-				<div class="c-panel__item">
-					<div class="c-panel__box">
-						<b-link active-class="active" router-tag="a" :to="{ name: 'library' }">
-							L
-						</b-link>
-					</div>
-				</div>
-				<div class="c-panel__item">
-					<div class="c-panel__box">
-						<b-link active-class="active" router-tag="a" :to="{ name: 'search' }">
-							Sea
-						</b-link>
-					</div>
-				</div>
-				<div class="c-panel__item">
-					<div class="c-panel__box">
-						<b-link active-class="active" router-tag="a" :to="{ name: 'settings' }">
-							Set
-						</b-link>
-					</div>
-				</div>
+				<b-link class="c-panel__item" active-class="active" router-tag="a" :to="{ name: 'library' }">
+					<div class="c-panel__box u-icon--bookmark"></div>
+				</b-link>
+				<b-link class="c-panel__item" active-class="active" router-tag="a" :to="{ name: 'search' }">
+					<div class="c-panel__box u-icon--search"></div>
+				</b-link>
+				<b-link class="c-panel__item" active-class="active" router-tag="a" :to="{ name: 'settings' }">
+					<div class="c-panel__box u-icon--settings"></div>
+				</b-link>
 			</div>
 		</div>
 		<router-view />
@@ -32,6 +20,6 @@
 
 <script>
 export default {
-	components: {},
-};
+	components: {}
+}
 </script>

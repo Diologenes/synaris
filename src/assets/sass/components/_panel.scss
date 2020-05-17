@@ -32,7 +32,7 @@
       color: clr(txt);
       text-decoration: none;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 1.25rem;
       text-transform: uppercase;
       @include textStyle(nonSelect);
       @include transitionAll();
@@ -50,20 +50,6 @@
   
       &--last {
         margin-bottom: 2rem;
-      }
-  
-      &--ghost {
-        transform: scale(1.3);
-  
-        .c-workspace-list__box {
-          border: 1px solid clr(clr, base) !important;
-        }
-      }
-  
-      &--is-drag {
-        .c-workspace-list__box {
-          border: 1px dashed rgba(clr(clr, base), .5);
-        }
       }
   
     }
