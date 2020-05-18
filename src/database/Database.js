@@ -21,15 +21,16 @@ export default class Database {
 				}
 			})
 		})
-	}
+	} 
 
 	// create database
 	createDatabase() {
 		return new Promise((resolve) => {
 			let db = new sqlite3.Database(this.dbPath, (err) => {
 				const sqlTables = [
-					'CREATE TABLE "libraries" ("id"	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"uuid" TEXT UNIQUE,"group" INTEGER,"title"	TEXT,"sorting" INTEGER);',
-					'CREATE TABLE "article" ("id" INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, "uuid" TEXT UNIQUE, "title" TEXT, "content" TEXT, "labels" TEXT);'
+					'CREATE TABLE "libraries" ("id" INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"uuid" TEXT UNIQUE, "parent" INTEGER, "group" INTEGER,"title" TEXT,"sorting" INTEGER);',
+					'CREATE TABLE "groups" ("id" INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"uuid" TEXT UNIQUE, "title" TEXT,"sorting" INTEGER);',
+					'CREATE TABLE "articles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, "uuid" TEXT UNIQUE, "title" TEXT, "content" TEXT, "labels" TEXT);'
 				]
 				// iterate through table creation
 				sqlTables.forEach((value) => {
@@ -42,13 +43,14 @@ export default class Database {
 	}
 
 	addLibrary() {
+		console.log('check')
 		let db = new sqlite3.Database(this.dbPath)
 		db.run(`INSERT INTO libraries(title,sorting) VALUES('2', 3)`, function(err) {
 			if (err) {
-			  return console.log(err.message);
+				return console.log(err.message)
 			}
 			// get the last insert id
-			console.log(`A row has been inserted with rowid ${this.lastID}`);
-		  });
+			console.log(`A row has been inserted with rowid ${this.lastID}`)
+		})
 	}
 }
