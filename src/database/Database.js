@@ -2,7 +2,7 @@ var sqlite3 = require('sqlite3').verbose()
 const fs = require('fs')
 
 // database class
-export default class Database {
+class Database {
 	// constructor
 	constructor() {
 		this.dbPath = './sqlite.db'
@@ -21,7 +21,7 @@ export default class Database {
 				}
 			})
 		})
-	} 
+	}
 
 	// create database
 	createDatabase() {
@@ -53,4 +53,47 @@ export default class Database {
 			console.log(`A row has been inserted with rowid ${this.lastID}`)
 		})
 	}
+
+	getLibraries() {
+		return this.sqlQueryAll('SELECT * FROM libraries ORDER BY sorting ASC')
+	}
+
+	updateLibrarySorting(idArray) {
+		let vm = this
+		idArray.forEach((item, index) => {
+			vm.sqlQueryRun('UPDATE libraries SET sorting = ? WHERE id = ?', [index,item])
+		})
+	}
+
+	sqlQueryAll(query) {
+		return new Promise((resolve, reject) => {
+			let db = new sqlite3.Database(this.dbPath)
+			db.all(query, [], (err, rows) => {
+				if (err) {
+					reject(err)
+				} else {
+					resolve(rows)
+				}
+			})
+			db.close()
+		})
+	}
+
+	sqlQueryRun(query, params) {
+		return new Promise((resolve, reject) => {
+			let db = new sqlite3.Database(this.dbPath)
+			db.run(query, params, (err) => {
+				if (err) {
+					reject(err)
+					console.error('sqlQueryRun', error)
+				} else {
+					resolve()
+					console.log('sqlQueryRun', query, params)
+				}
+			})
+			db.close()
+		})
+	}
 }
+
+export default new Database()

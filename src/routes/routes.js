@@ -51,8 +51,7 @@ export const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 
 	if (from.name === null) {
-		const db = new Database();
-		db.checkConnection().then(() => {
+		Database.checkConnection().then(() => {
 			next()
 		});
 	} else {

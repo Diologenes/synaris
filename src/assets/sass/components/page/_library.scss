@@ -1,58 +1,87 @@
 .c-library {
-  display: flex;
-  flex: 0 1;
-  flex-direction: column;
+	display: flex;
+	flex: 0 1;
+	flex-direction: column;
 
-  &__content {
-    display: flex;
-    flex-direction: column;
-    flex: 0 1 auto;
-    width: 16rem;
-    background: clr(bg, d-1);
-    position: relative;
-    z-index: 10;
-    height: 100%;
-    min-height: 100%;
-    padding: 2rem 0;
+	&__content {
+		display: flex;
+		flex-direction: column;
+		flex: 0 1 auto;
+		width: 16rem;
+		background: clr(bg, d-1);
+		position: relative;
+		z-index: 10;
+		height: 100%;
+		min-height: 100%;
+		padding: 2rem 0;
 
-    &:before {
-      content: '';
-      position: absolute;
-      width: 1px;
-      border-right: 1px solid clr(bg, d-1, 7);
-      top: 0;
-      bottom: 0;
-      right: 0;
-      z-index: 2;
-    }
+		&:before {
+			content: '';
+			position: absolute;
+			width: 1px;
+			border-right: 1px solid clr(bg, d-1, 7);
+			top: 0;
+			bottom: 0;
+			right: 0;
+			z-index: 2;
+		}
 
-    &:after {
-      opacity: .5;
-      @include gradientHorizontal();
-      transform: rotate(180deg);
-      content: '';
-      position: absolute;
-      width: .75rem;
-      top: 0;
-      bottom: 0;
-      right: -.75rem;
-      z-index: 2;
-    }
-  }
+		&:after {
+			opacity: 0.5;
+			@include gradientHorizontal();
+			transform: rotate(180deg);
+			content: '';
+			position: absolute;
+			width: 0.75rem;
+			top: 0;
+			bottom: 0;
+			right: -0.75rem;
+			z-index: 2;
+		}
+	}
 
-  &__list {
-    display: flex;
-    padding: 0 1.5rem;
+	&__list {
+		display: flex;
+		padding: .5rem 1.5rem;
+    border: 1px transparent;
+    align-items: center;
+    @include transitionAll();
+    color: clr(txt, alt);
+    margin: 2px 0;
 
-    &-title {
-      flex: 1 1 auto;
-      @include textStyle(regularUppercase);
-    }
+		&-title {
+			flex: 1 1 auto;
+			@include textStyle(smallUppercase);
+		}
 
-    &-indicator {
-      flex: 0 1 auto;
-    }
+		&-indicator {
+			flex: 0 1 auto;
+		}
 
-  }
+		&--clickable {
+			&:hover {
+				color: clr(txt, alt);
+				background: clr(bg, d-1, 7);
+				text-decoration: none;
+			}
+		}
 
+		&--ghost {
+			border: 1px solid clr(clr, base) !important;
+		}
+
+		&--is-drag {
+			border: 1px dashed rgba(clr(clr, base), 0.5);
+			margin: 3px 1rem;
+			padding-bottom: calc(.5rem - 3px);
+			background: transparent !important;
+			&:before {
+				width: 0 !important;
+			}
+
+			.c-channel-list__indicator {
+				transform: scale(0);
+			}
+		}
+	}
 }

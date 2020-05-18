@@ -11,7 +11,7 @@ require('./directives/clickOutside')
 Vue.use(BootstrapVue)
 
 new Vue({
-	store: store,
-	router: router,
-	render: (h) => h(App)
+    store: store,
+    router: router,
+    render: (h) => h(App)
 }).$mount('#app')
