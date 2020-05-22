@@ -7,8 +7,8 @@ const sequelize = new Sequelize({
   storage: dbPath
 })
 
-const Group = require("./Groups");
-const Library = require("./Librarys");
+const Group = require("./Group");
+const Library = require("./Library");
 
 const models = {
   Group: Group.init(sequelize, Sequelize),
