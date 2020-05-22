@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import Database from '@/database/Database'
 import { mapGetters } from 'vuex'
 import draggable from 'vuedraggable'
 import _ from 'lodash'
@@ -62,7 +61,7 @@ export default {
 		// create channel
 		createChannel() {
 			console.log('submit')
-			Database.addLibrary()
+			//Database.addLibrary()
 		},
 
 		// start dragging
@@ -81,7 +80,7 @@ export default {
 				})
 
 				// SQL HERE
-				Database.updateLibrarySorting(idArray)
+				//Database.updateLibrarySorting(idArray)
 				// SQL HERE
 			}
 		}

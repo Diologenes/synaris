@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Database from '@/database/Database'
 
 Vue.use(VueRouter)
 

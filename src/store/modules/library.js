@@ -1,4 +1,4 @@
-import Database from '@/database/Database'
+// import Database from '@/database/Database'
 
 // default state
 const getDefaultState = () => {
@@ -56,10 +56,11 @@ const actions = {
 
 	getAll(context) {
 		return new Promise((resolve) => {
-			Database.getLibraries().then((response) => {
-				context.commit('libraries', response)
-				resolve(response)
-			})
+			// Database.getLibraries().then((response) => {
+			// 	context.commit('libraries', response)
+			// 	resolve(response)
+			// })
+			resolve('test123')
 		})
 	} 
 }
