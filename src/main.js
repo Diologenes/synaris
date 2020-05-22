@@ -8,10 +8,14 @@ import BootstrapVue from 'bootstrap-vue'
 require('./components/components')
 require('./directives/clickOutside')
 
-const db = require('./database/models/index.js')
+const db = require('./database/models')
 
-
-
+db.Group.findAll({
+	where: {},
+	include: [{ model: db.Library, as: db.Library.libraries }]
+}).then((groups) => {
+	console.log('All users:', JSON.stringify(groups, null, 40))
+})
 
 // sequelize
 // 	.authenticate()

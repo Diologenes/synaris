@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-class Library extends Sequelize.Model {
+class Group extends Sequelize.Model {
 	static init(sequelize, DataTypes) {
 		return super.init(
 			{
@@ -11,8 +11,8 @@ class Library extends Sequelize.Model {
 		)
 	}
 	static associate(models) {
-		this.myAssociation = this.belongsTo(models.Group)
+		this.myAssociation = this.hasMany(models.Library)
 	}
 }
 
-module.exports = Library
+module.exports = Group

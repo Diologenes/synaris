@@ -1,32 +1,27 @@
-'use strict'
-
-const fs = require('fs')
-const path = require('path')
-const Sequelize = require('sequelize')
-const basename = path.basename(__filename)
-const db = {}
+const Sequelize = require("sequelize");
+const path = require("path")
+const dbPath = path.resolve('src/database/storage/database.sqlite')
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: '../storage/database.sqlite'
+  storage: dbPath
 })
 
-fs.readdirSync(__dirname)
-	.filter((file) => {
-		return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
-	})
-	.forEach((file) => { 
-		const model = sequelize['import'](path.join(__dirname, file))
-		db[model.name] = model
-	})
+const Group = require("./group");
+const Library = require("./library");
 
-Object.keys(db).forEach((modelName) => {
-	if (db[modelName].associate) {
-		db[modelName].associate(db)
-	}
-})
+const models = {
+  Group: Group.init(sequelize, Sequelize),
+  Library: Library.init(sequelize, Sequelize),
+};
 
-db.sequelize = sequelize
-db.Sequelize = Sequelize
+Object.values(models)
+  .filter(model => typeof model.associate === "function")
+  .forEach(model => model.associate(models));
 
-module.exports = db
+const db = {
+  ...models,
+  sequelize
+};
+
+module.exports = db;
