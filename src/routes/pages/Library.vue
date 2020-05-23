@@ -33,12 +33,22 @@
 				</draggable>
 				<!-- draggable -->
 
-				<div class="c-create-button c-button c-button--primary c-button--bullseye u-icon--more"></div>
-
+				<div v-b-modal.modal-create-new-library class="c-create-button c-button c-button--primary c-button--bullseye u-icon--more"></div>
 			</div>
 		</div>
 
 		<router-view />
+
+		<!-- modal: new library / group -->
+		<b-modal id="modal-create-new-library" centered title="Create new library or group">
+			<b-form-group label="Enter title">
+				<b-form-input id="input-1" type="email" required placeholder="New title ..."></b-form-input>
+			</b-form-group>
+			<b-form-group label="Type">
+				<b-form-radio-group id="btn-radios-1" v-model="selected" :options="options" buttons name="radios-btn-default" button-variant="outline-primary"></b-form-radio-group>
+			</b-form-group>
+		</b-modal>
+		<!-- modal: new library / group -->
 	</div>
 </template>
 
@@ -53,6 +63,12 @@ export default {
 	},
 	data() {
 		return {
+			selected: 'first',
+			options: [
+				{ text: 'Library', value: 'first' },
+				{ text: 'Group', value: 'second' }
+			],
+
 			isDragging: false
 		}
 	},

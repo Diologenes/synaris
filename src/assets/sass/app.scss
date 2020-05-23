@@ -3,10 +3,7 @@
 @import "settings/colors";
 @import "settings/variables";
 @import "settings/border";
-@import "settings/bootstrap";
 @import "settings/html";
-
-// 3rd party plugins
 
 // mixins
 @import "mixins/gradient";
@@ -22,6 +19,8 @@
 @import "utilities/m";
 
 // plugins
+@import "plugins/bootstrap";
+@import "plugins/bootstrapModal";
 
 // page components
 @import "components/page/page";
