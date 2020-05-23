@@ -1,28 +1,40 @@
 <template>
 	<div class="c-page c-page__default">
 		<div class="c-library">
-			<!-- library content -->
 			<div class="c-library__content">
-				<!-- library list -->
-				<div class="c-library__list">
-					<div class="c-library__list-title">Libraries</div>
-					<div class="c-library__list-indicator">
-						<div class="c-panelbox">
-							<form-panel-box :clickable="true" :primary="true" icon="more" @submit="createChannel()" />
-						</div>
-					</div>
+				<!-- panel section -->
+				<div class="c-panel-section">
+					<div class="c-panel-section__title">Libraries</div>
 				</div>
+				<!-- panel section -->
 
-				<draggable v-if="libraries !== null" v-model="libraries" ghostClass="c-library__list--ghost" touchStartThreshold="5" @start="startDrag()" @end="endDrag()">
-					<b-link v-for="library in libraries" :key="library.id" router-tag="a" :to="{ name: 'library', params: { libraryId: library.id } }" active-class="active" :class="{ 'c-library__list--is-drag': isDragging }" class="c-library__list c-library__list--clickable">
-						<div class="c-library__list-title" :title="library.title">{{ library.title }}</div>
-						<div class="c-library__list-indicator">
-							<div class="c-panelbox">
-								<div class="c-panelbox__item">0</div>
-							</div>
+				<!-- draggable -->
+				<draggable v-if="libraries !== null" v-model="libraries" ghostClass="c-library__item--ghost" touchStartThreshold="5" @start="startDrag()" @end="endDrag()">
+					<!-- group item -->
+					<div v-for="library in libraries" :key="library.id" class="c-library__group">
+						<!-- group title -->
+						<div class="c-library__group-title">{{ library.title }}</div>
+						<!-- group title -->
+
+						<!-- group content -->
+						<div class="c-library__group-content">
+							<b-link v-for="element in library.Libraries" :key="element.id" router-tag="a" :to="{ name: 'library', params: { libraryId: element.id } }" class="c-library__item" active-class="active">
+								<div class="c-library__item-title" :title="element.title">{{ element.title }}</div>
+								<div class="c-library__item-indicator">
+									<div class="c-panelbox">
+										<div class="c-panelbox__item">0</div>
+									</div>
+								</div>
+							</b-link>
 						</div>
-					</b-link>
+						<!-- group item -->
+					</div>
+					<!-- group -->
 				</draggable>
+				<!-- draggable -->
+
+				<div class="c-create-button c-button c-button--primary c-button--bullseye u-icon--more"></div>
+
 			</div>
 		</div>
 

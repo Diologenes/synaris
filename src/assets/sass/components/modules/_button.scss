@@ -1,0 +1,30 @@
+.c-button {
+	cursor: pointer;
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	@include transitionAll();
+
+	&:hover {
+		box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.1);
+	}
+
+	&:before,
+	&:after {
+		text-transform: initial;
+		flex: 0;
+	}
+
+	&--primary {
+		background-color: clr(clr, base);
+		color: clr(txt, alt);
+	}
+
+	&--bullseye {
+		width: 3rem;
+		height: 3rem;
+		border-radius: 100%;
+		font-size: 1.0rem;
+	}
+}

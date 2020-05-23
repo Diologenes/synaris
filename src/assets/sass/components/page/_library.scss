@@ -11,9 +11,8 @@
 		background: clr(bg, d-1);
 		position: relative;
 		z-index: 10;
-		height: 100%;
+		height: 100%; 
 		min-height: 100%;
-		padding: 2rem 0;
 
 		&:before {
 			content: '';
@@ -40,14 +39,45 @@
 		}
 	}
 
-	&__list {
+	&__group {
+		@include transitionAll();
 		display: flex;
-		padding: .5rem 1.5rem;
-    border: 1px transparent;
-    align-items: center;
-    @include transitionAll();
-    color: clr(txt, alt);
-    margin: 2px 0;
+		flex-direction: column;
+		margin-bottom: 1rem;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid clr(bg, d-2);
+
+		&:first-child {
+			padding-top: 1rem;
+		}
+
+		&:last-child {
+			border-bottom: 1px solid transparent;	
+		}
+
+		&-title {
+			flex: 1 1 auto;
+			color: clr(txt, base);
+			padding: 0.5rem 1.5rem;
+			margin: 2px 0;
+			border: 1px transparent;
+			align-items: center;
+			@include textStyle(smallUppercase);
+		}
+
+		&-content {
+			flex: 1 1 auto;
+		}
+	}
+
+	&__item {
+		display: flex;
+		padding: 0.5rem 1.5rem;
+		border: 1px transparent;
+		align-items: center;
+		@include transitionAll();
+		color: clr(txt, alt);
+		margin: 2px 0;
 
 		&-title {
 			flex: 1 1 auto;
@@ -58,12 +88,10 @@
 			flex: 0 1 auto;
 		}
 
-		&--clickable {
-			&:hover {
-				color: clr(txt, alt);
-				background: clr(bg, d-1, 7);
-				text-decoration: none;
-			}
+		&:hover {
+			color: clr(txt, alt);
+			background: clr(bg, d-1, 7);
+			text-decoration: none;
 		}
 
 		&--ghost {
@@ -73,7 +101,7 @@
 		&--is-drag {
 			border: 1px dashed rgba(clr(clr, base), 0.5);
 			margin: 3px 1rem;
-			padding-bottom: calc(.5rem - 3px);
+			padding-bottom: calc(0.5rem - 3px);
 			background: transparent !important;
 			&:before {
 				width: 0 !important;

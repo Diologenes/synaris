@@ -1,124 +1,266 @@
 $iconFontPath: '../fonts';
 
 @font-face {
-  font-family: 'glyphter';
-  src: url('#{$iconFontPath}/glyphter.eot');
-  src: url('#{$iconFontPath}/glyphter.eot?#iefix') format('embedded-opentype'),
-  url('#{$iconFontPath}/glyphter.woff') format('woff'),
-  url('#{$iconFontPath}/glyphter.ttf') format('truetype'),
-  url('#{$iconFontPath}/glyphter.svg#glyphter') format('svg');
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'glyphter';
+	src: url('#{$iconFontPath}/glyphter.eot');
+	src: url('#{$iconFontPath}/glyphter.eot?#iefix') format('embedded-opentype'), url('#{$iconFontPath}/glyphter.woff') format('woff'), url('#{$iconFontPath}/glyphter.ttf') format('truetype'), url('#{$iconFontPath}/glyphter.svg#glyphter') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
 
-.icon-burger:before{content:'\0041';}
-.icon-arrow:before{content:'\0042';}
-.icon-package:before{content:'\0043';}
-.icon-lab:before{content:'\0044';}
-.icon-stop:before{content:'\0045';}
-.icon-label:before{content:'\0046';}
-.icon-label-enabled:before{content:'\0047';}
-.icon-bug:before{content:'\0048';}
-.icon-code:before{content:'\0049';}
-.icon-branch:before{content:'\004a';}
-.icon-settings:before{content:'\004b';}
-.icon-copy:before{content:'\004c';}
-.icon-chat:before{content:'\004d';}
-.icon-pc:before{content:'\004e';}
-.icon-download:before{content:'\004f';}
-.icon-menu:before{content:'\0050';}
-.icon-mail:before{content:'\0051';}
-.icon-info:before{content:'\0052';}
-.icon-filter:before{content:'\0053';}
-.icon-team:before{content:'\0054';}
-.icon-home:before{content:'\0055';}
-.icon-link:before{content:'\0056';}
-.icon-upload:before{content:'\0057';}
-.icon-more:before{content:'\0058';}
-.icon-refresh:before{content:'\0059';}
-.icon-info:before{content:'\0052';}
-.icon-forward:before{content:'\0061';}
-.icon-triangle:before{content:'\0062';}
-.icon-star:before{content:'\0063';}
-.icon-label2:before{content:'\0064';}
-.icon-terminal:before{content:'\0065';}
-.icon-like:before{content:'\0066';}
-.icon-dislike:before{content:'\0067';}
-.icon-remove:before{content:'\0068';}
-.icon-profile:before{content:'\0069';}
-.icon-edit:before{content:'\006a';}
-.icon-power:before{content:'\006b';}
-.icon-notes:before{content:'\006c';}
-.icon-bookmark:before{content:'\006d';}
-.icon-note:before{content:'\006e';}
-.icon-checked:before{content:'\006f';}
-.icon-notification:before{content:'\0070';}
-.icon-notification-enabled:before{content:'\0071';}
-.icon-move:before{content:'\0072';}
-.icon-drag:before{content:'\0073';}
-.icon-text:before{content:'\0074';}
-.icon-time:before{content:'\0075';}
-.icon-calendar:before{content:'\0076';}
-.icon-unlock:before{content:'\0077';}
-.icon-copy:before{content:'\0078';}
-.icon-money:before{content:'\0079';}
-.icon-watch:before{content:'\007a';}
-.icon-crop:before{content:'\0030';}
-.icon-change:before{content:'\0031';}
-.icon-hot:before{content:'\0032';}
-.icon-navigate:before{content:'\0033';}
-.icon-lock:before{content:'\0034';}
-.icon-attach:before{content:'\0035';}
-.icon-connection:before{content:'\0036';}
-.icon-pin:before{content:'\0037';}
-.icon-search:before{content:'\0038';}
-.icon-revert:before{content:'\0039';}
-.icon-save:before{content:'\0021';}
-.icon-sound-on:before{content:'\0022';}
-.icon-sound-off:before{content:'\0023';}
-.icon-revert:before{content:'\0024';}
-.icon-close:before{content:'\0025';}
-.icon-camera:before{content:'\0026';}
-.icon-image:before{content:'\0027';}
-.icon-win-minimize:before{content:'\0028';}
-.icon-win-window:before{content:'\0029';}
-.icon-win-fullscreen:before{content:'\002a';}
-.icon-arrow-double:before{content:'\002b';}
+.icon-burger:before {
+	content: '\0041';
+}
+.icon-arrow:before {
+	content: '\0042';
+}
+.icon-package:before {
+	content: '\0043';
+}
+.icon-lab:before {
+	content: '\0044';
+}
+.icon-stop:before {
+	content: '\0045';
+}
+.icon-label:before {
+	content: '\0046';
+}
+.icon-label-enabled:before {
+	content: '\0047';
+}
+.icon-bug:before {
+	content: '\0048';
+}
+.icon-code:before {
+	content: '\0049';
+}
+.icon-branch:before {
+	content: '\004a';
+}
+.icon-settings:before {
+	content: '\004b';
+}
+.icon-copy:before {
+	content: '\004c';
+}
+.icon-chat:before {
+	content: '\004d';
+}
+.icon-pc:before {
+	content: '\004e';
+}
+.icon-download:before {
+	content: '\004f';
+}
+.icon-menu:before {
+	content: '\0050';
+}
+.icon-mail:before {
+	content: '\0051';
+}
+.icon-info:before {
+	content: '\0052';
+}
+.icon-filter:before {
+	content: '\0053';
+}
+.icon-team:before {
+	content: '\0054';
+}
+.icon-home:before {
+	content: '\0055';
+}
+.icon-link:before {
+	content: '\0056';
+}
+.icon-upload:before {
+	content: '\0057';
+}
+.icon-more:before {
+	content: '\0058';
+}
+.icon-refresh:before {
+	content: '\0059';
+}
+.icon-info:before {
+	content: '\0052';
+}
+.icon-forward:before {
+	content: '\0061';
+}
+.icon-triangle:before {
+	content: '\0062';
+}
+.icon-star:before {
+	content: '\0063';
+}
+.icon-label2:before {
+	content: '\0064';
+}
+.icon-terminal:before {
+	content: '\0065';
+}
+.icon-like:before {
+	content: '\0066';
+}
+.icon-dislike:before {
+	content: '\0067';
+}
+.icon-remove:before {
+	content: '\0068';
+}
+.icon-profile:before {
+	content: '\0069';
+}
+.icon-edit:before {
+	content: '\006a';
+}
+.icon-power:before {
+	content: '\006b';
+}
+.icon-notes:before {
+	content: '\006c';
+}
+.icon-bookmark:before {
+	content: '\006d';
+}
+.icon-note:before {
+	content: '\006e';
+}
+.icon-checked:before {
+	content: '\006f';
+}
+.icon-notification:before {
+	content: '\0070';
+}
+.icon-notification-enabled:before {
+	content: '\0071';
+}
+.icon-move:before {
+	content: '\0072';
+}
+.icon-drag:before {
+	content: '\0073';
+}
+.icon-text:before {
+	content: '\0074';
+}
+.icon-time:before {
+	content: '\0075';
+}
+.icon-calendar:before {
+	content: '\0076';
+}
+.icon-unlock:before {
+	content: '\0077';
+}
+.icon-copy:before {
+	content: '\0078';
+}
+.icon-money:before {
+	content: '\0079';
+}
+.icon-watch:before {
+	content: '\007a';
+}
+.icon-crop:before {
+	content: '\0030';
+}
+.icon-change:before {
+	content: '\0031';
+}
+.icon-hot:before {
+	content: '\0032';
+}
+.icon-navigate:before {
+	content: '\0033';
+}
+.icon-lock:before {
+	content: '\0034';
+}
+.icon-attach:before {
+	content: '\0035';
+}
+.icon-connection:before {
+	content: '\0036';
+}
+.icon-pin:before {
+	content: '\0037';
+}
+.icon-search:before {
+	content: '\0038';
+}
+.icon-revert:before {
+	content: '\0039';
+}
+.icon-save:before {
+	content: '\0021';
+}
+.icon-sound-on:before {
+	content: '\0022';
+}
+.icon-sound-off:before {
+	content: '\0023';
+}
+.icon-revert:before {
+	content: '\0024';
+}
+.icon-close:before {
+	content: '\0025';
+}
+.icon-camera:before {
+	content: '\0026';
+}
+.icon-image:before {
+	content: '\0027';
+}
+.icon-win-minimize:before {
+	content: '\0028';
+}
+.icon-win-window:before {
+	content: '\0029';
+}
+.icon-win-fullscreen:before {
+	content: '\002a';
+}
+.icon-arrow-double:before {
+	content: '\002b';
+}
 
 @mixin rawIconFont() {
-  font-family: 'glyphter';
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-transform: initial;
+	font-family: 'glyphter';
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-transform: initial;
 }
 
 @mixin iconFontFree($icon) {
-  text-transform: initial;
-  @include rawIconFont();
-  content: $icon;
-  flex: 0;
-  color: inherit;
+	text-transform: initial;
+	@include rawIconFont();
+	content: $icon;
+	flex: 0;
+	color: inherit;
 }
 
-
 @mixin iconFont($icon, $marginBefore: false, $fontSize: '') {
-  &:before {
-	@include rawIconFont();
-	flex: 0;
-	content: $icon;
-	color: inherit;
-	@if $marginBefore != false {
-	  @if $marginBefore == true {
-		margin-right: .5rem;
-	  } @else {
-		margin-right: $marginBefore;
-	  }
+	&:before {
+		@include rawIconFont();
+		flex: 0;
+		content: $icon;
+		color: inherit;
+		@if $marginBefore != false {
+			@if $marginBefore == true {
+				margin-right: 0.5rem;
+			} @else {
+				margin-right: $marginBefore;
+			}
+		}
+		@if $fontSize != '' {
+			font-size: $fontSize;
+		}
 	}
-	@if $fontSize != '' {
-	  font-size: $fontSize;
-	}
-  }
 }

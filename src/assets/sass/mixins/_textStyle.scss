@@ -1,88 +1,80 @@
 @mixin textStyle($style) {
+	@if $style == 'nl2br' {
+		white-space: pre-line;
+	}
 
-  @if $style == 'nl2br' {
-    white-space: pre-line;
-  }
+	@if $style == 'nonSelect' {
+		-ms-user-select: None;
+		-moz-user-select: None;
+		-webkit-user-select: None;
+	}
 
-  @if $style == 'nonSelect' {
-    -ms-user-select: None;
-    -moz-user-select: None;
-    -webkit-user-select: None;
-  }
+	@if $style == 'canSelect' {
+		-ms-user-select: text;
+		-moz-user-select: text;
+		-webkit-user-select: text;
+	}
 
-  @if $style == 'canSelect' {
-    -ms-user-select: text;
-    -moz-user-select: text;
-    -webkit-user-select: text;
-  }
+	@if $style == 'headline' {
+		font-weight: 600;
+		font-size: 1.15rem;
+		line-height: 1;
+	}
 
-  @if $style == 'headline' {
-    font-weight: 600;
-    font-size: 1.15rem;
-    line-height: 1;
-  }
+	@if $style == 'contentHeadline--1' {
+		font-weight: 600;
+		font-size: 2rem;
+		line-height: 1;
+		text-transform: uppercase;
+	}
 
-  @if $style == 'contentHeadline--1' {
-    font-weight: 600;
-    font-size: 2rem;
-    line-height: 1;
-    text-transform: uppercase;
-  }
+	@if $style == 'introduction' {
+		font-size: 1.15rem;
+		line-height: 130%;
+	}
 
-  @if $style == 'introduction' {
-    font-size: 1.15rem;
-    line-height: 130%;
-  }
+	@if $style == 'lead' {
+		font-weight: 600;
+		font-size: 2rem;
+		line-height: 1;
+		text-transform: uppercase;
+	}
 
-  @if $style == 'lead' {
-    font-weight: 600;
-    font-size: 2rem;
-    line-height: 1;
-    text-transform: uppercase;
-  }
+	@if $style == 'regular' {
+		font-weight: 600;
+		line-height: 130%;
+		font-size: 1rem;
+	}
 
-  @if $style == 'regular' {
-    font-weight: 600;
-    line-height: 130%;
-    font-size: 1rem;
-  }
+	@if $style == 'small' {
+		font-weight: 600;
+		line-height: 130%;
+		font-size: 0.9rem;
+	}
 
-  @if $style == 'small' {
-    font-weight: 600;
-    line-height: 130%;
-    font-size: .9rem;
-  }
+	@if $style == 'tiny' {
+		font-weight: 600;
+		line-height: 130%;
+		font-size: 0.6rem;
+	}
 
-  @if $style == 'tiny' {
-    font-weight: 600;
-    line-height: 130%;
-    font-size: .6rem;
-  }
+	@if $style == 'uppercase' {
+		text-transform: uppercase;
+	}
 
-  @if $style == 'uppercase' {
-    text-transform: uppercase;
-  }
+	@if $style == 'regularUppercase' {
+		@include textStyle(regular);
+		@include textStyle(uppercase);
+	}
 
-  @if $style == 'regularUppercase' {
-    @include textStyle(regular);
-    @include textStyle(uppercase);
-  }
+	@if $style == 'smallUppercase' {
+		@include textStyle(small);
+		@include textStyle(uppercase);
+	}
 
-  @if $style == 'smallUppercase' {
-    @include textStyle(small);
-    @include textStyle(uppercase);
-  }
-
-  @if $style == 'contextMenu' {
-    font-weight: 600;
-    font-size: .8rem;
-    text-transform: uppercase;
-  }
-
-  @if $style == 'loginTitle' {
-    font-weight: 600;
-    font-size: 1rem;
-    text-transform: uppercase;
-  }
-
+	@if $style == 'contextMenu' {
+		font-weight: 600;
+		font-size: 0.8rem;
+		text-transform: uppercase;
+	}
 }

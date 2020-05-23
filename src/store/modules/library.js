@@ -1,4 +1,4 @@
-// import Database from '@/database/Database'
+const db = require('@/database/models')
 
 // default state
 const getDefaultState = () => {
@@ -28,7 +28,7 @@ const getters = {
 const mutations = {
 	// resets the state
 	resetStore(state) {
-		Object.assign(state, getDefaultState()) 
+		Object.assign(state, getDefaultState())
 	},
 
 	// channels
@@ -55,14 +55,18 @@ const actions = {
 	},
 
 	getAll(context) {
+		let vm = this
 		return new Promise((resolve) => {
-			// Database.getLibraries().then((response) => {
-			// 	context.commit('libraries', response)
-			// 	resolve(response)
-			// })
-			resolve('test123')
+			db.Group.findAll({
+				where: {},
+				include: [{ model: db.Library }]
+			}).then((response) => {
+				console.log(response)
+				context.commit('libraries', response)
+				resolve(response)
+			}).catch(e => console.error(e))
 		})
-	} 
+	}
 }
 
 export default {

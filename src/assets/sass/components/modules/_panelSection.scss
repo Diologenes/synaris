@@ -1,0 +1,12 @@
+.c-panel-section {
+    min-height: 4rem;
+    align-items: center;
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    border-bottom: 1px solid clr(bg, d-2);
+    
+    &__title {
+        @include textStyle(regularUppercase);
+        color: clr(txt, alt);
+    }
+}
