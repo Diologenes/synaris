@@ -38,17 +38,8 @@
 		</div>
 
 		<router-view />
+		<modal-add-library/>
 
-		<!-- modal: new library / group -->
-		<b-modal id="modal-create-new-library" centered title="Create new library or group">
-			<b-form-group label="Enter title">
-				<b-form-input id="input-1" type="email" required placeholder="New title ..."></b-form-input>
-			</b-form-group>
-			<b-form-group label="Type">
-				<b-form-radio-group id="btn-radios-1" v-model="selected" :options="options" buttons name="radios-btn-default" button-variant="outline-primary"></b-form-radio-group>
-			</b-form-group>
-		</b-modal>
-		<!-- modal: new library / group -->
 	</div>
 </template>
 
@@ -56,19 +47,15 @@
 import { mapGetters } from 'vuex'
 import draggable from 'vuedraggable'
 import _ from 'lodash'
+import modalAddLibrary from '@/components/modals/AddLibrary'
 
 export default {
 	components: {
-		draggable
+		draggable,
+		modalAddLibrary
 	},
 	data() {
 		return {
-			selected: 'first',
-			options: [
-				{ text: 'Library', value: 'first' },
-				{ text: 'Group', value: 'second' }
-			],
-
 			isDragging: false
 		}
 	},
