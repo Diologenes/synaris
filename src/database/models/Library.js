@@ -5,6 +5,7 @@ class Library extends Sequelize.Model {
 		return super.init(
 			{
 				title: DataTypes.STRING,
+				groupId: DataTypes.INTEGER,
 				sorting: DataTypes.INTEGER
 			},
 			{ sequelize }
