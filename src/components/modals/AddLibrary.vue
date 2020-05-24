@@ -3,6 +3,9 @@
 		<b-form-group label="Enter title">
 			<b-form-input v-model="title" placeholder="New title ..."></b-form-input>
 		</b-form-group>
+		<b-form-group label="Select a group">
+			
+		</b-form-group>
 		<b-form-group label="Type">
 			<b-form-radio-group id="btn-radios-1" v-model="selectedType" :options="options" buttons name="radios-btn-default" button-variant="outline-primary"></b-form-radio-group>
 		</b-form-group>
@@ -37,14 +40,18 @@ export default {
 			let vm = this
 			if (vm.isPending === false) {
 				vm.removeErrors()
+				vm.isPending = true
 				if (vm.selectedType === 'library') {
-					vm.$db.Library.create({ title: vm.title, groupId: 1, sorting: 999 }).then((response) => {})
+					vm.$db.Library.create({ title: vm.title, groupId: 1, sorting: 999 }).then((response) => {
+						vm.handleClose()
+						vm.isPending = false
+					})
 				} else if (vm.selectedType === 'group') {
-					vm.$db.Group.create({ title: vm.title, sorting: 999 }).then((response) => {})
+					vm.$db.Group.create({ title: vm.title, sorting: 999 }).then((response) => {
+						vm.handleClose()
+						vm.isPending = false
+					})
 				}
-				// vm.isPending = true
-				// vm.handleClose()
-				// vm.isPending = false
 			}
 			evt.preventDefault()
 		},
