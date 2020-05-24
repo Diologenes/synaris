@@ -1,0 +1,34 @@
+.c-selectbox {
+  @include textStyle(nonSelect);
+  position: relative;
+
+  &.active {
+
+	.c-selectbox__item {
+	  &:after {
+		transform: rotate(-90deg);
+	  }
+	}
+  }
+
+  &__item {
+	@include textStyle(smallUppercase);
+	@include transitionAll();
+	color: clr(txt);
+	cursor: pointer;
+	padding-right: 1.5rem;
+
+	&:hover {
+	  text-decoration: underline;
+	}
+
+	&:after {
+	  @include iconFontFree('\0042');
+	  position: absolute;
+	  right: 0;
+	  top: 0.25rem;
+	  transform: rotate(90deg);
+	}
+  }
+
+}

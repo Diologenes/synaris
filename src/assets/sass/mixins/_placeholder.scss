@@ -1,0 +1,18 @@
+@mixin placeholder($color, $isMandatory: false, $style: '') {
+  &::placeholder {
+	color: $color;
+	opacity: 1;
+	@if $style != '' {
+	  @include textStyle($style);
+	}
+	@if $isMandatory == true {
+	  font-style: italic;
+	}
+  }
+  &:-ms-input-placeholder {
+	color: $color;
+  }
+  &::-ms-input-placeholder {
+	color: $color;
+  }
+}

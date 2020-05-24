@@ -3,9 +3,11 @@
 		<b-form-group label="Enter title">
 			<b-form-input v-model="title" placeholder="New title ..."></b-form-input>
 		</b-form-group>
-		<b-form-group label="Select a group">
-			
+
+		<b-form-group label="Select a folder">
+			<form-select-box wrapperClass="u-m__b--4" :options="groups" />
 		</b-form-group>
+
 		<b-form-group label="Type">
 			<b-form-radio-group id="btn-radios-1" v-model="selectedType" :options="options" buttons name="radios-btn-default" button-variant="outline-primary"></b-form-radio-group>
 		</b-form-group>
@@ -18,6 +20,7 @@ export default {
 		return {
 			title: '',
 			selectedType: 'library',
+			groups: [],
 			options: [
 				{ text: 'Library', value: 'library' },
 				{ text: 'Group', value: 'group' }
@@ -32,6 +35,11 @@ export default {
 			this.title = ''
 			this.selectedType = 'library'
 			this.removeErrors()
+			this.groups = this.getGroups()
+		},
+
+		getGroups() {
+
 		},
 
 		// submit the create channel

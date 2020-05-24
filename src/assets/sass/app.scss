@@ -13,6 +13,7 @@
 @import "mixins/transition";
 @import "mixins/iconFonts";
 @import "mixins/triangle";
+@import "mixins/placeholder";
 
 // utilities
 @import "utilities/icon";
@@ -21,6 +22,7 @@
 // plugins
 @import "plugins/bootstrap";
 @import "plugins/bootstrapModal";
+@import "plugins/perfectScrollbar";
 
 // page components
 @import "components/page/page";
@@ -33,3 +35,5 @@
 @import "components/modules/contextmenu";
 @import "components/modules/button";
 @import "components/modules/createButton";
+@import "components/modules/form";
+@import "components/modules/selectBox";
