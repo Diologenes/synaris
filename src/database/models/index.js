@@ -1,11 +1,15 @@
 const Sequelize = require("sequelize");
 const path = require("path")
 const dbPath = path.resolve('src/database/storage/database.sqlite')
+console.log('dbPath', dbPath)
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: dbPath
 })
+
+
+console.log('sequelize', sequelize)
 
 const Folder = require("./Folder");
 const Library = require("./Library");
@@ -23,5 +27,8 @@ const db = {
   ...models,
   sequelize
 };
+
+console.log('db', db)
+
 
 module.exports = db;

@@ -18,7 +18,7 @@
 
 						<!-- group content -->
 						<div class="c-library__group-content">
-							<b-link v-for="element in library.Libraries" :key="element.id" router-tag="a" :to="{ name: 'library', params: { libraryId: element.id } }" class="c-library__item" active-class="active">
+							<b-link v-for="element in library.libraries" :key="element.id" router-tag="a" :to="{ name: 'library', params: { libraryId: element.id } }" class="c-library__item" active-class="active">
 								<div class="c-library__item-title" :title="element.title">{{ element.title }}</div>
 								<div class="c-library__item-indicator">
 									<div class="c-panelbox">

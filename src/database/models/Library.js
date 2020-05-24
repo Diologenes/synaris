@@ -8,7 +8,7 @@ class Library extends Sequelize.Model {
 				folderId: DataTypes.INTEGER,
 				sorting: DataTypes.INTEGER
 			},
-			{ sequelize }
+			{ sequelize, tableName: 'Libraries', modelName: 'library' }
 		)
 	}
 	static associate(models) {
