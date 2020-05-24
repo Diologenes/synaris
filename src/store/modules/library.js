@@ -57,7 +57,7 @@ const actions = {
 	getAll(context) {
 		let vm = this
 		return new Promise((resolve) => {
-			db.Group.findAll({
+			db.Folder.findAll({
 				where: {},
 				include: [{ model: db.Library }]
 			}).then((response) => {

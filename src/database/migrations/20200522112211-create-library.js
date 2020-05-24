@@ -17,7 +17,7 @@ module.exports = {
       sorting: {
         type: Sequelize.INTEGER
       },
-      groupId: {
+      folderId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

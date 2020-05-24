@@ -5,14 +5,14 @@ class Library extends Sequelize.Model {
 		return super.init(
 			{
 				title: DataTypes.STRING,
-				groupId: DataTypes.INTEGER,
+				folderId: DataTypes.INTEGER,
 				sorting: DataTypes.INTEGER
 			},
 			{ sequelize }
 		)
 	}
 	static associate(models) {
-		this.myAssociation = this.belongsTo(models.Group)
+		this.myAssociation = this.belongsTo(models.Folder)
 	}
 }
 

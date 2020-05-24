@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-class Group extends Sequelize.Model {
+class Folder extends Sequelize.Model {
 	static init(sequelize, DataTypes) {
 		return super.init(
 			{
@@ -15,4 +15,4 @@ class Group extends Sequelize.Model {
 	}
 }
 
-module.exports = Group
+module.exports = Folder

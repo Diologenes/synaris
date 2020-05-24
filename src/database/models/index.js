@@ -7,11 +7,11 @@ const sequelize = new Sequelize({
   storage: dbPath
 })
 
-const Group = require("./Group");
+const Folder = require("./Folder");
 const Library = require("./Library");
 
 const models = {
-  Group: Group.init(sequelize, Sequelize),
+  Folder: Folder.init(sequelize, Sequelize),
   Library: Library.init(sequelize, Sequelize),
 };
 
