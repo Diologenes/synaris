@@ -94,18 +94,6 @@
 			text-decoration: none;
 		}
 
-		&--is-drag {
-			border: 1px solid clr(clr, base) !important;
-		}
-
-		&--is-drag1 {
-			border: 1px solid red !important;
-		}
-
-		&--is-drag2 {
-			border: 1px solid green !important;
-		}
-
 		&--is-drop {
 			border: 1px dashed rgba(clr(clr, base), 0.5);
 			margin: 3px 1rem;

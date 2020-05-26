@@ -19,12 +19,12 @@
 					<!-- group content -->
 					<div class="c-library__group-content">
 						<b-link
-							@dragstart="dragStart(elementIndex, $event)"
+							@dragstart="dragStart(elementIndex, libraryIndex)"
 							@dragover.prevent
 							@dragenter="dragEnter(libraryIndex, $event)"
 							@dragleave="dragLeave(libraryIndex, $event)"
 							@dragend="dragEnd"
-							@drop="dragFinish(elementIndex, $event, libraryIndex)"
+							@drop="dragFinish(elementIndex, libraryIndex)"
 							draggable="true"
 							v-for="(element, elementIndex) in library.libraries"
 							:key="element.id"
@@ -65,8 +65,11 @@ export default {
 	},
 	data() {
 		return {
-			isDragging: false,
-			draggedId: null
+			drag: {
+				isDrag: false,
+				libraryDragIndex: null,
+				folderDragIndex: null
+			}
 		}
 	},
 	computed: {
@@ -94,13 +97,13 @@ export default {
 			})
 		},
 
-		dragStart: function(i, event) {
-			console.log('dragStart', i, event)
+		dragStart: function(i, folderId) {
 			this.changeDraggableItems('add')
-			this.draggedId = i
+			this.drag.libraryDragIndex = i
+			this.drag.folderDragIndex = folderId
 		},
 		dragEnter: function(i, event) {
-			console.log('dragEnter', event)
+			// console.log('dragEnter', event)
 		},
 		dragLeave: function(i, event) {
 			// console.log('dragLeave', i, event)
@@ -108,9 +111,32 @@ export default {
 		dragEnd: function(event) {
 			this.changeDraggableItems('remove')
 		},
-		dragFinish: function(i, event, folderId) {
-			console.log('dragFinish / drop', this.draggedId, i, folderId)
-			console.log('dragFinish / drop ::', this.libraries)
+		dragFinish: function(libraryDropIndex, folderDropIndex) {
+			console.log('dragFinish / folderDragIndex', this.drag.folderDragIndex)
+			console.log('dragFinish / libraryDragIndex', this.drag.libraryDragIndex)
+			console.log('dragFinish / folderDropIndex', folderDropIndex)
+			console.log('dragFinish / libraryDropIndex', libraryDropIndex)
+
+			if (this.drag.folderDragIndex === folderDropIndex) {
+				// console.log('stay in folder')
+
+				// let tmpArr = []
+				// let cutEl = this.libraries[folderDropIndex].libraries[this.drag.libraryDragIndex]
+				// console.log(cutEl)
+				// this.libraries[folderDropIndex].libraries.forEach((el, i) => {
+				// console.log(cutEl)
+
+				// 	tmpArr.push(el)
+				// 	if (i === libraryDropIndex && libraryDropIndex !== 0) {
+				// 		tmpArr.push(cutEl)
+				// 	} 
+				// })
+				// this.libraries[folderDropIndex].libraries = tmpArr
+			} else {
+				console.log('switch folder')
+			}
+
+			// console.log(this.libraries[folderId])
 		}
 	}
 }
