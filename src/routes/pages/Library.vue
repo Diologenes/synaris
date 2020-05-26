@@ -117,26 +117,15 @@ export default {
 			console.log('dragFinish / folderDropIndex', folderDropIndex)
 			console.log('dragFinish / libraryDropIndex', libraryDropIndex)
 
+			// move element in same folder
 			if (this.drag.folderDragIndex === folderDropIndex) {
-				// console.log('stay in folder')
-
-				// let tmpArr = []
-				// let cutEl = this.libraries[folderDropIndex].libraries[this.drag.libraryDragIndex]
-				// console.log(cutEl)
-				// this.libraries[folderDropIndex].libraries.forEach((el, i) => {
-				// console.log(cutEl)
-
-				// 	tmpArr.push(el)
-				// 	if (i === libraryDropIndex && libraryDropIndex !== 0) {
-				// 		tmpArr.push(cutEl)
-				// 	} 
-				// })
-				// this.libraries[folderDropIndex].libraries = tmpArr
+				if (this.drag.libraryDragIndex !== libraryDropIndex) {
+					let elementToMove = this.libraries[folderDropIndex].libraries[this.drag.libraryDragIndex]
+					this.libraries[folderDropIndex].libraries.splice(this.drag.libraryDragIndex, 1)
+					this.libraries[folderDropIndex].libraries.splice(libraryDropIndex, 0, elementToMove)
+				}
 			} else {
-				console.log('switch folder')
 			}
-
-			// console.log(this.libraries[folderId])
 		}
 	}
 }

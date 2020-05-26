@@ -58,13 +58,18 @@ const actions = {
 		let vm = this
 		return new Promise((resolve) => {
 			db.Folder.findAll({
-				where: {},
+				order: [
+					['sorting', 'ASC'],
+					[db.Library, 'sorting', 'ASC']
+				],
 				include: [{ model: db.Library }]
-			}).then((response) => {
-				console.log(response)
-				context.commit('libraries', response)
-				resolve(response)
-			}).catch(e => console.error(e))
+			})
+				.then((response) => {
+					console.log(response)
+					context.commit('libraries', response)
+					resolve(response)
+				})
+				.catch((e) => console.error(e))
 		})
 	}
 }
