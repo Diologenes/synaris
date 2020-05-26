@@ -11,35 +11,37 @@
 				<!-- group item -->
 				<div v-for="(library, libraryIndex) in libraries" :key="library.id" class="c-library__group">
 					<!-- group title -->
-					<div class="c-library__group-title" @dragstart="dragStart(libraryIndex, $event)" @dragover.prevent @dragenter="dragEnter(libraryIndex, $event)" @dragleave="dragLeave(libraryIndex, $event)" @dragend="dragEnd" @drop="dragFinish(libraryIndex, $event, libraryIndex)" draggable="true">
+					<div class="c-library__group-title" @dragstart="dragStart(libraryIndex, $event)" @dragover.prevent @dragend="dragEnd" @drop="dragFinish(libraryIndex, $event, libraryIndex)" draggable="true">
 						{{ library.title }}
+					</div>
+
+					<div v-if="library.libraries.length === 0">
+						<div class="c-library__dropzone" @dragover.prevent @drop="dragFinish(0, libraryIndex)"></div>
 					</div>
 					<!-- group title -->
 
 					<!-- group content -->
 					<div class="c-library__group-content">
-						<b-link
-							@dragstart="dragStart(elementIndex, libraryIndex)"
-							@dragover.prevent
-							@dragenter="dragEnter(libraryIndex, $event)"
-							@dragleave="dragLeave(libraryIndex, $event)"
-							@dragend="dragEnd"
-							@drop="dragFinish(elementIndex, libraryIndex)"
-							draggable="true"
-							v-for="(element, elementIndex) in library.libraries"
-							:key="element.id"
-							router-tag="a"
-							:to="{ name: 'library', params: { libraryId: element.id } }"
-							class="c-library__item"
-							active-class="active"
-						>
-							<div class="c-library__item-title" :title="element.title">{{ element.title }}</div>
-							<div class="c-library__item-indicator">
-								<div class="c-panelbox">
-									<div class="c-panelbox__item">0</div>
+						<div class="c-library__item c-library__dropzone" v-for="(element, elementIndex) in library.libraries" :key="element.id">
+							<b-link
+								@dragover.prevent
+								@dragstart="dragStart(elementIndex, libraryIndex)"
+								@drop="dragFinish(elementIndex, libraryIndex)"
+								@dragend="dragEnd"
+								draggable="true"
+								router-tag="a"
+								:to="{ name: 'library', params: { libraryId: element.id } }"
+								class="c-library__link"
+								active-class="active"
+							>
+								<div class="c-library__link-title" :title="element.title">{{ element.title }}</div>
+								<div class="c-library__link-indicator">
+									<div class="c-panelbox">
+										<div class="c-panelbox__item">0</div>
+									</div>
 								</div>
-							</div>
-						</b-link>
+							</b-link>
+						</div>
 					</div>
 					<!-- group item -->
 				</div>
@@ -87,44 +89,40 @@ export default {
 	},
 	methods: {
 		changeDraggableItems(type) {
-			let items = window.document.getElementsByClassName('c-library__item')
+			const identifierClass = 'c-library__dropzone'
+			const activeClass = 'c-library__dropzone--is-active'
+			let items = window.document.getElementsByClassName(identifierClass)
 			items.forEach((element) => {
 				if (type === 'add') {
-					element.classList.add('c-library__item--is-drop')
+					element.classList.add(activeClass)
 				} else if (type === 'remove') {
-					element.classList.remove('c-library__item--is-drop')
+					element.classList.remove(activeClass)
 				}
 			})
 		},
+		// dragStart: function(i, folderId) {},
 
 		dragStart: function(i, folderId) {
 			this.changeDraggableItems('add')
 			this.drag.libraryDragIndex = i
 			this.drag.folderDragIndex = folderId
 		},
-		dragEnter: function(i, event) {
-			// console.log('dragEnter', event)
-		},
-		dragLeave: function(i, event) {
-			// console.log('dragLeave', i, event)
-		},
-		dragEnd: function(event) {
+		dragEnd: function() {
 			this.changeDraggableItems('remove')
 		},
 		dragFinish: function(libraryDropIndex, folderDropIndex) {
-			console.log('dragFinish / folderDragIndex', this.drag.folderDragIndex)
-			console.log('dragFinish / libraryDragIndex', this.drag.libraryDragIndex)
-			console.log('dragFinish / folderDropIndex', folderDropIndex)
-			console.log('dragFinish / libraryDropIndex', libraryDropIndex)
-
+			let elementToMove = this.libraries[this.drag.folderDragIndex].libraries[this.drag.libraryDragIndex]
 			// move element in same folder
 			if (this.drag.folderDragIndex === folderDropIndex) {
 				if (this.drag.libraryDragIndex !== libraryDropIndex) {
-					let elementToMove = this.libraries[folderDropIndex].libraries[this.drag.libraryDragIndex]
-					this.libraries[folderDropIndex].libraries.splice(this.drag.libraryDragIndex, 1)
-					this.libraries[folderDropIndex].libraries.splice(libraryDropIndex, 0, elementToMove)
+					this.libraries[this.drag.folderDragIndex].libraries.splice(this.drag.libraryDragIndex, 1)
+					this.libraries[this.drag.folderDragIndex].libraries.splice(libraryDropIndex, 0, elementToMove)
 				}
-			} else {
+			}
+			// move element in another folder
+			if (this.drag.folderDragIndex !== folderDropIndex) {
+				this.libraries[this.drag.folderDragIndex].libraries.splice(this.drag.libraryDragIndex, 1)
+				this.libraries[folderDropIndex].libraries.splice(libraryDropIndex, 0, elementToMove)
 			}
 		}
 	}

@@ -11,7 +11,7 @@
 		background: clr(bg, d-1);
 		position: relative;
 		z-index: 10;
-		height: 100%; 
+		height: 100%;
 		min-height: 100%;
 
 		&:before {
@@ -52,7 +52,7 @@
 		}
 
 		&:last-child {
-			border-bottom: 1px solid transparent;	
+			border-bottom: 1px solid transparent;
 		}
 
 		&-title {
@@ -71,9 +71,32 @@
 	}
 
 	&__item {
+		margin: 3px 0;
+		border: 1px transparent;
+	}
+
+	&__dropzone {
+		@include transitionAll();
+		border: 1px solid transparent;
+
+		&--is-active {
+			border: 1px dashed rgba(clr(clr, base), 0.5) !important;
+			margin: 3px 1rem;
+			min-height: 3rem;
+			background: transparent !important;
+			&:before {
+				width: 0 !important;
+			}
+
+			.c-channel-list__indicator {
+				transform: scale(0);
+			}
+		}
+	}
+
+	&__link {
 		display: flex;
 		padding: 0.5rem 1.5rem;
-		border: 1px transparent;
 		align-items: center;
 		@include transitionAll();
 		color: clr(txt, alt);
@@ -92,20 +115,6 @@
 			color: clr(txt, alt);
 			background: clr(bg, d-1, 7);
 			text-decoration: none;
-		}
-
-		&--is-drop {
-			border: 1px dashed rgba(clr(clr, base), 0.5);
-			margin: 3px 1rem;
-			padding-bottom: calc(0.5rem - 3px);
-			background: transparent !important;
-			&:before {
-				width: 0 !important;
-			}
-
-			.c-channel-list__indicator {
-				transform: scale(0);
-			}
 		}
 	}
 }
