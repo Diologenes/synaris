@@ -11,7 +11,7 @@
 				<!-- group item -->
 				<div v-for="(library, libraryIndex) in libraries" :key="library.id" class="c-library__group">
 					<!-- group title -->
-					<div class="c-library__group-title" @dragstart="dragStart(libraryIndex, $event)" @dragover.prevent @dragend="dragEnd" @drop="dragFinish(libraryIndex, $event, libraryIndex)" draggable="true">
+					<div class="c-library__group-title" @dragover.prevent @dragstart="dragStart('folder', null, libraryIndex)" @drop="dragFinish(null, libraryIndex)" @dragend="dragEnd()" draggable="true">
 						{{ library.title }}
 					</div>
 
@@ -25,9 +25,9 @@
 						<div class="c-library__item c-library__dropzone" v-for="(element, elementIndex) in library.libraries" :key="element.id">
 							<b-link
 								@dragover.prevent
-								@dragstart="dragStart(elementIndex, libraryIndex)"
+								@dragstart="dragStart('library', elementIndex, libraryIndex)"
 								@drop="dragFinish(elementIndex, libraryIndex)"
-								@dragend="dragEnd"
+								@dragend="dragEnd()"
 								draggable="true"
 								router-tag="a"
 								:to="{ name: 'library', params: { libraryId: element.id } }"
@@ -69,6 +69,7 @@ export default {
 		return {
 			drag: {
 				isDrag: false,
+				type: null,
 				libraryDragIndex: null,
 				folderDragIndex: null
 			}
@@ -88,41 +89,70 @@ export default {
 		this.$store.dispatch('library/getAll')
 	},
 	methods: {
-		changeDraggableItems(type) {
+		showLibraryDropzones: _.debounce(() => {
 			const identifierClass = 'c-library__dropzone'
 			const activeClass = 'c-library__dropzone--is-active'
 			let items = window.document.getElementsByClassName(identifierClass)
 			items.forEach((element) => {
-				if (type === 'add') {
-					element.classList.add(activeClass)
-				} else if (type === 'remove') {
-					element.classList.remove(activeClass)
-				}
+				element.classList.add(activeClass)
+			})
+		}, 30),
+		hideLibraryDropzones() {
+			const identifierClass = 'c-library__dropzone'
+			const activeClass = 'c-library__dropzone--is-active'
+			let items = window.document.getElementsByClassName(identifierClass)
+			items.forEach((element) => {
+				element.classList.remove(activeClass)
 			})
 		},
-		// dragStart: function(i, folderId) {},
 
-		dragStart: function(i, folderId) {
-			this.changeDraggableItems('add')
-			this.drag.libraryDragIndex = i
-			this.drag.folderDragIndex = folderId
-		},
-		dragEnd: function() {
-			this.changeDraggableItems('remove')
-		},
-		dragFinish: function(libraryDropIndex, folderDropIndex) {
-			let elementToMove = this.libraries[this.drag.folderDragIndex].libraries[this.drag.libraryDragIndex]
-			// move element in same folder
-			if (this.drag.folderDragIndex === folderDropIndex) {
-				if (this.drag.libraryDragIndex !== libraryDropIndex) {
-					this.libraries[this.drag.folderDragIndex].libraries.splice(this.drag.libraryDragIndex, 1)
-					this.libraries[this.drag.folderDragIndex].libraries.splice(libraryDropIndex, 0, elementToMove)
-				}
+		dragStart(type, i, folderId) {
+			this.drag.type = type
+			switch (this.drag.type) {
+				case 'library':
+					this.showLibraryDropzones()
+					this.drag.libraryDragIndex = i
+					this.drag.folderDragIndex = folderId
+					break
+				case 'folder':
+					this.drag.folderDragIndex = folderId
+					break
 			}
-			// move element in another folder
-			if (this.drag.folderDragIndex !== folderDropIndex) {
-				this.libraries[this.drag.folderDragIndex].libraries.splice(this.drag.libraryDragIndex, 1)
-				this.libraries[folderDropIndex].libraries.splice(libraryDropIndex, 0, elementToMove)
+		},
+		dragEnd() {
+			switch (this.drag.type) {
+				case 'library':
+					this.hideLibraryDropzones()
+					break
+				case 'folder':
+					break
+			}
+		},
+		dragFinish(libraryDropIndex, folderDropIndex) {
+			switch (this.drag.type) {
+				case 'library':
+					let elementToMove = this.libraries[this.drag.folderDragIndex].libraries[this.drag.libraryDragIndex]
+					// move element in same folder
+					if (this.drag.folderDragIndex === folderDropIndex) {
+						if (this.drag.libraryDragIndex !== libraryDropIndex) {
+							this.libraries[this.drag.folderDragIndex].libraries.splice(this.drag.libraryDragIndex, 1)
+							this.libraries[this.drag.folderDragIndex].libraries.splice(libraryDropIndex, 0, elementToMove)
+						}
+					}
+					// move element in another folder
+					if (this.drag.folderDragIndex !== folderDropIndex) {
+						this.libraries[this.drag.folderDragIndex].libraries.splice(this.drag.libraryDragIndex, 1)
+						this.libraries[folderDropIndex].libraries.splice(libraryDropIndex, 0, elementToMove)
+					}
+					break
+				case 'folder':
+					if (this.drag.folderDragIndex !== folderDropIndex) {
+						let folderToMove = this.libraries[this.drag.folderDragIndex]
+						this.libraries.splice(this.drag.folderDragIndex, 1)
+
+						this.libraries.splice(folderDropIndex, 0, folderToMove)
+					}
+					break
 			}
 		}
 	}
