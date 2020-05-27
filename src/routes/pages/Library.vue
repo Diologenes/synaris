@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import _ from 'lodash'
+import { mapGetters } from 'vuex'
 import modalAddLibrary from '@/components/modals/AddLibrary'
 
 export default {
@@ -79,9 +79,6 @@ export default {
 		libraries: {
 			get() {
 				return this.$store.getters['library/libraries']
-			},
-			set(value) {
-				this.$store.dispatch('library/update', value)
 			}
 		}
 	},
@@ -129,30 +126,57 @@ export default {
 			}
 		},
 		dragFinish(libraryDropIndex, folderDropIndex) {
-			switch (this.drag.type) {
+			let vm = this
+			let writeData = false
+			switch (vm.drag.type) {
 				case 'library':
-					let elementToMove = this.libraries[this.drag.folderDragIndex].libraries[this.drag.libraryDragIndex]
+					let elementToMove = vm.libraries[vm.drag.folderDragIndex].libraries[vm.drag.libraryDragIndex]
 					// move element in same folder
-					if (this.drag.folderDragIndex === folderDropIndex) {
-						if (this.drag.libraryDragIndex !== libraryDropIndex) {
-							this.libraries[this.drag.folderDragIndex].libraries.splice(this.drag.libraryDragIndex, 1)
-							this.libraries[this.drag.folderDragIndex].libraries.splice(libraryDropIndex, 0, elementToMove)
+					if (vm.drag.folderDragIndex === folderDropIndex) {
+						// continue if drag and drop is not the same
+						if (vm.drag.libraryDragIndex !== libraryDropIndex) {
+							vm.libraries[vm.drag.folderDragIndex].libraries.splice(vm.drag.libraryDragIndex, 1)
+							vm.libraries[vm.drag.folderDragIndex].libraries.splice(libraryDropIndex, 0, elementToMove)
+							writeData = true
 						}
 					}
 					// move element in another folder
-					if (this.drag.folderDragIndex !== folderDropIndex) {
-						this.libraries[this.drag.folderDragIndex].libraries.splice(this.drag.libraryDragIndex, 1)
-						this.libraries[folderDropIndex].libraries.splice(libraryDropIndex, 0, elementToMove)
+					if (vm.drag.folderDragIndex !== folderDropIndex) {
+						vm.libraries[vm.drag.folderDragIndex].libraries.splice(vm.drag.libraryDragIndex, 1)
+						vm.libraries[folderDropIndex].libraries.splice(libraryDropIndex, 0, elementToMove)
+						writeData = true
 					}
 					break
 				case 'folder':
-					if (this.drag.folderDragIndex !== folderDropIndex) {
-						let folderToMove = this.libraries[this.drag.folderDragIndex]
-						this.libraries.splice(this.drag.folderDragIndex, 1)
-						this.libraries.splice(folderDropIndex, 0, folderToMove)
+					if (vm.drag.folderDragIndex !== folderDropIndex) {
+						let folderToMove = vm.libraries[vm.drag.folderDragIndex]
+						vm.libraries.splice(vm.drag.folderDragIndex, 1)
+						vm.libraries.splice(folderDropIndex, 0, folderToMove)
+						writeData = true
 					}
 					break
 			}
+
+			if (writeData) {
+				vm.persistSorting()
+			}
+		},
+
+		persistSorting() {
+			let vm = this
+			let promises = []
+			vm.libraries.forEach((folder, folderIndex) => {
+				folder.sorting = folderIndex
+				promises.push(folder.save({ fields: ['sorting'] }))
+				folder.libraries.forEach((library, libraryIndex) => {
+					library.sorting = libraryIndex
+					library.folderId = folder.id
+					promises.push(library.save())
+				})
+			})
+			Promise.all(promises).then(() => {
+				vm.$store.dispatch('library/update', this.libraries)
+			})
 		}
 	}
 }

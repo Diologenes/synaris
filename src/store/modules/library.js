@@ -65,7 +65,6 @@ const actions = {
 				include: [{ model: db.Library }]
 			})
 				.then((response) => {
-					console.log(response)
 					context.commit('libraries', response)
 					resolve(response)
 				})
