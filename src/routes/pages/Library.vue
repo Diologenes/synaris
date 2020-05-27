@@ -149,7 +149,6 @@ export default {
 					if (this.drag.folderDragIndex !== folderDropIndex) {
 						let folderToMove = this.libraries[this.drag.folderDragIndex]
 						this.libraries.splice(this.drag.folderDragIndex, 1)
-
 						this.libraries.splice(folderDropIndex, 0, folderToMove)
 					}
 					break
