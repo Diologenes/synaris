@@ -8,9 +8,6 @@ const sequelize = new Sequelize({
   storage: dbPath
 })
 
-
-console.log('sequelize', sequelize)
-
 const Folder = require("./Folder");
 const Library = require("./Library");
 
@@ -27,8 +24,5 @@ const db = {
   ...models,
   sequelize
 };
-
-console.log('db', db)
-
 
 module.exports = db;
