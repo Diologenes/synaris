@@ -1,0 +1,13 @@
+.c-layermenu {
+    background-color: clr(bg, d-2);
+    border-radius: .5rem;
+    box-shadow: 0 0 1rem 0 rgba(0,0,0,.2);
+    display: flex;
+    min-width: 15rem;
+    min-height: 5rem;
+    overflow: hidden;
+    z-index: -1;
+    &--is-active {
+        z-index: 999;
+    }
+}

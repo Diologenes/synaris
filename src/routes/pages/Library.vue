@@ -24,6 +24,7 @@
 					<div class="c-library__group-content">
 						<div class="c-library__item c-library__dropzone" v-for="(element, elementIndex) in library.libraries" :key="element.id">
 							<b-link
+								@contextmenu.prevent="$refs.layermenuLibrary.open($event, 'Payload')"
 								@dragover.prevent
 								@dragstart="dragStart('library', elementIndex, libraryIndex)"
 								@drop="dragFinish(elementIndex, libraryIndex)"
@@ -46,6 +47,10 @@
 					<!-- group item -->
 				</div>
 				<!-- group -->
+
+				<LayerMenu ref="layermenuLibrary">
+					test
+				</LayerMenu>
 
 				<div v-b-modal.modal-create-new-library class="c-create-button c-button c-button--primary c-button--bullseye u-icon--more"></div>
 			</div>
@@ -104,6 +109,7 @@ export default {
 		},
 
 		dragStart(type, i, folderId) {
+			this.$refs.layermenuLibrary.close()
 			this.drag.type = type
 			switch (this.drag.type) {
 				case 'library':
