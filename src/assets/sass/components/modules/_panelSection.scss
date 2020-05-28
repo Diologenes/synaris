@@ -4,6 +4,7 @@
     padding: 0.5rem 1.5rem;
     display: flex;
     border-bottom: 1px solid clr(bg, d-2);
+    flex: 0 0 auto;
     
     &__title {
         @include textStyle(regularUppercase);

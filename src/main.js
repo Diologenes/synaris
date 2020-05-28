@@ -7,7 +7,6 @@ import BootstrapVue from 'bootstrap-vue'
 import PerfectScrollbar from 'vue2-perfect-scrollbar'
 
 require('./components/components')
-// require('./directives/clickOutside')
 const db = require('./database/models')
 
 Vue.use(BootstrapVue)

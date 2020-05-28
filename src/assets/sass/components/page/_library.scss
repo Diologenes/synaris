@@ -3,7 +3,7 @@
 	flex: 0 1;
 	flex-direction: column;
 
-	&__content {
+	&__wrap {
 		display: flex;
 		flex-direction: column;
 		flex: 0 1 auto;
@@ -39,6 +39,11 @@
 		}
 	}
 
+	&__content {
+		flex: 1 1 100%;
+		position: relative;
+	}
+
 	&__group {
 		@include transitionAll();
 		display: flex;
@@ -52,6 +57,7 @@
 		}
 
 		&:last-child {
+			margin-bottom: 5rem;
 			border-bottom: 1px solid transparent;
 		}
 
@@ -104,6 +110,7 @@
 
 		&-title {
 			flex: 1 1 auto;
+			margin-right: 1rem;
 			@include textStyle(smallUppercase);
 		}
 

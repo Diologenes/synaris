@@ -1,52 +1,57 @@
 <template>
 	<div class="c-page c-page__default">
 		<div class="c-library">
-			<div class="c-library__content">
+			<div class="c-library__wrap">
 				<!-- panel section -->
 				<div class="c-panel-section">
 					<div class="c-panel-section__title">Libraries</div>
 				</div>
 				<!-- panel section -->
 
-				<!-- group item -->
-				<div v-for="(library, libraryIndex) in libraries" :key="library.id" class="c-library__group">
-					<!-- group title -->
-					<div class="c-library__group-title" @dragover.prevent @dragstart="dragStart('folder', null, libraryIndex)" @drop="dragFinish(null, libraryIndex)" @dragend="dragEnd()" draggable="true">
-						{{ library.title }}
-					</div>
-
-					<div v-if="library.libraries.length === 0">
-						<div class="c-library__dropzone" @dragover.prevent @drop="dragFinish(0, libraryIndex)"></div>
-					</div>
-					<!-- group title -->
-
-					<!-- group content -->
-					<div class="c-library__group-content">
-						<div class="c-library__item c-library__dropzone" v-for="(element, elementIndex) in library.libraries" :key="element.id">
-							<b-link
-								@contextmenu.prevent="$refs.layermenuLibrary.open($event, 'Payload')"
-								@dragover.prevent
-								@dragstart="dragStart('library', elementIndex, libraryIndex)"
-								@drop="dragFinish(elementIndex, libraryIndex)"
-								@dragend="dragEnd()"
-								draggable="true"
-								router-tag="a"
-								:to="{ name: 'library', params: { libraryId: element.id } }"
-								class="c-library__link"
-								active-class="active"
-							>
-								<div class="c-library__link-title" :title="element.title">{{ element.title }}</div>
-								<div class="c-library__link-indicator">
-									<div class="c-panelbox">
-										<div class="c-panelbox__item">0</div>
-									</div>
-								</div>
-							</b-link>
+				<!-- scrollbar -->
+				<perfect-scrollbar class="c-library__content">
+					<!-- group item -->
+					<div v-for="(library, libraryIndex) in libraries" :key="library.id" class="c-library__group">
+						<!-- group title -->
+						<div class="c-library__group-title" @dragover.prevent @dragstart="dragStart('folder', null, libraryIndex)" @drop="dragFinish(null, libraryIndex)" @dragend="dragEnd()" draggable="true">
+							{{ library.title }}
 						</div>
+
+						<div v-if="library.libraries.length === 0">
+							<div class="c-library__dropzone" @dragover.prevent @drop="dragFinish(0, libraryIndex)"></div>
+						</div>
+						<!-- group title -->
+
+						<!-- group content -->
+						<div class="c-library__group-content">
+							<div class="c-library__item c-library__dropzone" v-for="(element, elementIndex) in library.libraries" :key="element.id">
+								<b-link
+									@contextmenu.prevent="$refs.layermenuLibrary.open($event, 'Payload')"
+									@dragover.prevent
+									@dragstart="dragStart('library', elementIndex, libraryIndex)"
+									@drop="dragFinish(elementIndex, libraryIndex)"
+									@dragend="dragEnd()"
+									draggable="true"
+									router-tag="a"
+									:to="{ name: 'library', params: { libraryId: element.id } }"
+									class="c-library__link"
+									active-class="active"
+								>
+									<div class="c-library__link-title" :title="element.title">{{ element.title }}</div>
+									<div class="c-library__link-indicator">
+										<div class="c-panelbox">
+											<div class="c-panelbox__item">0</div>
+										</div>
+									</div>
+								</b-link>
+							</div>
+						</div>
+						<!-- group content -->
 					</div>
 					<!-- group item -->
-				</div>
-				<!-- group -->
+				</perfect-scrollbar>
+
+				<!-- scrollbar -->
 
 				<LayerMenu ref="layermenuLibrary">
 					test
