@@ -1,5 +1,5 @@
 <template>
-	<div class="c-layermenu" id="layermenu-library" :class="{ 'c-layermenu--is-active': isVisible }" ref="popper" v-show="isVisible" tabindex="-1" v-click-outside="close" @contextmenu.capture.prevent>
+	<div class="c-layermenu" :class="{ 'c-layermenu--is-active': isVisible }" ref="popper" tabindex="-1" v-click-outside="close" @contextmenu.capture.prevent>
 		<slot></slot>
 	</div>
 </template>
@@ -14,7 +14,7 @@ export default {
 			type: String,
 			default: 'body'
 		}
-	},
+	}, 
 	data() {
 		return {
 			opened: false,

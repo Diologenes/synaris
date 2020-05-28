@@ -54,7 +54,10 @@
 				<!-- scrollbar -->
 
 				<LayerMenu ref="layermenuLibrary">
-					test
+					<ul class="c-layermenu__wrap">
+						<li class="c-layermenu__item"><a class="c-layermenu__link" href="#">Rename ...</a></li>
+						<li class="c-layermenu__item"><a class="c-layermenu__link" href="#">Delete ...</a></li>
+					</ul>
 				</LayerMenu>
 
 				<div v-b-modal.modal-create-new-library class="c-create-button c-button c-button--primary c-button--bullseye u-icon--more"></div>

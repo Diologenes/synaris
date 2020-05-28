@@ -40,7 +40,7 @@
 	}
 
 	&__content {
-		flex: 1 1 100%;
+		flex: 1 1 auto;
 		position: relative;
 	}
 
@@ -83,7 +83,10 @@
 
 	&__dropzone {
 		@include transitionAll();
-		border: 1px solid transparent;
+		border-top: 1px solid transparent;
+		border-bottom: 1px solid transparent;
+		display: flex;
+		align-items: center;
 
 		&--is-active {
 			border: 1px dashed rgba(clr(clr, base), 0.5) !important;
@@ -94,13 +97,14 @@
 				width: 0 !important;
 			}
 
-			.c-channel-list__indicator {
-				transform: scale(0);
+			.c-library__link-indicator {
+				display: none;
 			}
 		}
 	}
 
 	&__link {
+		flex: 1;
 		display: flex;
 		padding: 0.5rem 1.5rem;
 		align-items: center;

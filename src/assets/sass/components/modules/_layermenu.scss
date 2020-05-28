@@ -1,15 +1,44 @@
 .c-layermenu {
     background-color: clr(bg, d-2);
-    border-radius: .5rem;
-    box-shadow: 0 0 1rem 0 rgba(0,0,0,.2);
+    border: 1px solid clr(bg, d-3);
+    border-radius: .25rem;
+    box-shadow: .1rem .1rem .5rem .1rem rgba(0,0,0,.2);
     display: none;
-    min-width: 15rem;
-    min-height: 5rem;
     overflow: hidden;
-    z-index: -1;
+    min-width: 15rem;
+    z-index: -1; 
+    opacity: 0;
+    transform: scale(0);
     &--is-active {
+        transform: scale(1);
         display: block;
-
         z-index: 999;
+        opacity: 1;
+    }
+
+    &__wrap {
+        margin: 0;
+        padding: .25rem;
+        list-style: none;
+    }
+
+    &__item {
+      border-bottom: 1px solid clr(bg, d-3);
+      &:last-child {
+          border-bottom: 0;
+      }
+    }
+
+    &__link {
+        display: flex;
+        padding: .75rem 1.5rem;
+        color: clr(txt, alt);
+        @include transitionAll();
+        @include textStyle('contextMenu');
+        &:hover {
+            text-decoration: none;
+            background: clr(bg, d-3);
+            color: clr(txt, alt);
+        }
     }
 }
