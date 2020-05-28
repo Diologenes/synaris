@@ -82,11 +82,13 @@ export default {
 					if (vm.selectedType === 'library') {
 						vm.$db.Library.create({ title: vm.title, folderId: vm.selectedFolder, sorting: 999 }).then((response) => {
 							vm.isPending = false
+							vm.$store.dispatch('library/getAll')
 							vm.handleClose()
 						})
 					} else if (vm.selectedType === 'folder') {
 						vm.$db.Folder.create({ title: vm.title, sorting: 999 }).then((response) => {
 							vm.isPending = false
+							vm.$store.dispatch('library/getAll')
 							vm.handleClose()
 						})
 					}
