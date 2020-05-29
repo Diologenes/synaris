@@ -1,28 +1,28 @@
-const Sequelize = require("sequelize");
-const path = require("path")
+const Sequelize = require('sequelize')
+const path = require('path')
 const dbPath = path.resolve('src/database/storage/database.sqlite')
 console.log('dbPath', dbPath)
 
 const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: dbPath
+	dialect: 'sqlite',
+	storage: dbPath
 })
 
-const Folder = require("./Folder");
-const Library = require("./Library");
+const Folder = require('./Folder')
+const Library = require('./Library')
 
 const models = {
-  Folder: Folder.init(sequelize, Sequelize),
-  Library: Library.init(sequelize, Sequelize),
-};
+	Folder: Folder.init(sequelize, Sequelize),
+	Library: Library.init(sequelize, Sequelize)
+}
 
 Object.values(models)
-  .filter(model => typeof model.associate === "function")
-  .forEach(model => model.associate(models));
+	.filter((model) => typeof model.associate === 'function')
+	.forEach((model) => model.associate(models))
 
 const db = {
-  ...models,
-  sequelize
-};
+	...models,
+	sequelize
+}
 
-module.exports = db;
+module.exports = db
