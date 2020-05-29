@@ -68,7 +68,8 @@
   width: 100vw;
   height: 100vh;
   background-color: $modal-backdrop-bg;
-  opacity: .7;
+  opacity: .5;
+  backdrop-filter: blur(2px);
 }
 
 .modal-header {

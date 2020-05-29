@@ -12,7 +12,7 @@ class Library extends Sequelize.Model {
 		)
 	}
 	static associate(models) {
-		this.myAssociation = this.belongsTo(models.Folder)
+		this.myAssociation = this.belongsTo(models.Folder, { onDelete: 'cascade' })
 	}
 }
 

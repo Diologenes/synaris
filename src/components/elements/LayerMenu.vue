@@ -1,6 +1,13 @@
 <template>
 	<div class="c-layermenu" :class="{ 'c-layermenu--is-active': isVisible }" ref="popper" tabindex="-1" v-click-outside="close" @contextmenu.capture.prevent>
-		<slot></slot>
+		<ul class="c-layermenu__wrap">
+			<transition v-for="(option, key) in options" :key="key">
+				<li v-if="typeof option.method !== 'undefined'" class="c-layermenu__item" @click="select(option)">
+					<span class="c-layermenu__link">{{ option.title }}</span>
+				</li>
+				<li v-if="option.special === 'divider'" class="c-layermenu__divider"></li>
+			</transition>
+		</ul>
 	</div>
 </template>
 
@@ -10,16 +17,17 @@ import ClickOutside from 'vue-click-outside'
 
 export default {
 	props: {
+		options: Array,
 		boundariesElement: {
 			type: String,
 			default: 'body'
 		}
-	}, 
+	},
 	data() {
 		return {
 			opened: false,
-			contextData: {}
-		} 
+			payload: null
+		}
 	},
 	directives: {
 		ClickOutside
@@ -30,18 +38,15 @@ export default {
 		}
 	},
 	methods: {
-		open(evt, contextData) {
-			let vm = this
-			let popperReference = vm.$refs.popper
-
+		open($event, payload = null) {
 			this.opened = true
-			this.contextData = contextData
+			this.payload = payload
 
 			const virtualReference = {
 				getBoundingClientRect() {
 					return {
-						top: evt.clientY,
-						left: evt.clientX,
+						top: $event.clientY,
+						left: $event.clientX,
 						bottom: 1,
 						right: 1,
 						width: 1,
@@ -50,14 +55,21 @@ export default {
 				}
 			}
 
-			createPopper(virtualReference, popperReference, {
+			createPopper(virtualReference, this.$refs.popper, {
 				placement: 'right-start',
 				strategy: 'fixed'
 			})
 		},
+
 		close() {
 			this.opened = false
-			this.contextData = null
+			this.payload = null
+		},
+
+		select(option) {
+			option['payload'] = this.payload
+			this.$emit('select', option)
+			this.close()
 		}
 	}
 }

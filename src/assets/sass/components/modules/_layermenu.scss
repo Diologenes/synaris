@@ -30,11 +30,13 @@
     }
 
     &__link {
+        @include transitionAll();
+        @include textStyle('contextMenu');
+        @include textStyle('nonSelect');
         display: flex;
         padding: .75rem 1.5rem;
         color: clr(txt, alt);
-        @include transitionAll();
-        @include textStyle('contextMenu');
+        cursor: pointer;
         &:hover {
             text-decoration: none;
             background: clr(bg, d-3);

@@ -13,7 +13,7 @@
 					<!-- group item -->
 					<div v-for="(library, libraryIndex) in libraries" :key="library.id" class="c-library__group">
 						<!-- group title -->
-						<div class="c-library__group-title" @dragover.prevent @dragstart="dragStart('folder', null, libraryIndex)" @drop="dragFinish(null, libraryIndex)" @dragend="dragEnd()" draggable="true">
+						<div class="c-library__group-title" @contextmenu.prevent="$refs.layermenuLibrary.open($event, library)" @dragover.prevent @dragstart="dragStart('folder', null, libraryIndex)" @drop="dragFinish(null, libraryIndex)" @dragend="dragEnd()" draggable="true">
 							{{ library.title }}
 						</div>
 
@@ -26,7 +26,7 @@
 						<div class="c-library__group-content">
 							<div class="c-library__item c-library__dropzone" v-for="(element, elementIndex) in library.libraries" :key="element.id">
 								<b-link
-									@contextmenu.prevent="$refs.layermenuLibrary.open($event, 'Payload')"
+									@contextmenu.prevent="$refs.layermenuLibrary.open($event, element)"
 									@dragover.prevent
 									@dragstart="dragStart('library', elementIndex, libraryIndex)"
 									@drop="dragFinish(elementIndex, libraryIndex)"
@@ -53,12 +53,14 @@
 
 				<!-- scrollbar -->
 
-				<LayerMenu ref="layermenuLibrary">
-					<ul class="c-layermenu__wrap">
-						<li class="c-layermenu__item"><a class="c-layermenu__link" href="#">Rename ...</a></li>
-						<li class="c-layermenu__item"><a class="c-layermenu__link" href="#">Delete ...</a></li>
-					</ul>
-				</LayerMenu>
+				<LayerMenu
+					@select="contextLibrarySelect"
+					ref="layermenuLibrary"
+					:options="[
+						{ method: 'rename', title: 'Rename ...' },
+						{ method: 'delete', title: 'Delete ...' }
+					]"
+				/>
 
 				<div v-b-modal.modal-create-new-library class="c-create-button c-button c-button--primary c-button--bullseye u-icon--more"></div>
 			</div>
@@ -66,6 +68,7 @@
 
 		<router-view />
 		<modal-add-library />
+		<modal-delete-library :item="contextObject" />
 	</div>
 </template>
 
@@ -73,10 +76,12 @@
 import _ from 'lodash'
 import { mapGetters } from 'vuex'
 import modalAddLibrary from '@/components/modals/AddLibrary'
+import modalDeleteLibrary from '@/components/modals/DeleteLibrary'
 
 export default {
 	components: {
-		modalAddLibrary
+		modalAddLibrary,
+		modalDeleteLibrary
 	},
 	data() {
 		return {
@@ -85,7 +90,8 @@ export default {
 				type: null,
 				libraryDragIndex: null,
 				folderDragIndex: null
-			}
+			},
+			contextObject: null
 		}
 	},
 	computed: {
@@ -191,6 +197,17 @@ export default {
 			Promise.all(promises).then(() => {
 				vm.$store.dispatch('library/update', this.libraries)
 			})
+		},
+
+		contextLibrarySelect(option) {
+			let vm = this
+			vm.contextObject = option.payload
+			console.log(vm.contextObject)
+			switch (option.method) {
+				case 'delete':
+					vm.$root.$emit('bv::show::modal', 'modal-delete-library')
+					break
+			}
 		}
 	}
 }
