@@ -19,8 +19,8 @@
 
 				<!-- scrollbar -->
 				<perfect-scrollbar class="c-article-list__content">
-					<div v-for="(article, articleIndex) in articles" :key="article.id" class="c-article-list__item">
-						<a href="#" class="c-article-list__link">
+					<div v-for="article in articles" :key="article.id" class="c-article-list__item">
+						<a href="#" class="c-article-list__link" @contextmenu.prevent="$refs.layermenuArticle.open($event, article)">
 							<div class="c-article-list__title">{{ article.title }}</div>
 							<div class="c-article-list__description">{{ article.description }}</div>
 						</a>
@@ -31,14 +31,20 @@
 		</div>
 
 		<router-view />
+
+		<modal-delete-article :item="contextObject" />
+		<LayerMenu @select="contextArticleSelect" ref="layermenuArticle" :options="[{ method: 'delete', title: 'Delete ...', icon: 'delete' }]" />
 	</div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import modalDeleteArticle from '@/components/modals/DeleteArticle'
 
 export default {
-	components: {},
+	components: {
+		modalDeleteArticle
+	},
 	beforeRouteEnter(to, from, next) {
 		next((vm) => {
 			vm.$store.dispatch('article/getByCategory', { category: to.params.category })
@@ -50,9 +56,6 @@ export default {
 		vm.$store.dispatch('article/getByCategory', { category: to.params.category }).then(() => {
 			next()
 		})
-	},
-	mounted() {
-		this.init()
 	},
 	computed: {
 		articles: {
@@ -70,16 +73,23 @@ export default {
 	},
 	data() {
 		return {
-			filter: ''
+			filter: '',
+			contextObject: null
 		}
 	},
 	methods: {
-		init() {
-			console.log(this.articles)
-		},
-
 		deleteFilter() {
 			this.filter = ''
+		},
+
+		contextArticleSelect(option) {
+			let vm = this
+			vm.contextObject = option.payload
+			switch (option.method) {
+				case 'delete':
+					vm.$root.$emit('bv::show::modal', 'modal-delete-article')
+					break
+			}
 		}
 	}
 }
