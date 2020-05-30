@@ -1,5 +1,5 @@
 <template>
-	<b-modal id="modal-create-new-category" ref="modalCreateNewCategory" centered title="Create new category or group" :ok-disabled="isPending" @shown="resetModal" @ok="handleOk">
+	<b-modal id="modal-create-new-category" ref="modalCreateNewCategory" centered title="Create new category or collection" :ok-disabled="isPending" @shown="resetModal" @ok="handleOk">
 		<div v-for="error in errors" :key="error">
 			<b-alert variant="danger" :show="error === 'title'">Enter title</b-alert>
 			<b-alert variant="danger" :show="error === 'noCollection'">Select a collection for your category</b-alert>
