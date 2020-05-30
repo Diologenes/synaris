@@ -1,13 +1,13 @@
 const Sequelize = require('sequelize')
 
-class Folder extends Sequelize.Model {
+class Collection extends Sequelize.Model {
 	static init(sequelize, DataTypes) {
 		return super.init(
 			{
 				title: DataTypes.STRING,
 				sorting: DataTypes.INTEGER
 			},
-			{ sequelize, tableName: 'Folders', modelName: 'folder' }
+			{ sequelize, tableName: 'Collections', modelName: 'collection' }
 		)
 	}
 	static associate(models) {
@@ -15,4 +15,4 @@ class Folder extends Sequelize.Model {
 	}
 }
 
-module.exports = Folder
+module.exports = Collection

@@ -15,7 +15,7 @@ export default {
 		handleOk(evt) {
 			let vm = this
 			vm.item.destroy().then(() => {
-				vm.$store.dispatch('folder/getAll').then(() => {
+				vm.$store.dispatch('collection/getAll').then(() => {
 					vm.handleClose()
 				})
 			})

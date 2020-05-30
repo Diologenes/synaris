@@ -3,7 +3,7 @@ const db = require('@/database/models')
 // default state
 const getDefaultState = () => {
 	return {
-		folders: null,
+		collections: null,
 	}
 }
 
@@ -12,8 +12,8 @@ const state = getDefaultState()
 
 // getters
 const getters = {
-	folders(state) {
-		return state.folders
+	collections(state) {
+		return state.collections
 	},
 }
 
@@ -23,8 +23,8 @@ const mutations = {
 		Object.assign(state, getDefaultState())
 	},
 
-	folders(state, value) {
-		state.folders = value
+	collections(state, value) {
+		state.collections = value
 	},
 }
 
@@ -35,13 +35,13 @@ const actions = {
 	},
 
 	update(context, value) {
-		context.commit('folders', value)
+		context.commit('collections', value)
 	},
 
 	getAll(context) {
 		let vm = this
 		return new Promise((resolve) => {
-			db.Folder.findAll({
+			db.Collection.findAll({
 				order: [
 					['sorting', 'ASC'],
 					[db.Category, 'sorting', 'ASC']
@@ -49,7 +49,7 @@ const actions = {
 				include: [{ model: db.Category }]
 			})
 				.then((response) => {
-					context.commit('folders', response)
+					context.commit('collections', response)
 					resolve(response)
 				})
 				.catch((e) => console.error(e))

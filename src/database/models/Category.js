@@ -5,14 +5,14 @@ class Category extends Sequelize.Model {
 		return super.init(
 			{
 				title: DataTypes.STRING,
-				folderId: DataTypes.INTEGER,
+				collectionId: DataTypes.INTEGER,
 				sorting: DataTypes.INTEGER
 			},
 			{ sequelize, tableName: 'Categories', modelName: 'category' }
 		)
 	}
 	static associate(models) {
-		this.myAssociation = this.belongsTo(models.Folder, { onDelete: 'cascade' })
+		this.myAssociation = this.belongsTo(models.Collection, { onDelete: 'cascade' })
 	}
 }
 

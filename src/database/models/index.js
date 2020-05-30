@@ -8,11 +8,11 @@ const sequelize = new Sequelize({
 	storage: dbPath
 })
 
-const Folder = require('./Folder')
+const Collection = require('./Collection')
 const Category = require('./Category')
 
 const models = {
-	Folder: Folder.init(sequelize, Sequelize),
+	Collection: Collection.init(sequelize, Sequelize),
 	Category: Category.init(sequelize, Sequelize)
 }
 

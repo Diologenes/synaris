@@ -18,7 +18,7 @@ module.exports = {
       sorting: {
         type: Sequelize.INTEGER
       },
-      folderId: {
+      collectionId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

@@ -2,7 +2,7 @@
 	<b-modal id="modal-create-new-category" ref="modalCreateNewCategory" centered title="Create new category or group" :ok-disabled="isPending" @shown="resetModal" @ok="handleOk">
 		<div v-for="error in errors" :key="error">
 			<b-alert variant="danger" :show="error === 'title'">Enter title</b-alert>
-			<b-alert variant="danger" :show="error === 'noFolder'">Select a folder for your category</b-alert>
+			<b-alert variant="danger" :show="error === 'noFolder'">Select a collection for your category</b-alert>
 		</div>
 
 		<b-form-group label="Type">
@@ -12,9 +12,9 @@
 			<b-form-input v-model="title" placeholder="New title ..."></b-form-input>
 		</b-form-group>
 
-		<b-form-group v-if="selectedType == 'category'" label="Select a folder">
-			<b-dropdown id="dropdown-dropup" :text="valFolder" variant="primary">
-				<b-dropdown-item @click="changeFolder(folder)" v-for="folder in folders" :key="folder.id">{{ folder.text }}</b-dropdown-item>
+		<b-form-group v-if="selectedType == 'category'" label="Select a collection">
+			<b-dropdown id="dropdown-dropup" :text="valCollection" variant="primary">
+				<b-dropdown-item @click="changeFolder(collection)" v-for="collection in collections" :key="collection.id">{{ collection.text }}</b-dropdown-item>
 			</b-dropdown>
 		</b-form-group>
 	</b-modal>
@@ -26,12 +26,12 @@ export default {
 		return {
 			title: '',
 			selectedType: 'category',
-			folders: [],
-			selectedFolder: '',
-			valFolder: 'Select a folder ...',
+			collections: [],
+			selectedCollection: '',
+			valCollection: 'Select a collection ...',
 			options: [
 				{ text: 'Category', value: 'category' },
-				{ text: 'Folder', value: 'folder' }
+				{ text: 'Collection', value: 'collection' }
 			],
 			isPending: false,
 			errors: []
@@ -42,25 +42,25 @@ export default {
 		resetModal() {
 			this.title = ''
 			this.selectedType = 'category'
-			this.valFolder = 'Select a folder ...'
+			this.valCollection = 'Select a collection ...'
 			this.removeErrors()
-			this.folders = this.getFolders()
+			this.collections = this.getFolders()
 		},
 
-		changeFolder(folder) {
-			this.valFolder = folder.text
-			this.selectedFolder = folder.id
+		changeFolder(collection) {
+			this.valCollection = collection.text
+			this.selectedCollection = collection.id
 		},
 
 		// get groups
 		getFolders() {
 			let vm = this
 			let tmpVal = []
-			vm.$db.Folder.findAll({}).then((response) => {
+			vm.$db.Collection.findAll({}).then((response) => {
 				response.forEach((element) => {
 					tmpVal.push({ id: element.dataValues.id, text: element.dataValues.title })
 				})
-				vm.folders = tmpVal
+				vm.collections = tmpVal
 			})
 		},
 
@@ -72,7 +72,7 @@ export default {
 			if (vm.title === '') {
 				vm.errors.push('title')
 			}
-			if (vm.selectedType === 'category' && vm.selectedFolder === '') {
+			if (vm.selectedType === 'category' && vm.selectedCollection === '') {
 				vm.errors.push('noFolder')
 			}
 
@@ -80,15 +80,15 @@ export default {
 				if (vm.errors.length === 0) {
 					vm.isPending = true
 					if (vm.selectedType === 'category') {
-						vm.$db.Category.create({ title: vm.title, folderId: vm.selectedFolder, sorting: 999 }).then((response) => {
+						vm.$db.Category.create({ title: vm.title, collectionId: vm.selectedCollection, sorting: 999 }).then((response) => {
 							vm.isPending = false
-							vm.$store.dispatch('folder/getAll')
+							vm.$store.dispatch('collection/getAll')
 							vm.handleClose()
 						})
-					} else if (vm.selectedType === 'folder') {
-						vm.$db.Folder.create({ title: vm.title, sorting: 999 }).then((response) => {
+					} else if (vm.selectedType === 'collection') {
+						vm.$db.Collection.create({ title: vm.title, sorting: 999 }).then((response) => {
 							vm.isPending = false
-							vm.$store.dispatch('folder/getAll')
+							vm.$store.dispatch('collection/getAll')
 							vm.handleClose()
 						})
 					}
