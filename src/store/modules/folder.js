@@ -3,7 +3,7 @@ const db = require('@/database/models')
 // default state
 const getDefaultState = () => {
 	return {
-		categories: null,
+		folders: null,
 	}
 }
 
@@ -12,8 +12,8 @@ const state = getDefaultState()
 
 // getters
 const getters = {
-	categories(state) {
-		return state.categories
+	folders(state) {
+		return state.folders
 	},
 }
 
@@ -23,8 +23,8 @@ const mutations = {
 		Object.assign(state, getDefaultState())
 	},
 
-	categories(state, value) {
-		state.categories = value
+	folders(state, value) {
+		state.folders = value
 	},
 }
 
@@ -35,7 +35,7 @@ const actions = {
 	},
 
 	update(context, value) {
-		context.commit('categories', value)
+		context.commit('folders', value)
 	},
 
 	getAll(context) {
@@ -49,7 +49,7 @@ const actions = {
 				include: [{ model: db.Category }]
 			})
 				.then((response) => {
-					context.commit('categories', response)
+					context.commit('folders', response)
 					resolve(response)
 				})
 				.catch((e) => console.error(e))

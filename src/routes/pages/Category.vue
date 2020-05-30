@@ -11,33 +11,33 @@
 				<!-- scrollbar -->
 				<perfect-scrollbar class="c-category__content">
 					<!-- group item -->
-					<div v-for="(category, categoryIndex) in categories" :key="category.id" class="c-category__group">
+					<div v-for="(folder, folderIndex) in folders" :key="folder.id" class="c-category__group">
 						<!-- group title -->
-						<div class="c-category__group-title" @contextmenu.prevent="$refs.layermenuCategory.open($event, category)" @dragover.prevent @dragstart="dragStart('folder', null, categoryIndex)" @drop="dragFinish(null, categoryIndex)" @dragend="dragEnd()" draggable="true">
-							{{ category.title }}
+						<div class="c-category__group-title" @contextmenu.prevent="$refs.layermenuCategory.open($event, folder)" @dragover.prevent @dragstart="dragStart('folder', null, folderIndex)" @drop="dragFinish(null, folderIndex)" @dragend="dragEnd()" draggable="true">
+							{{ folder.title }}
 						</div>
 
-						<div v-if="category.categories.length === 0">
-							<div class="c-category__dropzone" @dragover.prevent @drop="dragFinish(0, categoryIndex)"></div>
+						<div v-if="folder.categories.length === 0">
+							<div class="c-category__dropzone" @dragover.prevent @drop="dragFinish(0, folderIndex)"></div>
 						</div>
 						<!-- group title -->
 
 						<!-- group content -->
 						<div class="c-category__group-content">
-							<div class="c-category__item c-category__dropzone" v-for="(element, elementIndex) in category.categories" :key="element.id">
+							<div class="c-category__item c-category__dropzone" v-for="(category, categoryIndex) in folder.categories" :key="category.id">
 								<b-link
-									@contextmenu.prevent="$refs.layermenuCategory.open($event, element)"
+									@contextmenu.prevent="$refs.layermenuCategory.open($event, category)"
 									@dragover.prevent
-									@dragstart="dragStart('category', elementIndex, categoryIndex)"
-									@drop="dragFinish(elementIndex, categoryIndex)"
+									@dragstart="dragStart('category', categoryIndex, folderIndex)"
+									@drop="dragFinish(categoryIndex, folderIndex)"
 									@dragend="dragEnd()"
 									draggable="true"
 									router-tag="a"
-									:to="{ name: 'category', params: { categoryId: element.id } }"
+									:to="{ name: 'category', params: { categoryId: category.id } }"
 									class="c-category__link"
 									active-class="active"
 								>
-									<div class="c-category__link-title" :title="element.title">{{ element.title }}</div>
+									<div class="c-category__link-title" :title="category.title">{{ category.title }}</div>
 									<div class="c-category__link-indicator">
 										<div class="c-panelbox">
 											<div class="c-panelbox__item">0</div>
@@ -95,14 +95,14 @@ export default {
 		}
 	},
 	computed: {
-		categories: {
+		folders: {
 			get() {
-				return this.$store.getters['category/categories']
+				return this.$store.getters['folder/folders']
 			}
 		}
 	},
 	mounted() {
-		this.$store.dispatch('category/getAll')
+		this.$store.dispatch('folder/getAll')
 	},
 	methods: {
 		showCategoryDropzones: _.debounce(() => {
@@ -150,28 +150,28 @@ export default {
 			let writeData = false
 			switch (vm.drag.type) {
 				case 'category':
-					let elementToMove = vm.categories[vm.drag.folderDragIndex].categories[vm.drag.categoryDragIndex]
+					let elementToMove = vm.folders[vm.drag.folderDragIndex].categories[vm.drag.categoryDragIndex]
 					// move element in same folder
 					if (vm.drag.folderDragIndex === folderDropIndex) {
 						// continue if drag and drop is not the same
 						if (vm.drag.categoryDragIndex !== categoryDropIndex) {
-							vm.categories[vm.drag.folderDragIndex].categories.splice(vm.drag.categoryDragIndex, 1)
-							vm.categories[vm.drag.folderDragIndex].categories.splice(categoryDropIndex, 0, elementToMove)
+							vm.folders[vm.drag.folderDragIndex].categories.splice(vm.drag.categoryDragIndex, 1)
+							vm.folders[vm.drag.folderDragIndex].categories.splice(categoryDropIndex, 0, elementToMove)
 							writeData = true
 						}
 					}
 					// move element in another folder
 					if (vm.drag.folderDragIndex !== folderDropIndex) {
-						vm.categories[vm.drag.folderDragIndex].categories.splice(vm.drag.categoryDragIndex, 1)
-						vm.categories[folderDropIndex].categories.splice(categoryDropIndex, 0, elementToMove)
+						vm.folders[vm.drag.folderDragIndex].categories.splice(vm.drag.categoryDragIndex, 1)
+						vm.folders[folderDropIndex].categories.splice(categoryDropIndex, 0, elementToMove)
 						writeData = true
 					}
 					break
 				case 'folder':
 					if (vm.drag.folderDragIndex !== folderDropIndex) {
-						let folderToMove = vm.categories[vm.drag.folderDragIndex]
-						vm.categories.splice(vm.drag.folderDragIndex, 1)
-						vm.categories.splice(folderDropIndex, 0, folderToMove)
+						let folderToMove = vm.folders[vm.drag.folderDragIndex]
+						vm.folders.splice(vm.drag.folderDragIndex, 1)
+						vm.folders.splice(folderDropIndex, 0, folderToMove)
 						writeData = true
 					}
 					break
@@ -185,7 +185,7 @@ export default {
 		persistSorting() {
 			let vm = this
 			let promises = []
-			vm.categories.forEach((folder, folderIndex) => {
+			vm.folders.forEach((folder, folderIndex) => {
 				folder.sorting = folderIndex
 				promises.push(folder.save({ fields: ['sorting'] }))
 				folder.categories.forEach((category, categoryIndex) => {
@@ -195,7 +195,7 @@ export default {
 				})
 			})
 			Promise.all(promises).then(() => {
-				vm.$store.dispatch('category/update', this.categories)
+				vm.$store.dispatch('folder/update', this.folders)
 			})
 		},
 

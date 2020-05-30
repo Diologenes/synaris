@@ -82,13 +82,13 @@ export default {
 					if (vm.selectedType === 'category') {
 						vm.$db.Category.create({ title: vm.title, folderId: vm.selectedFolder, sorting: 999 }).then((response) => {
 							vm.isPending = false
-							vm.$store.dispatch('category/getAll')
+							vm.$store.dispatch('folder/getAll')
 							vm.handleClose()
 						})
 					} else if (vm.selectedType === 'folder') {
 						vm.$db.Folder.create({ title: vm.title, sorting: 999 }).then((response) => {
 							vm.isPending = false
-							vm.$store.dispatch('category/getAll')
+							vm.$store.dispatch('folder/getAll')
 							vm.handleClose()
 						})
 					}
