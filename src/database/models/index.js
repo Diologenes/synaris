@@ -10,10 +10,12 @@ const sequelize = new Sequelize({
 
 const Collection = require('./Collection')
 const Category = require('./Category')
+const Article = require('./Article')
 
 const models = {
 	Collection: Collection.init(sequelize, Sequelize),
-	Category: Category.init(sequelize, Sequelize)
+	Category: Category.init(sequelize, Sequelize),
+	Article: Article.init(sequelize, Sequelize)
 }
 
 Object.values(models)

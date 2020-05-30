@@ -1,37 +1,59 @@
 <template>
-	<div>Article</div>
+	<div class="c-page c-page__default">
+		<div class="c-article-list">
+			<div class="c-article-list__wrap">
+				<!-- panel section -->
+				<div class="c-panel-section">
+					<div class="c-panel-section__title">asd</div>
+				</div>
+				<!-- panel section -->
+			</div>
+		</div>
+
+		<router-view />
+	</div>
 </template>
 
 <script>
 export default {
 	components: {},
-
 	beforeRouteEnter(to, from, next) {
 		next((vm) => {
 			next()
-			console.log('enter', to.params.category)
-
-			// vm.$db.Collection.findAll({
-			// 	order: [
-			// 		['title', 'ASC'],
-			// 		[db.Category, 'sorting', 'ASC']
-			// 	],
-			// 	include: [{ model: db.Category }]
-			// })
-
-			// vm.getCollection(to.params.category).then(() => {
-			// })
+			vm.$db.Article.findAll({
+				where: {
+					categoryId: to.params.category
+				},
+				order: [['title', 'ASC']]
+			}).then((response) => {
+				vm.articles = response
+			})
 		})
 	},
 	beforeRouteUpdate(to, from, next) {
 		let vm = this
-		console.log(to.params.category)
-		// this.getCollection(to.params.collectionId).then(() => {
-		// 	vm.scrollTop()
-		// })
+		vm.$db.Article.findAll({
+			where: {
+				categoryId: to.params.category
+			},
+			order: [['title', 'ASC']]
+		}).then((response) => {
+			vm.articles = response
+		})
 		next()
 	},
-	mounted() {},
-	methods: {}
+	mounted() {
+		this.init()
+	},
+	data() {
+		return {
+			articles: null
+		}
+	},
+	methods: {
+		init() {
+			console.log(this.articles)
+		}
+	}
 }
 </script>

@@ -21,9 +21,6 @@ class Article extends Sequelize.Model {
 				},
 				categoryId: {
 					type: DataTypes.INTEGER
-				},
-				sorting: {
-					type: DataTypes.INTEGER
 				}
 			},
 			{ sequelize, tableName: 'Articles', modelName: 'article' }
