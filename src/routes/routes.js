@@ -5,8 +5,8 @@ Vue.use(VueRouter)
 
 // import routes
 import index from '@/routes/pages/Index'
+import collection from '@/routes/pages/Collection'
 import category from '@/routes/pages/Category'
-import article from '@/routes/pages/Article'
 import search from '@/routes/pages/Search'
 import settings from '@/routes/pages/Settings'
 
@@ -19,14 +19,14 @@ export const router = new VueRouter({
 			component: index,
 			children: [
 				{
-					path: '/category',
-					name: 'category',
-					component: category,
+					path: '/collection',
+					name: 'collection',
+					component: collection,
 					children: [
 						{
-							path: '/:article',
-							name: 'article',
-							component: article
+							path: '/:category',
+							name: 'category',
+							component: category
 						}
 					]
 				},
