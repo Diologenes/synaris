@@ -46,9 +46,9 @@ export const router = new VueRouter({
 	]
 })
 
-
 // before each router entry is resolved
 router.beforeEach((to, from, next) => {
+	console.log('Route from', from, 'Route to', to)
 
 	if (from.name === null) {
 		next()

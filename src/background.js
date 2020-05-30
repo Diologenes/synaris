@@ -23,6 +23,11 @@ function createWindow() {
 			nodeIntegration: true
 		}
 	})
+
+	// prevent new electron window by using middle mouse button
+	win.webContents.on('new-window', function (event, url) {
+		event.preventDefault()
+	})
   
 	if (process.env.WEBPACK_DEV_SERVER_URL) {
 		// Load the url of the dev server if in development mode

@@ -16,6 +16,17 @@
 					</div>
 				</div>
 				<!-- filter section -->
+
+				<!-- scrollbar -->
+				<perfect-scrollbar class="c-article-list__content">
+					<div v-for="(article, articleIndex) in articles" :key="article.id" class="c-article-list__item">
+						<a href="#" class="c-article-list__link">
+							<div class="c-article-list__title">{{ article.title }}</div>
+							<div class="c-article-list__description">{{ article.description }}</div>
+						</a>
+					</div>
+				</perfect-scrollbar>
+				<!-- scrollbar -->
 			</div>
 		</div>
 
@@ -24,37 +35,31 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
 	components: {},
 	beforeRouteEnter(to, from, next) {
 		next((vm) => {
+			vm.$store.dispatch('article/getByCategory', { category: to.params.category })
 			next()
-			vm.$db.Article.findAll({
-				where: {
-					categoryId: to.params.category
-				},
-				order: [['title', 'ASC']]
-			}).then((response) => {
-				vm.articles = response
-			})
 		})
 	},
 	beforeRouteUpdate(to, from, next) {
 		let vm = this
-		vm.$db.Article.findAll({
-			where: {
-				categoryId: to.params.category
-			},
-			order: [['title', 'ASC']]
-		}).then((response) => {
-			vm.articles = response
+		vm.$store.dispatch('article/getByCategory', { category: to.params.category }).then(() => {
+			next()
 		})
-		next()
 	},
 	mounted() {
 		this.init()
 	},
 	computed: {
+		articles: {
+			get() {
+				return this.$store.getters['article/articles']
+			}
+		},
 		isFilter() {
 			if (this.filter.length > 0) {
 				return true
@@ -65,7 +70,6 @@ export default {
 	},
 	data() {
 		return {
-			articles: null,
 			filter: ''
 		}
 	},

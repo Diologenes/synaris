@@ -12,3 +12,9 @@ body,
 	outline: none;
 }
 
+a {
+	text-decoration: none;
+	&:hover {
+		text-decoration: none;
+	}
+}
