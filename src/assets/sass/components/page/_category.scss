@@ -71,7 +71,6 @@
 			@include textStyle(tiny);
 			@include textStyle(uppercase);
 			font-weight: 600;
-
 		}
 
 		&-content {
@@ -80,7 +79,6 @@
 	}
 
 	&__item {
-
 	}
 
 	&__dropzone {
@@ -133,7 +131,5 @@
 		&-indicator {
 			flex: 0 1 auto;
 		}
-
-
 	}
 }
