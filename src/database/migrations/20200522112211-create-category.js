@@ -10,7 +10,7 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       parent: {
         type: Sequelize.INTEGER

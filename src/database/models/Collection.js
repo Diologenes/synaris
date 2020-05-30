@@ -4,8 +4,15 @@ class Collection extends Sequelize.Model {
 	static init(sequelize, DataTypes) {
 		return super.init(
 			{
-				title: DataTypes.STRING,
-				sorting: DataTypes.INTEGER
+				title: {
+					type: DataTypes.STRING,
+					validate: {
+						notEmpty: true
+					}
+				},
+				sorting: {
+					type: DataTypes.INTEGER
+				}
 			},
 			{ sequelize, tableName: 'Collections', modelName: 'collection' }
 		)

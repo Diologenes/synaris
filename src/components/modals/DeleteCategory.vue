@@ -23,7 +23,9 @@ export default {
 		},
 
 		handleClose() {
-			this.$root.$emit('bv::hide::modal', 'modal-delete-category')
+			this.$nextTick(() => {
+				this.$bvModal.hide('modal-delete-category')
+			})
 		}
 	}
 }

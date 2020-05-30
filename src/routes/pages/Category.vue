@@ -69,6 +69,7 @@
 		<router-view />
 		<modal-add-category />
 		<modal-delete-category :item="contextObject" />
+		<modal-rename-category :item="contextObject" />
 	</div>
 </template>
 
@@ -77,11 +78,13 @@ import _ from 'lodash'
 import { mapGetters } from 'vuex'
 import modalAddCategory from '@/components/modals/AddCategory'
 import modalDeleteCategory from '@/components/modals/DeleteCategory'
+import modalRenameCategory from '@/components/modals/RenameCategory'
 
 export default {
 	components: {
 		modalAddCategory,
-		modalDeleteCategory
+		modalDeleteCategory,
+		modalRenameCategory
 	},
 	data() {
 		return {
@@ -202,10 +205,12 @@ export default {
 		contextCategorySelect(option) {
 			let vm = this
 			vm.contextObject = option.payload
-			console.log(vm.contextObject)
 			switch (option.method) {
 				case 'delete':
 					vm.$root.$emit('bv::show::modal', 'modal-delete-category')
+					break
+				case 'rename':
+					vm.$root.$emit('bv::show::modal', 'modal-rename-category')
 					break
 			}
 		}

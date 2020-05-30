@@ -9,7 +9,7 @@
 			<b-form-radio-group id="btn-radios-1" v-model="selectedType" :options="options" buttons name="radios-btn-default" button-variant="outline-primary"></b-form-radio-group>
 		</b-form-group>
 		<b-form-group label="Enter title">
-			<b-form-input v-model="title" placeholder="New title ..."></b-form-input>
+			<b-form-input v-model="title" placeholder="New title ..." autofocus></b-form-input>
 		</b-form-group>
 
 		<b-form-group v-if="selectedType == 'category'" label="Select a collection">
@@ -80,17 +80,21 @@ export default {
 				if (vm.errors.length === 0) {
 					vm.isPending = true
 					if (vm.selectedType === 'category') {
-						vm.$db.Category.create({ title: vm.title, collectionId: vm.selectedCollection, sorting: 999 }).then((response) => {
-							vm.isPending = false
-							vm.$store.dispatch('collection/getAll')
-							vm.handleClose()
-						})
+						vm.$db.Category.create({ title: vm.title, collectionId: vm.selectedCollection, sorting: 999 })
+							.then((response) => {
+								vm.isPending = false
+								vm.$store.dispatch('collection/getAll')
+								vm.handleClose()
+							})
+							.catch((e) => console.log(e))
 					} else if (vm.selectedType === 'collection') {
-						vm.$db.Collection.create({ title: vm.title, sorting: 999 }).then((response) => {
-							vm.isPending = false
-							vm.$store.dispatch('collection/getAll')
-							vm.handleClose()
-						})
+						vm.$db.Collection.create({ title: vm.title, sorting: 999 })
+							.then((response) => {
+								vm.isPending = false
+								vm.$store.dispatch('collection/getAll')
+								vm.handleClose()
+							})
+							.catch((e) => console.log(e))
 					}
 				}
 			}
@@ -99,7 +103,9 @@ export default {
 
 		// handle close
 		handleClose() {
-			this.$root.$emit('bv::hide::modal', 'modal-create-new-category')
+			this.$nextTick(() => {
+				this.$bvModal.hide('modal-create-new-category')
+			})
 		},
 
 		// remove errors

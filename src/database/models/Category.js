@@ -4,9 +4,18 @@ class Category extends Sequelize.Model {
 	static init(sequelize, DataTypes) {
 		return super.init(
 			{
-				title: DataTypes.STRING,
-				collectionId: DataTypes.INTEGER,
-				sorting: DataTypes.INTEGER
+				title: {
+					type: DataTypes.STRING,
+					validate: {
+						notEmpty: true
+					}
+				},
+				collectionId: {
+					type: DataTypes.INTEGER
+				},
+				sorting: {
+					type: DataTypes.INTEGER
+				}
 			},
 			{ sequelize, tableName: 'Categories', modelName: 'category' }
 		)
