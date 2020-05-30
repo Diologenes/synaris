@@ -53,8 +53,6 @@
 
 				<!-- scrollbar -->
 
-				<LayerMenu @select="contextCategorySelect" ref="layermenuCategory" :options="[{ method: 'rename', title: 'Rename ...', icon: 'edit' }, { method: 'delete', title: 'Delete ...', icon: 'delete' }]" />
-
 				<div v-b-modal.modal-create-new-category class="c-create-button c-button c-button--primary c-button--bullseye u-icon--more"></div>
 			</div>
 		</div>
@@ -63,6 +61,14 @@
 		<modal-add-category />
 		<modal-delete-category :item="contextObject" />
 		<modal-rename-category :item="contextObject" />
+		<LayerMenu
+			@select="contextCategorySelect"
+			ref="layermenuCategory"
+			:options="[
+				{ method: 'rename', title: 'Rename ...', icon: 'edit' },
+				{ method: 'delete', title: 'Delete ...', icon: 'delete' }
+			]"
+		/>
 	</div>
 </template>
 

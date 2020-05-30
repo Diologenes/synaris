@@ -4,7 +4,7 @@
 			<div class="c-article-list__wrap">
 				<!-- panel section -->
 				<div class="c-panel-section">
-					<div class="c-panel-section__title">asd</div>
+					<div class="c-panel-section__title">TYPO3</div>
 				</div>
 				<!-- panel section -->
 			</div>

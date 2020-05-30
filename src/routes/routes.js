@@ -12,6 +12,7 @@ import settings from '@/routes/pages/Settings'
 
 // route definitions
 export const router = new VueRouter({
+	mode: 'history',
 	routes: [
 		{
 			path: '/',
@@ -24,7 +25,7 @@ export const router = new VueRouter({
 					component: collection,
 					children: [
 						{
-							path: '/:category',
+							path: ':category',
 							name: 'category',
 							component: category
 						}

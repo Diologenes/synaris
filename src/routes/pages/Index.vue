@@ -3,13 +3,13 @@
 		<div class="c-panel">
 			<div class="c-panel__list">
 				<div class="c-panel__gradient"></div>
-				<b-link class="c-panel__item" active-class="active" router-tag="a" :to="{ name: 'collection' }">
+				<b-link class="c-panel__item" active-class="c-panel__item--is-active" :exact="false" router-tag="a" :to="{ name: 'collection' }">
 					<div class="c-panel__box u-icon--bookmark"></div>
 				</b-link>
-				<b-link class="c-panel__item" active-class="active" router-tag="a" :to="{ name: 'search' }">
+				<b-link class="c-panel__item" active-class="c-panel__item--is-active" :exact="false" router-tag="a" :to="{ name: 'search' }">
 					<div class="c-panel__box u-icon--search"></div>
 				</b-link>
-				<b-link class="c-panel__item" active-class="active" router-tag="a" :to="{ name: 'settings' }">
+				<b-link class="c-panel__item" active-class="c-panel__item--is-active" :exact="false" router-tag="a" :to="{ name: 'settings' }">
 					<div class="c-panel__box u-icon--settings"></div>
 				</b-link>
 			</div>
