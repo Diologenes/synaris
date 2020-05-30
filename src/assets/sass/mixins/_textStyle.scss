@@ -1,6 +1,6 @@
 @mixin textStyle($style) {
-	text-shadow: 1px 1px 0px rgba(0,0,0, .3);
-	
+	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+
 	@if $style == 'nl2br' {
 		white-space: pre-line;
 	}
@@ -15,6 +15,10 @@
 		-ms-user-select: text;
 		-moz-user-select: text;
 		-webkit-user-select: text;
+	}
+
+	@if $style == 'nonBreak' {
+		white-space: nowrap;
 	}
 
 	@if $style == 'headline' {

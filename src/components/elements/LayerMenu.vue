@@ -3,7 +3,7 @@
 		<ul class="c-layermenu__wrap">
 			<transition v-for="(option, key) in options" :key="key">
 				<li v-if="typeof option.method !== 'undefined'" class="c-layermenu__item" @click="select(option)">
-					<span class="c-layermenu__link">{{ option.title }}</span>
+					<span class="c-layermenu__link"><span v-if="option.icon" :class="itemIcon(option)"></span>{{ option.title }}</span>
 				</li>
 				<li v-if="option.special === 'divider'" class="c-layermenu__divider"></li>
 			</transition>
@@ -36,6 +36,7 @@ export default {
 		isVisible() {
 			return this.opened
 		}
+		
 	},
 	methods: {
 		open($event, payload = null) {
@@ -64,6 +65,12 @@ export default {
 		close() {
 			this.opened = false
 			this.payload = null
+		},
+
+		itemIcon(option) {
+			if (typeof option.icon !== 'undefined') {
+				return 'c-layermenu__icon u-icon--' + option.icon
+			}
 		},
 
 		select(option) {
