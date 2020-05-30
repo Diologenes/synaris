@@ -11,7 +11,7 @@ class Folder extends Sequelize.Model {
 		)
 	}
 	static associate(models) {
-		this.myAssociation = this.hasMany(models.Library, { onDelete: 'cascade', hooks: true })
+		this.myAssociation = this.hasMany(models.Category, { onDelete: 'cascade', hooks: true })
 	}
 }
 

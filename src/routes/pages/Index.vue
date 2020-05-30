@@ -3,7 +3,7 @@
 		<div class="c-panel">
 			<div class="c-panel__list">
 				<div class="c-panel__gradient"></div>
-				<b-link class="c-panel__item" active-class="active" router-tag="a" :to="{ name: 'library' }">
+				<b-link class="c-panel__item" active-class="active" router-tag="a" :to="{ name: 'category' }">
 					<div class="c-panel__box u-icon--bookmark"></div>
 				</b-link>
 				<b-link class="c-panel__item" active-class="active" router-tag="a" :to="{ name: 'search' }">

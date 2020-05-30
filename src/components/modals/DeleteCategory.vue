@@ -1,5 +1,5 @@
 <template>
-	<b-modal id="modal-delete-library" ref="modalDeleteLibrary" centered title="Delete library" @ok="handleOk" ok-title="Delete library">
+	<b-modal id="modal-delete-category" ref="modalDeleteCategory" centered title="Delete category" @ok="handleOk" ok-title="Delete category">
 		<span v-if="item"
 			>Are you sure you want to delete <b>{{ item.title }}</b> and all its content?</span
 		>
@@ -15,7 +15,7 @@ export default {
 		handleOk(evt) {
 			let vm = this
 			vm.item.destroy().then(() => {
-				vm.$store.dispatch('library/getAll').then(() => {
+				vm.$store.dispatch('category/getAll').then(() => {
 					vm.handleClose()
 				})
 			})
@@ -23,7 +23,7 @@ export default {
 		},
 
 		handleClose() {
-			this.$root.$emit('bv::hide::modal', 'modal-delete-library')
+			this.$root.$emit('bv::hide::modal', 'modal-delete-category')
 		}
 	}
 }

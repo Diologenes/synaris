@@ -9,11 +9,11 @@ const sequelize = new Sequelize({
 })
 
 const Folder = require('./Folder')
-const Library = require('./Library')
+const Category = require('./Category')
 
 const models = {
 	Folder: Folder.init(sequelize, Sequelize),
-	Library: Library.init(sequelize, Sequelize)
+	Category: Category.init(sequelize, Sequelize)
 }
 
 Object.values(models)

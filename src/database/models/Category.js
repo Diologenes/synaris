@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-class Library extends Sequelize.Model {
+class Category extends Sequelize.Model {
 	static init(sequelize, DataTypes) {
 		return super.init(
 			{
@@ -8,7 +8,7 @@ class Library extends Sequelize.Model {
 				folderId: DataTypes.INTEGER,
 				sorting: DataTypes.INTEGER
 			},
-			{ sequelize, tableName: 'Libraries', modelName: 'library' }
+			{ sequelize, tableName: 'Categories', modelName: 'category' }
 		)
 	}
 	static associate(models) {
@@ -16,4 +16,4 @@ class Library extends Sequelize.Model {
 	}
 }
 
-module.exports = Library
+module.exports = Category

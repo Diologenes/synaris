@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import library from './modules/library'
+import category from './modules/category'
 
 // store
 Vue.use(Vuex)
 export const store = new Vuex.Store({
 	modules: {
-		library
+		category
 	}
 })
