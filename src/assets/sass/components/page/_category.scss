@@ -80,8 +80,7 @@
 	}
 
 	&__item {
-		margin: 3px 0;
-		border: 1px transparent;
+
 	}
 
 	&__dropzone {
@@ -94,7 +93,7 @@
 		&--is-active {
 			border: 1px dashed rgba(clr(clr, base), 0.5) !important;
 			margin: 3px 1rem;
-			min-height: 3rem;
+			min-height: 2.5rem;
 			background: transparent !important;
 			&:before {
 				width: 0 !important;
@@ -107,13 +106,23 @@
 	}
 
 	&__link {
+		@include transitionAll();
+		@include activeNavigator();
+
 		flex: 1;
 		display: flex;
 		padding: 0.5rem 1.5rem;
 		align-items: center;
-		@include transitionAll();
 		color: clr(txt, alt);
-		margin: 2px 0;
+		margin: 0 0;
+		position: relative;
+
+		&:hover,
+		&--is-active {
+			color: clr(txt, alt);
+			background: clr(bg, d-1, 7);
+			text-decoration: none;
+		}
 
 		&-title {
 			flex: 1 1 auto;
@@ -125,10 +134,6 @@
 			flex: 0 1 auto;
 		}
 
-		&:hover {
-			color: clr(txt, alt);
-			background: clr(bg, d-1, 7);
-			text-decoration: none;
-		}
+
 	}
 }

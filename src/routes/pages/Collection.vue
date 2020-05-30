@@ -35,7 +35,7 @@
 									router-tag="a"
 									:to="{ name: 'category', params: { category: category.id } }"
 									class="c-category__link"
-									active-class="active"
+									active-class="c-category__link--is-active"
 								>
 									<div class="c-category__link-title" :title="category.title">{{ category.title }}</div>
 									<div class="c-category__link-indicator">

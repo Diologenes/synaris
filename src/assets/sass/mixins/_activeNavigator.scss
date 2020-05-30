@@ -11,7 +11,7 @@
 	width: 0;
   }
 
-  &.active {
+  &--is-active {
 	&:before {
 	  transform: scale(1);
 	  width: .25rem;
