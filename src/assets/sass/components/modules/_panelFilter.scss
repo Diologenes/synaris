@@ -1,0 +1,75 @@
+.c-panel-filter {
+	position: relative;
+
+	&:after {
+		content: '';
+		position: absolute;
+		right: 0;
+		top: 100%;
+		bottom: 0;
+		height: 1rem;
+		width: 100%;
+		@include gradientVertical(0.1);
+	}
+
+	&__wrap {
+		height: 4rem;
+		align-items: center;
+		display: flex;
+		border-bottom: 1px solid clr(bg, d-2);
+		flex: 0 0 auto;
+		overflow: hidden;
+	}
+
+	&__input {
+		@include placeholder(clr(txt, base));
+		@include transitionAll();
+		height: inherit;
+		padding: 0.5rem 1.5rem;
+		background: transparent;
+		flex: 1 1 auto;
+		border: 0;
+		color: clr(txt, alt);
+
+		&:focus {
+			background: clr(bg, d-2);
+		}
+
+		&--is-active {
+			background: clr(bg, d-2);
+		}
+	}
+
+	&__close {
+		@include transitionAll();
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: inherit;
+		width: inherit;
+		overflow: hidden;
+		flex: 0;
+		transform: translateX(-2rem);
+		opacity: 0;
+		flex: 0 0 4rem;
+		width: 4rem;
+		z-index: -1;
+
+		button {
+			border: 0;
+			outline: 0;
+			background: transparent;
+			width: inherit;
+			height: inherit;
+			justify-content: center;
+			display: flex;
+			color: clr(txt, base);
+		}
+
+		&--is-active {
+			transform: translateX(0);
+			opacity: 1;
+			z-index: 1;
+		}
+	}
+}

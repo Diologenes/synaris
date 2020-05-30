@@ -7,6 +7,15 @@
 					<div class="c-panel-section__title">TYPO3</div>
 				</div>
 				<!-- panel section -->
+
+				<!-- filter section -->
+				<div class="c-panel-filter">
+					<div class="c-panel-filter__wrap">
+						<input v-model="filter" :class="{ 'c-panel-filter__input--is-active': isFilter }" class="c-panel-filter__input" type="text" placeholder="Filter articles ..." />
+						<div :class="{ 'c-panel-filter__close--is-active': isFilter }" class="c-panel-filter__close"><button @click="deleteFilter" class="u-icon--close"></button></div>
+					</div>
+				</div>
+				<!-- filter section -->
 			</div>
 		</div>
 
@@ -45,14 +54,28 @@ export default {
 	mounted() {
 		this.init()
 	},
+	computed: {
+		isFilter() {
+			if (this.filter.length > 0) {
+				return true
+			} else {
+				return false
+			}
+		}
+	},
 	data() {
 		return {
-			articles: null
+			articles: null,
+			filter: ''
 		}
 	},
 	methods: {
 		init() {
 			console.log(this.articles)
+		},
+
+		deleteFilter() {
+			this.filter = ''
 		}
 	}
 }
