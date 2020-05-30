@@ -1,186 +1,182 @@
 .modal-open {
-  overflow: hidden;
+	overflow: hidden;
 
-  .modal {
-	overflow-x: hidden;
-	overflow-y: auto;
-  }
+	.modal {
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
 }
 
 .modal {
-  position: fixed;
-  top: 1.75rem;
-  bottom: 0;
-  left: 0;
-  z-index: $zindex-modal;
-  display: none;
-  width: 100%;
-  overflow: hidden;
-  outline: 0;
+	position: fixed;
+	top: 1.75rem;
+	bottom: 0;
+	left: 0;
+	z-index: $zindex-modal;
+	display: none;
+	width: 100%;
+	overflow: hidden;
+	outline: 0;
 }
 
 .modal-dialog {
-  position: relative;
-  width: auto;
-  pointer-events: none;
-  margin: 0 auto !important;
+	position: relative;
+	width: auto;
+	pointer-events: none;
+	margin: 0 auto !important;
 
-  .modal.fade & {
-	@include transition($modal-transition);
-	transform: $modal-fade-transform;
-  }
+	.modal.fade & {
+		@include transition($modal-transition);
+		transform: $modal-fade-transform;
+	}
 
-  .modal.show & {
-	transform: $modal-show-transform;
-  }
+	.modal.show & {
+		transform: $modal-show-transform;
+	}
 }
 
 .modal-dialog-centered {
-  display: flex;
-  align-items: center;
-  min-height: calc(100% - (#{$modal-dialog-margin} * 2));
+	display: flex;
+	align-items: center;
+	min-height: calc(100% - (#{$modal-dialog-margin} * 2));
 
-  &::before {
-	display: block;
-	height: calc(100vh - (#{$modal-dialog-margin} * 2));
-	content: "";
-  }
+	&::before {
+		display: block;
+		height: calc(100vh - (#{$modal-dialog-margin} * 2));
+		content: '';
+	}
 }
 
 .modal-content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  pointer-events: auto;
-  background-color: clr(bg);
-  background-clip: padding-box;
-  border-radius: $border-radius-1;
-  box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.5);
-  outline: 0;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	pointer-events: auto;
+	background-color: clr(bg);
+	background-clip: padding-box;
+	border-radius: $border-radius-1;
+	box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.5);
+	outline: 0;
 }
 
 .modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: $zindex-modal-backdrop;
-  width: 100vw;
-  height: 100vh;
-  background-color: $modal-backdrop-bg;
-  opacity: 1;
-  backdrop-filter: blur(2px);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: $zindex-modal-backdrop;
+	width: 100vw;
+	height: 100vh;
+	background-color: $modal-backdrop-bg;
+	opacity: 1;
+	backdrop-filter: blur(2px);
 }
 
 .modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $modal-header-padding;
-  border-top-left-radius: $border-radius-1;
-  border-top-right-radius: $border-radius-1;
-  border-bottom: 1px solid clr(bg, d-2);
-  background: clr(bg, d-2);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: $modal-header-padding;
+	border-top-left-radius: $border-radius-1;
+	border-top-right-radius: $border-radius-1;
+	border-bottom: 1px solid clr(bg, d-2);
+	background: clr(bg, d-2);
 
-  .close {
-	margin: 0;
-	padding: 0;
-	background: clr(bg, d-1, 0);
-	border: 0;
-	font-size: 0;
-	color: transparent;
-	position: relative;
-	width: 1.75rem;
-	height: 1.75rem;
-	outline: none;
-	cursor: pointer;
-	border-radius: $border-radius-1;
+	.close {
+		margin: 0;
+		padding: 0;
+		background: clr(bg, d-1, 0);
+		border: 0;
+		font-size: 0;
+		color: transparent;
+		position: relative;
+		width: 1.75rem;
+		height: 1.75rem;
+		outline: none;
+		cursor: pointer;
+		border-radius: $border-radius-1;
 
-	&:before {
-	  @include iconFontFree('\0058');
-	  transform: rotate(45deg);
-	  font-size: .75rem;
-	  color: clr(txt);
-	  position: absolute;
-	  margin: 0 auto;
-	  top: 7px;
-	  bottom: 0;
-	  right: 0;
-	  left: -7px;
+		&:before {
+			@include iconFontFree('\0058');
+			transform: rotate(45deg);
+			font-size: 0.75rem;
+			color: clr(txt);
+			position: absolute;
+			margin: 0 auto;
+			top: 7px;
+			bottom: 0;
+			right: 0;
+			left: -7px;
+		}
 	}
-  }
 }
 
 .modal-title {
-  margin-bottom: 0;
-  line-height: $modal-title-line-height;
-  @include textStyle(smallUppercase);
-  @include textStyle(nonSelect);
+	margin-bottom: 0;
+	line-height: $modal-title-line-height;
+	@include textStyle(smallUppercase);
+	@include textStyle(nonSelect);
 }
 
 .modal-body {
-  position: relative;
-  flex: 1 1 auto;
-  padding: 2rem 1rem;
+	position: relative;
+	flex: 1 1 auto;
+	padding: 2rem 1rem;
 }
 
 .modal-footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: $modal-inner-padding;
-  border-top: 2px solid clr(bg, d-2);
-  @include border-bottom-radius($modal-content-border-radius);
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding: $modal-inner-padding;
+	border-top: 2px solid clr(bg, d-2);
+	@include border-bottom-radius($modal-content-border-radius);
 
-  > :not(:first-child) {
-	margin-left: .25rem;
-  }
+	> :not(:first-child) {
+		margin-left: 0.25rem;
+	}
 
-  > :not(:last-child) {
-	margin-right: .25rem;
-  }
+	> :not(:last-child) {
+		margin-right: 0.25rem;
+	}
 }
 
 .modal-scrollbar-measure {
-  position: absolute;
-  top: -9999px;
-  width: 50px;
-  height: 50px;
-  overflow: scroll;
+	position: absolute;
+	top: -9999px;
+	width: 50px;
+	height: 50px;
+	overflow: scroll;
 }
 
 @include media-breakpoint-up(sm) {
-  .modal-dialog {
-	max-width: $modal-md;
-	margin: $modal-dialog-margin-y-sm-up auto;
-  }
-
-  .modal-dialog-centered {
-	min-height: calc(100% - (#{$modal-dialog-margin-y-sm-up} * 2));
-
-	&::before {
-	  height: calc(100vh - (#{$modal-dialog-margin-y-sm-up} * 2));
+	.modal-dialog {
+		max-width: $modal-md;
+		margin: $modal-dialog-margin-y-sm-up auto;
 	}
-  }
 
-  .modal-content {
+	.modal-dialog-centered {
+		min-height: calc(100% - (#{$modal-dialog-margin-y-sm-up} * 2));
 
-  }
+		&::before {
+			height: calc(100vh - (#{$modal-dialog-margin-y-sm-up} * 2));
+		}
+	}
 
-  .modal-sm {
-	max-width: $modal-sm;
-  }
+	.modal-sm {
+		max-width: $modal-sm;
+	}
 }
 
 @include media-breakpoint-up(lg) {
-  .modal-lg,
-  .modal-xl {
-	max-width: $modal-lg;
-  }
+	.modal-lg,
+	.modal-xl {
+		max-width: $modal-lg;
+	}
 }
 
 @include media-breakpoint-up(xl) {
-  .modal-xl {
-	max-width: $modal-xl;
-  }
+	.modal-xl {
+		max-width: $modal-xl;
+	}
 }
