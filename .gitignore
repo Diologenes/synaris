@@ -1,7 +1,6 @@
 .DS_Store
 node_modules
 /dist
-/sqlite.db
 
 # local env files
 .env.local
@@ -25,4 +24,4 @@ yarn-error.log*
 /dist_electron
 
 # sqlite database
-src/database/storage/*
+/src/database/storage/
