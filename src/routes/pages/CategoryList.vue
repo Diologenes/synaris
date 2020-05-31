@@ -1,7 +1,7 @@
 <template>
 	<div class="c-page c-page__default">
 		<div class="c-category">
-			<div class="c-category__wrap">
+			<div class="c-category__wrap" ref="resizerCategory">
 				<!-- panel section -->
 				<div class="c-panel-section">
 					<div class="c-panel-section__title">Categories</div>
@@ -54,6 +54,8 @@
 				<!-- scrollbar -->
 
 				<div v-b-modal.modal-create-new-category class="c-create-button c-button c-button--primary c-button--bullseye u-icon--more"></div>
+ 
+				<div class="c-resize c-resize--horizontal" :class="[{ 'c-resize--is-active': resize.enabled, 'c-resize--is-hover': resize.hover }]" @mouseenter="resizeCategoryList($event)" @mouseleave="resizeCategoryList($event)" @mousedown="resizeCategoryList($event)" @mouseup="resizeCategoryList($event)" @mousemove="resizeCategoryList($event)"></div>
 			</div>
 		</div>
 
@@ -87,6 +89,10 @@ export default {
 	},
 	data() {
 		return {
+			resize: {
+				enabled: false,
+				hover: false
+			},
 			drag: {
 				isDrag: false,
 				type: null,
@@ -212,6 +218,30 @@ export default {
 					vm.$root.$emit('bv::show::modal', 'modal-rename-category')
 					break
 			}
+		},
+
+		resizeCategoryList($event) {
+			let element = this.$refs.resizerCategory
+
+			if ($event.type === 'mouseenter') {
+				this.resize.hover = true 
+			} 
+			if ($event.type === 'mouseleave') {
+				this.resize.hover = false
+			}
+
+			if ($event.type === 'mousedown') {
+				this.resize.enabled = true
+			}
+			if ($event.type === 'mousemove') {
+				if (this.resize.enabled === true) {
+					element.style.width = $event.clientX - element.offsetLeft + 'px'
+				}
+			}
+			if ($event.type === 'mouseup') {
+				this.resize.enabled = false
+			}
+			$event.preventDefault()
 		}
 	}
 }

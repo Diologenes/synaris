@@ -1,0 +1,27 @@
+.c-resize {
+	position: absolute;
+
+	&--horizontal {
+        @include transitionAll();
+		cursor: col-resize;
+		width: 6px;
+		right: 0;
+		top: 0;
+		bottom: 0;
+        height: 100%;
+		transform: translateX(3px); // center area to the middle
+		z-index: 1000000;
+	}
+
+	&--is-hover {
+        @include transitionAll(0ms);
+
+	}
+
+	&--is-active {
+        @include transitionAll(0ms);
+		width: 200px;
+		background: transparent;
+		transform: translateX(100px); // center area to the middle
+	}
+}
