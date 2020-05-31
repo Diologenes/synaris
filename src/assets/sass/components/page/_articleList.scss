@@ -51,10 +51,14 @@
 
 	&__link {
 		@include transitionAll();
+		@include activeNavigator();
+
 		padding: 2rem 1.5rem;
 		display: flex;
 		flex-direction: column;
-		&:hover {
+
+		&:hover,
+		&--is-active {
 			text-decoration: none;
 			background: clr(bg, d-1, 7);
 		}

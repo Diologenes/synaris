@@ -20,10 +20,18 @@
 				<!-- scrollbar -->
 				<perfect-scrollbar class="c-article-list__content">
 					<div v-for="article in articles" :key="article.id" class="c-article-list__item">
-						<a href="#" class="c-article-list__link" @contextmenu.prevent="$refs.layermenuArticle.open($event, article)">
+						<b-link
+							@contextmenu.prevent="$refs.layermenuArticle.open($event, article)"
+							@dragover.prevent
+							draggable="true"
+							router-tag="a"
+							:to="{ name: 'articleShow', params: { article: article.id } }"
+							class="c-article-list__link"
+							active-class="c-article-list__link--is-active"
+						>
 							<div class="c-article-list__title">{{ article.title }}</div>
 							<div class="c-article-list__description">{{ article.description }}</div>
-						</a>
+						</b-link>
 					</div>
 				</perfect-scrollbar>
 				<!-- scrollbar -->

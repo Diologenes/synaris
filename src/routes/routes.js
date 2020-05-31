@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 import index from '@/routes/pages/Index'
 import categoryList from '@/routes/pages/CategoryList'
 import articleList from '@/routes/pages/ArticleList'
+import articleShow from '@/routes/pages/ArticleShow'
 import search from '@/routes/pages/Search'
 import settings from '@/routes/pages/Settings'
 
@@ -26,7 +27,14 @@ export const router = new VueRouter({
 						{
 							path: ':category',
 							name: 'articleList',
-							component: articleList
+							component: articleList,
+							children: [
+								{
+									path: ':article',
+									name: 'articleShow',
+									component: articleShow
+								}
+							]
 						}
 					]
 				},
