@@ -81,7 +81,6 @@ export default {
 				this.enabled = false
 				this.$emit('value', this.calculatedDimension)
 				if (typeof this.dispatchToStore !== 'undefined') {
-					console.log('to store: ', this.dispatchToStore, this.calculatedDimension)
 					this.$store.dispatch(this.dispatchToStore, this.calculatedDimension)
 				}
 			}
