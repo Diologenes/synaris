@@ -33,7 +33,7 @@
 									@dragend="dragEnd()"
 									draggable="true"
 									router-tag="a"
-									:to="{ name: 'category', params: { category: category.id } }"
+									:to="{ name: 'articleList', params: { category: category.id } }"
 									class="c-category__link"
 									active-class="c-category__link--is-active"
 								>
