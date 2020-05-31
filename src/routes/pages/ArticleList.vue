@@ -1,7 +1,7 @@
 <template>
 	<div class="c-page c-page__default">
 		<div class="c-article-list">
-			<div class="c-article-list__wrap">
+			<div class="c-article-list__wrap" ref="resizerArticleList" :style="{ width: articleListWindowWidth }">
 				<!-- panel section -->
 				<div class="c-panel-section">
 					<div class="c-panel-section__title">TYPO3</div>
@@ -20,21 +20,15 @@
 				<!-- scrollbar -->
 				<perfect-scrollbar class="c-article-list__content">
 					<div v-for="article in articles" :key="article.id" class="c-article-list__item">
-						<b-link
-							@contextmenu.prevent="$refs.layermenuArticle.open($event, article)"
-							@dragover.prevent
-							draggable="true"
-							router-tag="a"
-							:to="{ name: 'articleShow', params: { article: article.id } }"
-							class="c-article-list__link"
-							active-class="c-article-list__link--is-active"
-						>
+						<b-link @contextmenu.prevent="$refs.layermenuArticle.open($event, article)" @dragover.prevent draggable="true" router-tag="a" :to="{ name: 'articleShow', params: { article: article.id } }" class="c-article-list__link" active-class="c-article-list__link--is-active">
 							<div class="c-article-list__title">{{ article.title }}</div>
 							<div class="c-article-list__description">{{ article.description }}</div>
 						</b-link>
 					</div>
 				</perfect-scrollbar>
 				<!-- scrollbar -->
+				
+				<section-resizer :min="200" :max="1000" bindRef="resizerArticleList" dispatchToStore="settings/articleListWindowWidth" />
 			</div>
 		</div>
 
@@ -69,6 +63,11 @@ export default {
 		articles: {
 			get() {
 				return this.$store.getters['article/articles']
+			}
+		},
+		articleListWindowWidth: {
+			get() {
+				return this.$store.getters['settings/articleListWindowWidth']
 			}
 		},
 		isFilter() {
