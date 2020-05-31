@@ -24,6 +24,7 @@ Object.values(models)
 
 const db = {
 	...models,
+	Sequelize,
 	sequelize
 }
 

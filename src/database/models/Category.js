@@ -22,6 +22,7 @@ class Category extends Sequelize.Model {
 	}
 	static associate(models) {
 		this.myAssociation = this.belongsTo(models.Collection, { onDelete: 'cascade' })
+		this.myAssociation2 = this.hasMany(models.Article, { onDelete: 'cascade' })
 	}
 }
 

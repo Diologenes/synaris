@@ -3,7 +3,7 @@ const db = require('@/database/models')
 // default state
 const getDefaultState = () => {
 	return {
-		collections: null,
+		collections: null
 	}
 }
 
@@ -14,7 +14,7 @@ const state = getDefaultState()
 const getters = {
 	collections(state) {
 		return state.collections
-	},
+	}
 }
 
 // mutations
@@ -25,7 +25,7 @@ const mutations = {
 
 	collections(state, value) {
 		state.collections = value
-	},
+	}
 }
 
 // actions
@@ -43,10 +43,22 @@ const actions = {
 		return new Promise((resolve) => {
 			db.Collection.findAll({
 				order: [
-					['sorting', 'ASC'],
-					[db.Category, 'sorting', 'ASC']
+					['sorting', 'ASC'], // order Collections.sorting first
+					[db.Category, 'sorting', 'ASC'] // order Categories.sorting second
 				],
-				include: [{ model: db.Category }]
+				group: ['Categories.id'], // group by Categories.id
+				include: [
+					{
+						model: db.Category, // join Categories
+						attributes: [
+							'id',
+							'title',
+							'sorting',
+							'collectionId',
+							[db.sequelize.literal('(SELECT COUNT(*) FROM "Articles" WHERE "Articles"."categoryId" = "categories"."id")'), 'articleCount'] // subquery to get count of articles
+						]
+					}
+				]
 			})
 				.then((response) => {
 					context.commit('collections', response)
