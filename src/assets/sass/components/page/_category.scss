@@ -78,9 +78,6 @@
 		}
 	}
 
-	&__item {
-	}
-
 	&__dropzone {
 		@include transitionAll();
 		border-top: 1px solid transparent;
