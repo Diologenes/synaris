@@ -1,0 +1,15 @@
+.c-dnd {
+    
+    &__ghost {
+        background: clr(clr, base);
+        color: clr(txt, alt);
+        opacity: 1;
+        padding: .5rem 1rem;
+        border-radius: .5rem;
+        max-width: 15rem;
+        position: absolute;
+        z-index: -1;
+        left: -100rem;
+        top: -100rem;
+    }
+}

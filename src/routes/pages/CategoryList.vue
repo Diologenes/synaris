@@ -17,7 +17,7 @@
 							class="c-category__group-title"
 							@contextmenu.prevent="$refs.layermenuCategory.open($event, collection)"
 							@dragover.prevent
-							@dragstart="dragStart('collection', null, collectionIndex, $event)"
+							@dragstart="dragStart('collection', null, collectionIndex, collection, $event)"
 							@drop="dragFinish(null, null, null, collectionIndex, $event)"
 							@dragend="dragEnd()"
 							draggable="true"
@@ -36,7 +36,7 @@
 								<b-link
 									@contextmenu.prevent="$refs.layermenuCategory.open($event, category)"
 									@dragover.prevent
-									@dragstart="dragStart('category', categoryIndex, collectionIndex, $event)"
+									@dragstart="dragStart('category', categoryIndex, collectionIndex, category, $event)"
 									@dragend="dragEnd()"
 									@drop="dragFinish(category, collection, categoryIndex, collectionIndex, $event)"
 									draggable="true"
@@ -137,7 +137,7 @@ export default {
 			})
 		},
 
-		dragStart(type, categoryIndex, collectionIndex, $event) {
+		dragStart(type, categoryIndex, collectionIndex, object, $event) {
 			// close layermenu if opened
 			this.$refs.layermenuCategory.close()
 
@@ -147,6 +147,13 @@ export default {
 				categoryIndex: categoryIndex,
 				collectionIndex: collectionIndex
 			})
+
+			var ghostElement = document.createElement('p')
+			ghostElement.classList.add('c-dnd__ghost')
+			ghostElement.innerHTML = object.title
+			document.body.appendChild(ghostElement)
+			$event.dataTransfer.setDragImage(ghostElement, 0, 0)
+
 			$event.dataTransfer.setData('draggedObject', payload)
 
 			// define style behavior for ...
@@ -159,6 +166,8 @@ export default {
 			}
 		},
 		dragEnd() {
+			var elem = document.querySelector('.c-dnd__ghost')
+			elem.parentNode.removeChild(elem)
 			this.hideCategoryDropzones()
 		},
 		dragFinish(category, collection, categoryDropIndex, collectionDropIndex, $event) {

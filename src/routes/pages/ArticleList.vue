@@ -97,9 +97,6 @@ export default {
 			contextObject: null
 		}
 	},
-	mounted() {
-		console.log('articleList')
-	},
 	methods: {
 		deleteFilter() {
 			this.filter = ''
@@ -112,12 +109,16 @@ export default {
 				type: 'article',
 				article: article
 			})
+
+			var ghostElement = document.createElement('p')
+			ghostElement.classList.add('c-dnd__ghost')
+			ghostElement.innerHTML = article.title
+			document.body.appendChild(ghostElement)
+			$event.dataTransfer.setDragImage(ghostElement, 0, 0)
 			$event.dataTransfer.setData('draggedObject', payload)
 		},
 
 		dragEnd($event) {
-			console.log($event)
-
 			this.$parent.hideCategoryDropzones()
 		},
 
