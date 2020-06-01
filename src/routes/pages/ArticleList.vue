@@ -11,7 +11,7 @@
 				<!-- filter section -->
 				<div class="c-panel-filter">
 					<div class="c-panel-filter__wrap">
-						<input v-model="filter" @keyup="filterArticles()" :class="{ 'c-panel-filter__input--is-active': isFilter }" class="c-panel-filter__input" type="text" placeholder="Filter articles ..." />
+						<input v-model="filter" @keyup="filterArticles" :class="{ 'c-panel-filter__input--is-active': isFilter }" class="c-panel-filter__input" type="text" placeholder="Filter articles ..." />
 						<div :class="{ 'c-panel-filter__close--is-active': isFilter }" class="c-panel-filter__close"><button @click="deleteFilter" class="u-icon--close"></button></div>
 					</div>
 				</div>
@@ -52,6 +52,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import modalDeleteArticle from '@/components/modals/DeleteArticle'
+import _ from 'lodash'
 
 export default {
 	components: {
@@ -83,6 +84,14 @@ export default {
 				return this.$store.getters['settings/articleListWindowWidth']
 			}
 		},
+		filter: {
+			get() {
+				return this.$store.getters['article/searchWord']
+			},
+			set(value) {
+				this.$store.dispatch('article/setSearchWord', value)
+			}
+		},
 		isFilter() {
 			if (this.filter.length > 0) {
 				return true
@@ -93,17 +102,16 @@ export default {
 	},
 	data() {
 		return {
-			filter: '',
 			contextObject: null
 		}
 	},
 	methods: {
-		filterArticles() {
-			this.$store.dispatch('article/getByCategory', { category: this.$route.params.category, searchWord: this.filter })
-		},
+		filterArticles: _.debounce(function() {
+			this.$store.dispatch('article/getByCategory', { category: this.$route.params.category })
+		}, 400),
 
 		deleteFilter() {
-			this.filter = ''
+			this.$store.dispatch('article/setSearchWord', '')
 			this.filterArticles()
 		},
 

@@ -5,7 +5,8 @@ const Op = db.Sequelize.Op
 const getDefaultState = () => {
 	return {
 		articles: null,
-		currentArticle: null
+		currentArticle: null,
+		searchWord: ''
 	}
 }
 
@@ -19,6 +20,9 @@ const getters = {
 	},
 	currentArticle(state) {
 		return state.currentArticle
+	},
+	searchWord(state) {
+		return state.searchWord
 	}
 }
 
@@ -32,6 +36,12 @@ const mutations = {
 	},
 	currentArticle(state, value) {
 		state.currentArticle = value
+	},
+	searchWord(state, value) {
+		// if (value !== '') {
+		// 	value.trim().replace(/\s{2,}/g, ' ')
+		// }
+		state.searchWord = value
 	}
 }
 
@@ -49,20 +59,20 @@ const actions = {
 		context.commit('currentArticle', value)
 	},
 
+	setSearchWord(context, value) {
+		context.commit('searchWord', value)
+	},
+
 	getByCategory(context, payload) {
 		let vm = this
 
 		let query = {}
 		query.categoryId = payload.category // join category id
-		let searchWord = payload.searchWord // let searchword
-		if (typeof searchWord !== 'undefined' && searchWord.length > 0) {
+		if (context.state.searchWord.length > 0) {
 			// if searchword exists
 
 			// clean up searchword(s) and split it into an array
-			let searchWordArray = searchWord
-				.trim()
-				.replace(/\s{2,}/g, ' ')
-				.split(' ')
+			let searchWordArray = context.state.searchWord.split(' ')
 
 			// build subqueries
 			let subQuery = []
@@ -84,7 +94,7 @@ const actions = {
 				})
 			})
 
-			// make sure cleaned up array has elements 
+			// make sure cleaned up array has elements
 			if (searchWordArray.length > 0) {
 				query[Op.and] = subQuery
 			}
