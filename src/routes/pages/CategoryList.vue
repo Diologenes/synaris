@@ -58,7 +58,6 @@
 					</div>
 					<!-- group item -->
 				</perfect-scrollbar>
-
 				<!-- scrollbar -->
 
 				<div v-b-modal.modal-create-new-category class="c-create-button c-button c-button--primary c-button--bullseye u-icon--more"></div>
