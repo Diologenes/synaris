@@ -26,7 +26,7 @@
 						</div>
 
 						<div v-if="collection.categories.length === 0">
-							<div class="c-category__dropzone c-category__dropzone--is-empty" @dragover.prevent @drop="dragFinish(0, collectionIndex)"></div>
+							<div class="c-category__dropzone c-category__dropzone--is-empty" @dragover.prevent @drop="dragFinish(null, null, 0, collectionIndex, $event)"></div>
 						</div>
 						<!-- group title -->
 
