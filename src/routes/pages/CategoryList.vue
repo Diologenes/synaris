@@ -26,7 +26,7 @@
 						</div>
 
 						<div v-if="collection.categories.length === 0">
-							<div class="c-category__dropzone" @dragover.prevent @drop="dragFinish(0, collectionIndex)"></div>
+							<div class="c-category__dropzone c-category__dropzone--is-empty" @dragover.prevent @drop="dragFinish(0, collectionIndex)"></div>
 						</div>
 						<!-- group title -->
 
@@ -115,10 +115,16 @@ export default {
 		this.$store.dispatch('collection/getAll')
 	},
 	methods: {
-		showCategoryDropzones: _.debounce(() => {
+		showCategoryDropzones: _.debounce((ignoreEmptyDropzones = false) => {
 			const identifierClass = 'c-category__dropzone'
 			const activeClass = 'c-category__dropzone--is-active'
-			let items = window.document.getElementsByClassName(identifierClass)
+			let items = []
+			if (ignoreEmptyDropzones) {
+				items = window.document.querySelectorAll('.' + identifierClass + ':not(.c-category__dropzone--is-empty)')
+				console.log(items)
+			} else {
+				items = window.document.getElementsByClassName(identifierClass)
+			}
 			items.forEach((element) => {
 				element.classList.add(activeClass)
 			})

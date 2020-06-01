@@ -60,7 +60,7 @@ export default {
 	beforeRouteEnter(to, from, next) {
 		next((vm) => {
 			vm.$store.dispatch('article/getByCategory', { category: to.params.category }).then((response) => {
-			vm.$store.dispatch('collection/setCurrentCategoryById', to.params.category)
+				vm.$store.dispatch('collection/setCurrentCategoryById', to.params.category)
 				next()
 			})
 		})
@@ -103,19 +103,18 @@ export default {
 		},
 
 		dragStart(article, $event) {
-			// close layermenu if opened
+			this.$parent.showCategoryDropzones(true)
 			this.$refs.layermenuArticle.close()
-
-			// define payload and dataTransfer
 			let payload = JSON.stringify({
 				type: 'article',
 				article: article
 			})
-			console.log('start', article, payload)
 			$event.dataTransfer.setData('draggedObject', payload)
 		},
 
-		dragEnd() {},
+		dragEnd() {
+			this.$parent.hideCategoryDropzones()
+		},
 
 		contextArticleSelect(option) {
 			let vm = this
