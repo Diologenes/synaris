@@ -11,7 +11,7 @@
 				<!-- filter section -->
 				<div class="c-panel-filter">
 					<div class="c-panel-filter__wrap">
-						<input v-model="filter" :class="{ 'c-panel-filter__input--is-active': isFilter }" class="c-panel-filter__input" type="text" placeholder="Filter articles ..." />
+						<input v-model="filter" @keyup="filterArticles()" :class="{ 'c-panel-filter__input--is-active': isFilter }" class="c-panel-filter__input" type="text" placeholder="Filter articles ..." />
 						<div :class="{ 'c-panel-filter__close--is-active': isFilter }" class="c-panel-filter__close"><button @click="deleteFilter" class="u-icon--close"></button></div>
 					</div>
 				</div>
@@ -98,8 +98,13 @@ export default {
 		}
 	},
 	methods: {
+		filterArticles() {
+			this.$store.dispatch('article/getByCategory', { category: this.$route.params.category, searchWord: this.filter })
+		},
+
 		deleteFilter() {
 			this.filter = ''
+			this.filterArticles()
 		},
 
 		dragStart(article, $event) {
