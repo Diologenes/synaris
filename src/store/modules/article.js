@@ -38,9 +38,9 @@ const mutations = {
 		state.currentArticle = value
 	},
 	searchWord(state, value) {
-		// if (value !== '') {
-		// 	value.trim().replace(/\s{2,}/g, ' ')
-		// }
+		if (value !== '') {
+			value.trim().replace(/\s{2,}/g, ' ')
+		}
 		state.searchWord = value
 	}
 }
