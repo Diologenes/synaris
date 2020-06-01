@@ -14,7 +14,7 @@ const state = getDefaultState()
 // getters
 const getters = {
 	collections(state) {
-		return state.collections
+		return state.collections 
 	},
 	currentCategory(state) {
 		return state.currentCategory
@@ -46,14 +46,14 @@ const actions = {
 
 	setCurrentCategoryById(context, categoryId) {
 		return new Promise((resolve) => {
-			context.state.collections.forEach((collection) => {
-				let queryResult = collection.categories.filter((category) => category.id === categoryId)
-				if (queryResult.length > 0) {
-					context.commit('currentCategory', queryResult[0])
-					resolve(queryResult[0])
-					return
-				}
+			db.Category.findOne({
+				where: {id: categoryId}
 			})
+				.then((response) => {
+					context.commit('currentCategory', response)
+					resolve(response)
+				})
+				.catch((e) => console.error(e))
 		})
 	},
 

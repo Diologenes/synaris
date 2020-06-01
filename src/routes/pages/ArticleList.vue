@@ -24,7 +24,7 @@
 							@contextmenu.prevent="$refs.layermenuArticle.open($event, article)"
 							@dragover.prevent
 							@dragstart="dragStart(article, $event)"
-							@dragend="dragEnd()"
+							@dragend="dragEnd($event)"
 							draggable="true"
 							router-tag="a"
 							:to="{ name: 'articleShow', params: { article: article.id } }"
@@ -97,6 +97,9 @@ export default {
 			contextObject: null
 		}
 	},
+	mounted() {
+		console.log('articleList')
+	},
 	methods: {
 		deleteFilter() {
 			this.filter = ''
@@ -112,7 +115,9 @@ export default {
 			$event.dataTransfer.setData('draggedObject', payload)
 		},
 
-		dragEnd() {
+		dragEnd($event) {
+			console.log($event)
+
 			this.$parent.hideCategoryDropzones()
 		},
 
