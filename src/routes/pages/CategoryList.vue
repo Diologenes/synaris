@@ -13,7 +13,7 @@
 					<!-- group item -->
 					<div v-for="(collection, collectionIndex) in collections" :key="collection.id" class="c-category__group">
 						<!-- group title -->
-						<div class="c-category__group-title" @contextmenu.prevent="$refs.layermenuCategory.open($event, collection)" @dragover.prevent @dragstart="dragStart('collection', null, collectionIndex)" @drop="dragFinish(null, collectionIndex)" @dragend="dragEnd()" draggable="true">
+						<div class="c-category__group-title" @contextmenu.prevent="$refs.layermenuCategory.open($event, collection)" @dragover.prevent @dragstart="dragStart('collection', null, collectionIndex, $event)" @drop="dragFinish(null, null, null, collectionIndex, $event)" @dragend="dragEnd()" draggable="true">
 							{{ collection.title }}
 						</div>
 
@@ -28,9 +28,9 @@
 								<b-link
 									@contextmenu.prevent="$refs.layermenuCategory.open($event, category)"
 									@dragover.prevent
-									@dragstart="dragStart('category', categoryIndex, collectionIndex)"
-									@drop="dragFinish(categoryIndex, collectionIndex)"
+									@dragstart="dragStart('category', categoryIndex, collectionIndex, $event)"
 									@dragend="dragEnd()"
+									@drop="dragFinish(category, collection, categoryIndex, collectionIndex, $event)"
 									draggable="true"
 									router-tag="a"
 									:to="{ name: 'articleList', params: { category: category.id } }"
@@ -88,12 +88,6 @@ export default {
 	},
 	data() {
 		return {
-			drag: {
-				isDrag: false,
-				type: null,
-				categoryDragIndex: null,
-				collectionDragIndex: null
-			},
 			contextObject: null
 		}
 	},
@@ -130,55 +124,61 @@ export default {
 			})
 		},
 
-		dragStart(type, i, collectionId) {
+		dragStart(type, categoryIndex, collectionIndex, $event) {
+
+			// close layermenu if opened
 			this.$refs.layermenuCategory.close()
-			this.drag.type = type
-			switch (this.drag.type) {
+
+			// define payload and dataTransfer 
+			let payload = JSON.stringify({
+				type: type,
+				categoryIndex: categoryIndex,
+				collectionIndex: collectionIndex
+			})
+			$event.dataTransfer.setData('text/plain', payload)
+
+			// define style behavior for ...
+			switch (type) {
 				case 'category':
 					this.showCategoryDropzones()
-					this.drag.categoryDragIndex = i
-					this.drag.collectionDragIndex = collectionId
 					break
 				case 'collection':
-					this.drag.collectionDragIndex = collectionId
 					break
 			}
 		},
 		dragEnd() {
-			switch (this.drag.type) {
-				case 'category':
-					this.hideCategoryDropzones()
-					break
-				case 'collection':
-					break
-			}
+			this.hideCategoryDropzones()
 		},
-		dragFinish(categoryDropIndex, collectionDropIndex) {
+		dragFinish(category, collection, categoryDropIndex, collectionDropIndex, $event) {
+
+			// dragged payload
+			let payload = JSON.parse($event.dataTransfer.getData('text'))
+
 			let vm = this
 			let writeData = false
-			switch (vm.drag.type) {
+			switch (payload.type) {
 				case 'category':
-					let elementToMove = vm.collections[vm.drag.collectionDragIndex].categories[vm.drag.categoryDragIndex]
+					let elementToMove = vm.collections[payload.collectionIndex].categories[payload.categoryIndex]
 					// move element in same collection
-					if (vm.drag.collectionDragIndex === collectionDropIndex) {
+					if (payload.collectionIndex === collectionDropIndex) {
 						// continue if drag and drop is not the same
-						if (vm.drag.categoryDragIndex !== categoryDropIndex) {
-							vm.collections[vm.drag.collectionDragIndex].categories.splice(vm.drag.categoryDragIndex, 1)
-							vm.collections[vm.drag.collectionDragIndex].categories.splice(categoryDropIndex, 0, elementToMove)
+						if (payload.categoryIndex !== categoryDropIndex) {
+							vm.collections[payload.collectionIndex].categories.splice(payload.categoryIndex, 1)
+							vm.collections[payload.collectionIndex].categories.splice(categoryDropIndex, 0, elementToMove)
 							writeData = true
 						}
 					}
 					// move element in another collection
-					if (vm.drag.collectionDragIndex !== collectionDropIndex) {
-						vm.collections[vm.drag.collectionDragIndex].categories.splice(vm.drag.categoryDragIndex, 1)
+					if (payload.collectionIndex !== collectionDropIndex) {
+						vm.collections[payload.collectionIndex].categories.splice(payload.categoryIndex, 1)
 						vm.collections[collectionDropIndex].categories.splice(categoryDropIndex, 0, elementToMove)
 						writeData = true
 					}
 					break
 				case 'collection':
-					if (vm.drag.collectionDragIndex !== collectionDropIndex) {
-						let collectionToMove = vm.collections[vm.drag.collectionDragIndex]
-						vm.collections.splice(vm.drag.collectionDragIndex, 1)
+					if (payload.collectionIndex !== collectionDropIndex) {
+						let collectionToMove = vm.collections[payload.collectionIndex]
+						vm.collections.splice(payload.collectionIndex, 1)
 						vm.collections.splice(collectionDropIndex, 0, collectionToMove)
 						writeData = true
 					}
