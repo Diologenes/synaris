@@ -121,7 +121,6 @@ export default {
 			let items = []
 			if (ignoreEmptyDropzones) {
 				items = window.document.querySelectorAll('.' + identifierClass + ':not(.c-category__dropzone--is-empty)')
-				console.log(items)
 			} else {
 				items = window.document.getElementsByClassName(identifierClass)
 			}
