@@ -1,4 +1,5 @@
 .c-panel-section {
+	@include textStyle(nonSelect);
 	min-height: 5rem;
 	align-items: center;
 	padding: 0.5rem 1.5rem;
