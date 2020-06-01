@@ -13,7 +13,15 @@
 					<!-- group item -->
 					<div v-for="(collection, collectionIndex) in collections" :key="collection.id" class="c-category__group">
 						<!-- group title -->
-						<div class="c-category__group-title" @contextmenu.prevent="$refs.layermenuCategory.open($event, collection)" @dragover.prevent @dragstart="dragStart('collection', null, collectionIndex, $event)" @drop="dragFinish(null, null, null, collectionIndex, $event)" @dragend="dragEnd()" draggable="true">
+						<div
+							class="c-category__group-title"
+							@contextmenu.prevent="$refs.layermenuCategory.open($event, collection)"
+							@dragover.prevent
+							@dragstart="dragStart('collection', null, collectionIndex, $event)"
+							@drop="dragFinish(null, null, null, collectionIndex, $event)"
+							@dragend="dragEnd()"
+							draggable="true"
+						>
 							{{ collection.title }}
 						</div>
 
@@ -104,7 +112,7 @@ export default {
 		}
 	},
 	mounted() {
-		this.$store.dispatch('collection/getAll').then((r) => console.log(r))
+		this.$store.dispatch('collection/getAll')
 	},
 	methods: {
 		showCategoryDropzones: _.debounce(() => {
@@ -125,17 +133,16 @@ export default {
 		},
 
 		dragStart(type, categoryIndex, collectionIndex, $event) {
-
 			// close layermenu if opened
 			this.$refs.layermenuCategory.close()
 
-			// define payload and dataTransfer 
+			// define payload and dataTransfer
 			let payload = JSON.stringify({
 				type: type,
 				categoryIndex: categoryIndex,
 				collectionIndex: collectionIndex
 			})
-			$event.dataTransfer.setData('text/plain', payload)
+			$event.dataTransfer.setData('draggedObject', payload)
 
 			// define style behavior for ...
 			switch (type) {
@@ -150,13 +157,29 @@ export default {
 			this.hideCategoryDropzones()
 		},
 		dragFinish(category, collection, categoryDropIndex, collectionDropIndex, $event) {
-
 			// dragged payload
-			let payload = JSON.parse($event.dataTransfer.getData('text'))
+			let payload = JSON.parse($event.dataTransfer.getData('draggedObject'))
 
 			let vm = this
 			let writeData = false
 			switch (payload.type) {
+				case 'article':
+					if (typeof category !== 'undefined' || category !== null) {
+						vm.$db.Article.findOne({
+							where: {
+								id: payload.article.id
+							}
+						}).then((article) => {
+							if (article.categoryId !== category.id) {
+								article.categoryId = category.id
+								article.save().then(() => {
+									vm.$store.dispatch('article/getByCategory', { category: vm.$store.getters['collection/currentCategory'].id })
+									vm.$store.dispatch('collection/getAll')
+								})
+							}
+						})
+					}
+					break
 				case 'category':
 					let elementToMove = vm.collections[payload.collectionIndex].categories[payload.categoryIndex]
 					// move element in same collection

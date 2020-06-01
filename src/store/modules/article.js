@@ -3,7 +3,8 @@ const db = require('@/database/models')
 // default state
 const getDefaultState = () => {
 	return {
-		articles: null
+		articles: null,
+		currentArticle: null
 	}
 }
 
@@ -14,7 +15,10 @@ const state = getDefaultState()
 const getters = {
 	articles(state) {
 		return state.articles
-	}
+	},
+	currentArticle(state) {
+		return state.currentArticle
+	},
 }
 
 // mutations
@@ -22,9 +26,11 @@ const mutations = {
 	resetStore(state) {
 		Object.assign(state, getDefaultState())
 	},
-
 	articles(state, value) {
 		state.articles = value
+	},
+	currentArticle(state, value) {
+		state.currentArticle = value
 	}
 }
 
@@ -36,6 +42,10 @@ const actions = {
 
 	update(context, value) {
 		context.commit('articles', value)
+	},
+
+	currentArticle(context, value) {
+		context.commit('currentArticle', value)
 	},
 
 	getByCategory(context, payload) {

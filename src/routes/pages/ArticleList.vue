@@ -20,14 +20,24 @@
 				<!-- scrollbar -->
 				<perfect-scrollbar class="c-article-list__content">
 					<div v-for="article in articles" :key="article.id" class="c-article-list__item">
-						<b-link @contextmenu.prevent="$refs.layermenuArticle.open($event, article)" @dragover.prevent draggable="true" router-tag="a" :to="{ name: 'articleShow', params: { article: article.id } }" class="c-article-list__link" active-class="c-article-list__link--is-active">
+						<b-link
+							@contextmenu.prevent="$refs.layermenuArticle.open($event, article)"
+							@dragover.prevent
+							@dragstart="dragStart(article, $event)"
+							@dragend="dragEnd()"
+							draggable="true"
+							router-tag="a"
+							:to="{ name: 'articleShow', params: { article: article.id } }"
+							class="c-article-list__link"
+							active-class="c-article-list__link--is-active"
+						>
 							<div class="c-article-list__title">{{ article.title }}</div>
 							<div class="c-article-list__description">{{ article.description }}</div>
 						</b-link>
 					</div>
 				</perfect-scrollbar>
 				<!-- scrollbar -->
-				
+
 				<section-resizer :min="200" :max="1000" bindRef="resizerArticleList" dispatchToStore="settings/articleListWindowWidth" />
 			</div>
 		</div>
@@ -49,13 +59,16 @@ export default {
 	},
 	beforeRouteEnter(to, from, next) {
 		next((vm) => {
-			vm.$store.dispatch('article/getByCategory', { category: to.params.category })
-			next()
+			vm.$store.dispatch('article/getByCategory', { category: to.params.category }).then((response) => {
+			vm.$store.dispatch('collection/setCurrentCategoryById', to.params.category)
+				next()
+			})
 		})
 	},
 	beforeRouteUpdate(to, from, next) {
 		let vm = this
-		vm.$store.dispatch('article/getByCategory', { category: to.params.category }).then(() => {
+		vm.$store.dispatch('article/getByCategory', { category: to.params.category }).then((response) => {
+			vm.$store.dispatch('collection/setCurrentCategoryById', to.params.category)
 			next()
 		})
 	},
@@ -88,6 +101,21 @@ export default {
 		deleteFilter() {
 			this.filter = ''
 		},
+
+		dragStart(article, $event) {
+			// close layermenu if opened
+			this.$refs.layermenuArticle.close()
+
+			// define payload and dataTransfer
+			let payload = JSON.stringify({
+				type: 'article',
+				article: article
+			})
+			console.log('start', article, payload)
+			$event.dataTransfer.setData('draggedObject', payload)
+		},
+
+		dragEnd() {},
 
 		contextArticleSelect(option) {
 			let vm = this

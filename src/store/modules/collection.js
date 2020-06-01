@@ -3,7 +3,8 @@ const db = require('@/database/models')
 // default state
 const getDefaultState = () => {
 	return {
-		collections: null
+		collections: null,
+		currentCategory: null
 	}
 }
 
@@ -14,6 +15,9 @@ const state = getDefaultState()
 const getters = {
 	collections(state) {
 		return state.collections
+	},
+	currentCategory(state) {
+		return state.currentCategory
 	}
 }
 
@@ -22,9 +26,11 @@ const mutations = {
 	resetStore(state) {
 		Object.assign(state, getDefaultState())
 	},
-
 	collections(state, value) {
 		state.collections = value
+	},
+	currentCategory(state, value) {
+		state.currentCategory = value
 	}
 }
 
@@ -36,6 +42,19 @@ const actions = {
 
 	update(context, value) {
 		context.commit('collections', value)
+	},
+
+	setCurrentCategoryById(context, categoryId) {
+		return new Promise((resolve) => {
+			context.state.collections.forEach((collection) => {
+				let queryResult = collection.categories.filter((category) => category.id === categoryId)
+				if (queryResult.length > 0) {
+					context.commit('currentCategory', queryResult[0])
+					resolve(queryResult[0])
+					return
+				}
+			})
+		})
 	},
 
 	getAll(context) {
