@@ -4,7 +4,7 @@
 			<div class="c-article-list__wrap" ref="resizerArticleList" :style="{ width: articleListWindowWidth }">
 				<!-- panel section -->
 				<div class="c-panel-section">
-					<div class="c-panel-section__title">TYPO3</div>
+					<div class="c-panel-section__title">{{ category.title }}</div>
 				</div>
 				<!-- panel section -->
 
@@ -74,15 +74,14 @@ export default {
 		})
 	},
 	computed: {
-		articles: {
-			get() {
-				return this.$store.getters['article/articles']
-			}
+		category() {
+			return this.$store.getters['collection/currentCategory']
 		},
-		articleListWindowWidth: {
-			get() {
-				return this.$store.getters['settings/articleListWindowWidth']
-			}
+		articles() {
+			return this.$store.getters['article/articles']
+		},
+		articleListWindowWidth() {
+			return this.$store.getters['settings/articleListWindowWidth']
 		},
 		filter: {
 			get() {
