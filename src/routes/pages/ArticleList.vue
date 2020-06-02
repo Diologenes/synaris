@@ -4,7 +4,9 @@
 			<div class="c-article-list__wrap" ref="resizerArticleList" :style="{ width: articleListWindowWidth }">
 				<!-- panel section -->
 				<div class="c-panel-section">
-					<div class="c-panel-section__title">{{ category.title }}</div>
+					<div class="c-panel-section__title">
+						<span class="u-hash" v-if="category">{{ category.title }}</span>
+					</div>
 				</div>
 				<!-- panel section -->
 
@@ -17,8 +19,10 @@
 				</div>
 				<!-- filter section -->
 
+				<loader :active="loading"/>
+
 				<!-- scrollbar -->
-				<perfect-scrollbar class="c-article-list__content">
+				<perfect-scrollbar class="c-article-list__content" v-if="!loading">
 					<div v-for="article in articles" :key="article.id" class="c-article-list__item">
 						<b-link
 							@contextmenu.prevent="$refs.layermenuArticle.open($event, article)"
@@ -58,21 +62,6 @@ export default {
 	components: {
 		modalDeleteArticle
 	},
-	beforeRouteEnter(to, from, next) {
-		next((vm) => {
-			vm.$store.dispatch('article/getByCategory', { category: to.params.category }).then((response) => {
-				vm.$store.dispatch('collection/setCurrentCategoryById', to.params.category)
-				next()
-			})
-		})
-	},
-	beforeRouteUpdate(to, from, next) {
-		let vm = this
-		vm.$store.dispatch('article/getByCategory', { category: to.params.category }).then((response) => {
-			vm.$store.dispatch('collection/setCurrentCategoryById', to.params.category)
-			next()
-		})
-	},
 	computed: {
 		category() {
 			return this.$store.getters['collection/currentCategory']
@@ -101,10 +90,36 @@ export default {
 	},
 	data() {
 		return {
+			loading: false,
 			contextObject: null
 		}
 	},
+	watch: {
+		$route(to, from) {
+			if (to.params.category !== from.params.category) {
+				this.init()
+			}
+		}
+	},
+	mounted() {
+		this.init()
+	},
 	methods: {
+		init() {
+			let vm = this
+			let loadTimer = _.delay(function() {
+				vm.loading = true
+			}, 500)
+			let promises = []
+			vm.$store.dispatch('article/resetArticles')
+			promises.push(vm.$store.dispatch('article/getByCategory', { category: vm.$route.params.category }))
+			promises.push(vm.$store.dispatch('collection/setCurrentCategoryById', vm.$route.params.category))
+			Promise.all(promises).then(() => {
+				clearTimeout(loadTimer)
+				vm.loading = false
+			})
+		},
+
 		filterArticles: _.debounce(function() {
 			this.$store.dispatch('article/getByCategory', { category: this.$route.params.category })
 		}, 400),

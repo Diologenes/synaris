@@ -18,6 +18,7 @@
 // utilities
 @import "utilities/icon";
 @import "utilities/m";
+@import "utilities/hash";
 
 // plugins
 @import "plugins/bootstrap";
@@ -42,3 +43,4 @@
 @import "components/modules/layermenu";
 @import "components/modules/resize";
 @import "components/modules/dnd";
+@import "components/modules/loader";

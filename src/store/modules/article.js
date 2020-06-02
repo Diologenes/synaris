@@ -51,6 +51,10 @@ const actions = {
 		context.commit('resetStore')
 	},
 
+	resetArticles(context) {
+		context.commit('articles', null)
+	},
+
 	update(context, value) {
 		context.commit('articles', value)
 	},
@@ -64,49 +68,50 @@ const actions = {
 	},
 
 	getByCategory(context, payload) {
-		let vm = this
-
-		let query = {}
-		query.categoryId = payload.category // join category id
-		if (context.state.searchWord.length > 0) {
-			// if searchword exists
-
-			// clean up searchword(s) and split it into an array
-			let searchWordArray = context.state.searchWord.split(' ')
-
-			// build subqueries
-			let subQuery = []
-			searchWordArray.forEach((searchWord) => {
-				searchWord = `%${searchWord}%`
-				subQuery.push({
-					[Op.or]: [
-						{
-							title: {
-								[Op.like]: searchWord
-							}
-						},
-						{
-							description: {
-								[Op.like]: searchWord
-							}
-						}
-					]
-				})
-			})
-
-			// make sure cleaned up array has elements
-			if (searchWordArray.length > 0) {
-				query[Op.and] = subQuery
-			}
-		}
-
 		return new Promise((resolve) => {
+			let query = {}
+			query.categoryId = payload.category // join category id
+			if (context.state.searchWord.length > 0) {
+				// if searchword exists
+
+				// clean up searchword(s) and split it into an array
+				let searchWordArray = context.state.searchWord.split(' ')
+
+				// build subqueries
+				let subQuery = []
+				searchWordArray.forEach((searchWord) => {
+					searchWord = `%${searchWord}%`
+					subQuery.push({
+						[Op.or]: [
+							{
+								title: {
+									[Op.like]: searchWord
+								}
+							},
+							{
+								description: {
+									[Op.like]: searchWord
+								}
+							}
+						]
+					})
+				})
+
+				// make sure cleaned up array has elements
+				if (searchWordArray.length > 0) {
+					query[Op.and] = subQuery
+				}
+			}
+
 			db.Article.findAll({
 				where: query
 			})
 				.then((response) => {
-					context.commit('articles', response)
-					resolve(response)
+					setTimeout(function() {
+						context.commit('articles', response)
+						resolve(response)
+					}, 0)
+	
 				})
 				.catch((e) => console.error(e))
 		})
