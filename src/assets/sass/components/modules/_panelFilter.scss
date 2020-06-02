@@ -21,6 +21,22 @@
 		overflow: hidden;
 	}
 
+	&__status {
+		overflow: hidden;
+		max-height: 0;
+		transition: all 150ms ease-in-out;
+		@include textStyle(tiny);
+		@include textStyle(nonSelect);
+		padding: 0 1.5rem;
+		background: clr(bg, d-2);
+		color: clr(txt, base);
+
+		&--is-active {
+			padding: 0 1.5rem 1rem;
+			max-height: 3rem;
+		}
+	}
+
 	&__input {
 		@include placeholder(clr(txt, base));
 		@include transitionAll();

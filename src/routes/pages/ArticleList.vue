@@ -16,10 +16,16 @@
 						<input v-model="filter" @keyup="filterArticles" :class="{ 'c-panel-filter__input--is-active': isFilter }" class="c-panel-filter__input" type="text" placeholder="Filter articles ..." />
 						<div :class="{ 'c-panel-filter__close--is-active': isFilter }" class="c-panel-filter__close"><button @click="deleteFilter" class="u-icon--close"></button></div>
 					</div>
+					<div class="c-panel-filter__status" :class="{ 'c-panel-filter__status--is-active': isFilter }">
+						<span v-if="articles">
+							<span v-if="articles.length > 0">{{ articles.length }} matches found</span>
+							<span v-if="articles.length === 0">No matches found</span>
+						</span>
+					</div>
 				</div>
 				<!-- filter section -->
 
-				<loader :active="loading"/>
+				<loader :active="loading" />
 
 				<!-- scrollbar -->
 				<perfect-scrollbar class="c-article-list__content" v-if="!loading">
