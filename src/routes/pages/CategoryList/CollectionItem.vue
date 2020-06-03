@@ -3,6 +3,7 @@
 		<!-- group title -->
 		<div
 			class="c-category__group-title"
+            @click="collectionCollapsed = !collectionCollapsed"
 			@contextmenu.prevent="dispatchContextMenu($event, collection)"
 			@dragover.prevent
 			@dragstart="dragStart('collection', null, collectionIndex, collection, $event)"
@@ -11,7 +12,7 @@
 			draggable="true"
 		>
 			<div class="c-category__group-name">{{ collection.title }}</div>
-			<div class="c-category__group-toggle u-icon--arrow-left" :class="{ 'c-category__group-toggle--is-collapsed': collectionCollapsed }" @click="collectionCollapsed = !collectionCollapsed"></div>
+			<div class="c-category__group-toggle u-icon--arrow-left" :class="{ 'c-category__group-toggle--is-collapsed': collectionCollapsed }"></div>
 		</div>
 
 		<div v-if="collection.categories.length === 0">

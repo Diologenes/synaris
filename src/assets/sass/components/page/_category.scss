@@ -51,18 +51,10 @@
 		padding-bottom: 1rem;
 		border-bottom: 1px solid clr(bg, d-2);
 
-		&:first-child {
-			padding-top: 1rem;
-		}
-
-		&:last-child {
-			margin-bottom: 5rem;
-			border-bottom: 1px solid transparent;
-		}
-
 		&-title {
 			@include textStyle(tiny);
 			@include textStyle(uppercase);
+			cursor: pointer;
 			font-weight: 600;
 			flex: 1 1 auto;
 			color: clr(txt, base);
@@ -82,7 +74,6 @@
 			position: relative;
 			width: 1.75rem;
 			height: 1.75rem;
-			cursor: pointer;
 			@include transitionAll;
 
 			&:before {

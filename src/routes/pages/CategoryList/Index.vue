@@ -118,7 +118,6 @@ export default {
 			ghostElement.innerHTML = object.title
 			document.body.appendChild(ghostElement)
 			$event.dataTransfer.setDragImage(ghostElement, 0, 0)
-
 			$event.dataTransfer.setData('draggedObject', payload)
 
 			// define style behavior for ...
