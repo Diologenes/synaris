@@ -4,12 +4,12 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 // import routes
-import index from '@/routes/pages/Index'
-import categoryList from '@/routes/pages/CategoryList'
-import articleList from '@/routes/pages/ArticleList'
-import articleShow from '@/routes/pages/ArticleShow'
-import search from '@/routes/pages/Search'
-import settings from '@/routes/pages/Settings'
+import index from '@/routes/pages/Index/Index'
+import categoryList from '@/routes/pages/CategoryList/Index'
+import articleList from '@/routes/pages/ArticleList/Index'
+import articleShow from '@/routes/pages/ArticleShow/Index'
+import search from '@/routes/pages/Search/Index'
+import settings from '@/routes/pages/Settings/Index'
 
 // route definitions
 export const router = new VueRouter({
