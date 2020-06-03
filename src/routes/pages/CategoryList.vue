@@ -3,7 +3,7 @@
 		<div class="c-category">
 			<div class="c-category__wrap" ref="resizerCategory" :style="{ width: categoryWindowWidth }">
 				<!-- panel section -->
-				<div class="c-panel-section">
+				<div class="c-panel-section u-m__b--4">
 					<div class="c-panel-section__title">Categories</div>
 				</div>
 				<!-- panel section -->
@@ -22,7 +22,8 @@
 							@dragend="dragEnd()"
 							draggable="true"
 						>
-							{{ collection.title }}
+							<div class="c-category__group-name">{{ collection.title }}</div>
+							<div class="c-category__group-toggle u-icon--arrow-left" :class="{'c-category__group-toggle--is-collapsed': collectionCollapsed}" @click="collectionCollapsed = !collectionCollapsed"></div>
 						</div>
 
 						<div v-if="collection.categories.length === 0">
@@ -31,7 +32,7 @@
 						<!-- group title -->
 
 						<!-- group content -->
-						<div class="c-category__group-content">
+						<div class="c-category__group-content" :class="{'c-category__group-content--is-collapsed': collectionCollapsed}">
 							<div class="c-category__item c-category__dropzone" v-for="(category, categoryIndex) in collection.categories" :key="category.id">
 								<b-link
 									@contextmenu.prevent="$refs.layermenuCategory.open($event, category)"
@@ -95,7 +96,8 @@ export default {
 	},
 	data() {
 		return {
-			contextObject: null
+			contextObject: null,
+			collectionCollapsed: false 
 		}
 	},
 	computed: {

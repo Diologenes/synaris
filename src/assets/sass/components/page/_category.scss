@@ -61,19 +61,48 @@
 		}
 
 		&-title {
+			@include textStyle(tiny);
+			@include textStyle(uppercase);
+			font-weight: 600;
 			flex: 1 1 auto;
 			color: clr(txt, base);
 			padding: 0.5rem 1.5rem;
 			margin: 2px 0;
 			border: 1px transparent;
 			align-items: center;
-			@include textStyle(tiny);
-			@include textStyle(uppercase);
-			font-weight: 600;
+			display: flex;
+		}
+
+		&-name {
+			flex: 1 1 auto;
+		}
+
+		&-toggle {
+			flex: 0 0 auto;
+			position: relative;
+			width: 1.75rem;
+			height: 1.75rem;
+			cursor: pointer;
+			@include transitionAll;
+
+			&:before {
+				transform: rotate(90deg);
+				margin: .5rem 0 0 .45rem;
+				position: absolute;
+			}
+
+			&--is-collapsed {
+				transform: rotate(180deg);
+			}
 		}
 
 		&-content {
+			@include transitionAll;
 			flex: 1 1 auto;
+
+			&--is-collapsed {
+				display: none;
+			}
 		}
 	}
 
