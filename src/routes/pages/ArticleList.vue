@@ -111,15 +111,15 @@ export default {
 		this.init()
 	},
 	methods: {
-		init() {
+		async init() {
 			let vm = this
 			let loadTimer = _.delay(function() {
 				vm.loading = true
 			}, 500)
 			let promises = []
 			vm.$store.dispatch('article/resetArticles')
-			promises.push(vm.$store.dispatch('article/getByCategory', { category: vm.$route.params.category }))
-			promises.push(vm.$store.dispatch('collection/setCurrentCategoryById', vm.$route.params.category))
+			await promises.push(vm.$store.dispatch('article/getByCategory', { category: vm.$route.params.category }))
+			await promises.push(vm.$store.dispatch('collection/setCurrentCategoryById', vm.$route.params.category))
 			Promise.all(promises).then(() => {
 				clearTimeout(loadTimer)
 				vm.loading = false
