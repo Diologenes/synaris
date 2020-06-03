@@ -10,54 +10,9 @@
 
 				<!-- scrollbar -->
 				<perfect-scrollbar class="c-category__content">
-					<!-- group item -->
-					<div v-for="(collection, collectionIndex) in collections" :key="collection.id" class="c-category__group">
-						<!-- group title -->
-						<div
-							class="c-category__group-title"
-							@contextmenu.prevent="$refs.layermenuCategory.open($event, collection)"
-							@dragover.prevent
-							@dragstart="dragStart('collection', null, collectionIndex, collection, $event)"
-							@drop="dragFinish(null, null, null, collectionIndex, $event)"
-							@dragend="dragEnd()"
-							draggable="true"
-						>
-							<div class="c-category__group-name">{{ collection.title }}</div>
-							<div class="c-category__group-toggle u-icon--arrow-left" :class="{'c-category__group-toggle--is-collapsed': collectionCollapsed}" @click="collectionCollapsed = !collectionCollapsed"></div>
-						</div>
-
-						<div v-if="collection.categories.length === 0">
-							<div class="c-category__dropzone c-category__dropzone--is-empty" @dragover.prevent @drop="dragFinish(null, null, 0, collectionIndex, $event)"></div>
-						</div>
-						<!-- group title -->
-
-						<!-- group content -->
-						<div class="c-category__group-content" :class="{'c-category__group-content--is-collapsed': collectionCollapsed}">
-							<div class="c-category__item c-category__dropzone" v-for="(category, categoryIndex) in collection.categories" :key="category.id">
-								<b-link
-									@contextmenu.prevent="$refs.layermenuCategory.open($event, category)"
-									@dragover.prevent
-									@dragstart="dragStart('category', categoryIndex, collectionIndex, category, $event)"
-									@dragend="dragEnd()"
-									@drop="dragFinish(category, collection, categoryIndex, collectionIndex, $event)"
-									draggable="true"
-									router-tag="a"
-									:to="{ name: 'articleList', params: { category: category.id } }"
-									class="c-category__link"
-									active-class="c-category__link--is-active"
-								>
-									<div class="c-category__link-title" :title="category.title">{{ category.title }}</div>
-									<div class="c-category__link-indicator">
-										<div class="c-panelbox">
-											<div class="c-panelbox__item">{{ category.dataValues.articleCount }}</div>
-										</div>
-									</div>
-								</b-link>
-							</div>
-						</div>
-						<!-- group content -->
-					</div>
-					<!-- group item -->
+					<transition v-for="(collection, collectionIndex) in collections" :key="collection.id">
+						<collection-item @dragStart="dragStart" @dragEnd="dragEnd" @dragFinish="dragFinish" @contextmenu="openContextMenu" :collection="collection" :collectionIndex="collectionIndex" />
+					</transition>
 				</perfect-scrollbar>
 				<!-- scrollbar -->
 
@@ -71,8 +26,8 @@
 		<modal-delete-category :item="contextObject" />
 		<modal-rename-category :item="contextObject" />
 		<LayerMenu
-			@select="contextCategorySelect"
 			ref="layermenuCategory"
+			@select="processContextMenu"
 			:options="[
 				{ method: 'rename', title: 'Rename ...', icon: 'edit' },
 				{ method: 'delete', title: 'Delete ...', icon: 'delete' }
@@ -87,17 +42,18 @@ import { mapGetters } from 'vuex'
 import modalAddCategory from '@/components/modals/AddCategory'
 import modalDeleteCategory from '@/components/modals/DeleteCategory'
 import modalRenameCategory from '@/components/modals/RenameCategory'
+import CollectionItem from './CollectionItem.vue'
 
 export default {
 	components: {
 		modalAddCategory,
 		modalDeleteCategory,
-		modalRenameCategory
+		modalRenameCategory,
+		CollectionItem
 	},
 	data() {
 		return {
-			contextObject: null,
-			collectionCollapsed: false 
+			contextObject: null
 		}
 	},
 	computed: {
@@ -114,6 +70,16 @@ export default {
 	},
 	mounted() {
 		this.$store.dispatch('collection/getAll')
+
+		// EventBus for method/categoryList. Intake params e.g. "{method: 'showCategoryDropzones', arguments: [true, false, 'string']}"
+		// Calls a method inside of this class
+		EventBus.listen('method/categoryList', (params) => {
+			if (typeof params.arguments !== 'undefined') {
+				this[params.method](...params.arguments)
+			} else {
+				this[params.method]()
+			}
+		})
 	},
 	methods: {
 		showCategoryDropzones: _.debounce((ignoreEmptyDropzones = false) => {
@@ -129,6 +95,7 @@ export default {
 				element.classList.add(activeClass)
 			})
 		}, 30),
+
 		hideCategoryDropzones() {
 			const identifierClass = 'c-category__dropzone'
 			const activeClass = 'c-category__dropzone--is-active'
@@ -139,9 +106,6 @@ export default {
 		},
 
 		dragStart(type, categoryIndex, collectionIndex, object, $event) {
-			// close layermenu if opened
-			this.$refs.layermenuCategory.close()
-
 			// define payload and dataTransfer
 			let payload = JSON.stringify({
 				type: type,
@@ -166,11 +130,13 @@ export default {
 					break
 			}
 		},
+
 		dragEnd() {
 			var elem = document.querySelector('.c-dnd__ghost')
 			elem.parentNode.removeChild(elem)
 			this.hideCategoryDropzones()
 		},
+
 		dragFinish(category, collection, categoryDropIndex, collectionDropIndex, $event) {
 			// dragged payload
 			let payload = JSON.parse($event.dataTransfer.getData('draggedObject'))
@@ -245,7 +211,11 @@ export default {
 			})
 		},
 
-		contextCategorySelect(option) {
+		openContextMenu($event, collection) {
+			this.$refs.layermenuCategory.open($event, collection)
+		},
+
+		processContextMenu(option) {
 			let vm = this
 			vm.contextObject = option.payload
 			switch (option.method) {

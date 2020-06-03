@@ -136,7 +136,7 @@ export default {
 		},
 
 		dragStart(article, $event) {
-			this.$parent.showCategoryDropzones(true)
+			EventBus.fire('method/categoryList', { method: 'showCategoryDropzones', arguments: [true, false, 'string'] })
 			this.$refs.layermenuArticle.close()
 			let payload = JSON.stringify({
 				type: 'article',
@@ -152,10 +152,11 @@ export default {
 		},
 
 		dragEnd($event) {
-			this.$parent.hideCategoryDropzones()
+			EventBus.fire('method/categoryList', { method: 'hideCategoryDropzones'})
 		},
 
 		contextArticleSelect(option) {
+			console.log('contextArticleSelect')
 			let vm = this
 			vm.contextObject = option.payload
 			switch (option.method) {
