@@ -3,7 +3,7 @@
 		<!-- group title -->
 		<div
 			class="c-category__group-title"
-            @click="collectionCollapsed = !collectionCollapsed"
+			@click="collapseToggle()"
 			@contextmenu.prevent="dispatchContextMenu($event, collection)"
 			@dragover.prevent
 			@dragstart="dragStart('collection', null, collectionIndex, collection, $event)"
@@ -12,7 +12,7 @@
 			draggable="true"
 		>
 			<div class="c-category__group-name">{{ collection.title }}</div>
-			<div class="c-category__group-toggle u-icon--arrow-left" :class="{ 'c-category__group-toggle--is-collapsed': collectionCollapsed }"></div>
+			<div class="c-category__group-toggle u-icon--arrow-left" :class="{ 'c-category__group-toggle--is-collapsed': isCollapsed }"></div>
 		</div>
 
 		<div v-if="collection.categories.length === 0">
@@ -21,7 +21,7 @@
 		<!-- group title -->
 
 		<!-- group content -->
-		<div class="c-category__group-content" :class="{ 'c-category__group-content--is-collapsed': collectionCollapsed }">
+		<div class="c-category__group-content" :class="{ 'c-category__group-content--is-collapsed': isCollapsed }">
 			<div class="c-category__item c-category__dropzone" v-for="(category, categoryIndex) in collection.categories" :key="category.id">
 				<b-link
 					@contextmenu.prevent="dispatchContextMenu($event, category)"
@@ -65,7 +65,18 @@ export default {
 			collectionCollapsed: false
 		}
 	},
+	computed: {
+		isCollapsed: {
+			get() {
+				return this.$store.getters['settings/collapsedCollections'].includes(this.collection.id) ? true : false
+			}
+		}
+	},
 	methods: {
+		collapseToggle() {
+			this.$store.dispatch('settings/modifyCollapsedCollection', this.collection.id)
+		},
+
 		dragStart(...parameters) {
 			this.$emit('dragStart', ...parameters)
 		},
