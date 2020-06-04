@@ -14,10 +14,11 @@
     right: -.5rem;
     min-width: 15rem;
     min-height: 3rem;
-    background: clr(bg, base, 2, w);
-    border-radius: $border-radius-1;
-    box-shadow: 0 0 30px 0 rgba(clr(bg, d-2), .9);
-    @include triangleBox(clr(bg, base, 2, w));
+    background-color: clr(bg, d-2);
+    border: 1px solid clr(bg, d-3);
+    border-radius: .25rem;
+    box-shadow: .1rem .1rem .5rem .1rem rgba(0,0,0,.2);
+    @include triangleBox(clr(bg, d-2));
     @include transitionAll();
     @include transitionCubic();
     z-index: -1;
@@ -39,7 +40,7 @@
     }
 
     &-inner {
-      padding: 1rem 1rem;
+      padding: .5rem .25rem;
       display: flex;
       width: 100%;
       position: relative;
@@ -54,14 +55,14 @@
 
     &-item {
       &--divider {
-        padding: .5rem 0;
+        padding: .5rem 1.5rem;
 
         &:before {
           display: block;
           content: '';
           width: 100%;
+          border-bottom: 1px solid clr(bg, l-1);
           height: 1px;
-          background: clr(bg, base, 4, w);
         }
       }
     }
@@ -79,9 +80,9 @@
     &-link {
       @include textStyle(contextMenu);
       @include transitionAll();
-      color: clr(txt);
+      color: clr(txt, alt);
       display: flex;
-      padding: .5rem .5rem;
+      padding: .75rem 1.5rem;
       position: relative;
       cursor: pointer;
       justify-content: space-between;
@@ -102,9 +103,9 @@
 
 
       &:hover {
-        color: clr(txt, alt);
         text-decoration: none;
-        background: clr(bg, d-1);
+        background: clr(bg, d-3);
+        color: clr(txt, alt);
 
         &:before {
           color: clr(clr);

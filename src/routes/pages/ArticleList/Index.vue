@@ -7,24 +7,13 @@
 					<div class="c-panel-section__title">
 						<span class="u-hash" v-if="category">{{ category.title }}</span>
 					</div>
+					<div class="c-panel-section__options">
+						<form-panel-box :options="filterOptions" :clickable="true" icon="filter" />
+					</div>
 				</div>
 				<!-- panel section -->
 
-				<!-- filter section -->
-				<div class="c-panel-filter">
-					<div class="c-panel-filter__wrap">
-						<input v-model="filter" @keyup="filterArticles" :class="{ 'c-panel-filter__input--is-active': isFilter }" class="c-panel-filter__input" type="text" placeholder="Filter articles ..." />
-						<div :class="{ 'c-panel-filter__close--is-active': isFilter }" class="c-panel-filter__close"><button @click="deleteFilter" class="u-icon--close"></button></div>
-					</div>
-					<div class="c-panel-filter__status" :class="{ 'c-panel-filter__status--is-active': isFilter }">
-						<span v-if="articles">
-							<span v-if="articles.length > 0">{{ articles.length }} matches found</span>
-							<span v-if="articles.length === 0">No matches found</span>
-						</span>
-					</div>
-				</div>
-				<!-- filter section -->
-
+				<search-bar :category="category" :articles="articles" />
 				<loader :active="loading" />
 
 				<!-- scrollbar -->
@@ -61,11 +50,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import searchBar from './SearchBar'
 import modalDeleteArticle from '@/components/modals/DeleteArticle'
 import _ from 'lodash'
 
 export default {
 	components: {
+		searchBar,
 		modalDeleteArticle
 	},
 	computed: {
@@ -78,26 +69,22 @@ export default {
 		articleListWindowWidth() {
 			return this.$store.getters['settings/articleListWindowWidth']
 		},
-		filter: {
-			get() {
-				return this.$store.getters['article/searchWord']
-			},
-			set(value) {
-				this.$store.dispatch('article/setSearchWord', value)
-			}
-		},
-		isFilter() {
-			if (this.filter.length > 0) {
-				return true
-			} else {
-				return false
-			}
-		}
 	},
 	data() {
 		return {
 			loading: false,
-			contextObject: null
+			contextObject: null,
+			filterOptions: [
+				{ type: 'method', title: 'Order by title' },
+				{ type: 'method', title: 'Order by modify date' },
+				{ type: 'method', title: 'Order by recently viewed' },
+				{ type: 'divider' },
+				{ type: 'method', title: 'Reverse direction', icon: 'move' },
+				{ type: 'divider' },
+				{ type: 'method', title: 'Show description', icon: 'text' },
+				{ type: 'method', title: 'Show labels', icon: 'label' },
+				{ type: 'method', title: 'Show date', icon: 'calendar' }
+			]
 		}
 	},
 	watch: {
@@ -126,14 +113,6 @@ export default {
 			})
 		},
 
-		filterArticles: _.debounce(function() {
-			this.$store.dispatch('article/getByCategory', { category: this.$route.params.category })
-		}, 400),
-
-		deleteFilter() {
-			this.$store.dispatch('article/setSearchWord', '')
-			this.filterArticles()
-		},
 
 		dragStart(article, $event) {
 			EventBus.fire('method/categoryList', { method: 'showCategoryDropzones', arguments: [true, false, 'string'] })
@@ -152,7 +131,7 @@ export default {
 		},
 
 		dragEnd($event) {
-			EventBus.fire('method/categoryList', { method: 'hideCategoryDropzones'})
+			EventBus.fire('method/categoryList', { method: 'hideCategoryDropzones' })
 		},
 
 		contextArticleSelect(option) {

@@ -10,6 +10,11 @@
 
 	&__title {
 		@include textStyle(regularUppercase);
+		flex: 1 1 auto;
 		color: clr(txt, alt);
+	}
+
+	&__options {
+		flex: 0 0 auto;
 	}
 }

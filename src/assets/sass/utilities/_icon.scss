@@ -95,7 +95,7 @@
   }
 
   &--move {
-    @include iconFont('\0073');
+    @include iconFont('\0072');
   }
 
   &--text {
@@ -156,6 +156,15 @@
 
   &--bookmark {
     @include iconFont('\006d');
+  }
+  &--watch {
+    @include iconFont('\007a');
+  }
+  &--pin {
+    @include iconFont('\0037');
+  }
+  &--calendar {
+    @include iconFont('\0076');
   }
 }
 
