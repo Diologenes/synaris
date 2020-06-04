@@ -13,7 +13,7 @@
   },
   "main": "background.js",
   "dependencies": {
-    "aws-sdk": "^2.688.0",
+    "aws-sdk": "^2.690.0",
     "core-js": "^3.6.4",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.11",
