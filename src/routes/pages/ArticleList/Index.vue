@@ -68,22 +68,24 @@ export default {
 		},
 		articleListWindowWidth() {
 			return this.$store.getters['settings/articleListWindowWidth']
-		},
+		}
 	},
 	data() {
 		return {
 			loading: false,
 			contextObject: null,
 			filterOptions: [
-				{ type: 'method', title: 'Order by title' },
-				{ type: 'method', title: 'Order by modify date' },
-				{ type: 'method', title: 'Order by recently viewed' },
-				{ type: 'divider' },
-				{ type: 'method', title: 'Reverse direction', icon: 'move' },
-				{ type: 'divider' },
-				{ type: 'method', title: 'Show description', icon: 'text' },
-				{ type: 'method', title: 'Show labels', icon: 'label' },
-				{ type: 'method', title: 'Show date', icon: 'calendar' }
+				{ special: 'group', title: 'Order by' },
+				{ method: 'changeFilterOptions', title: 'Title', icon: 'arrow-left' },
+				{ method: 'changeFilterOptions', title: 'Modify date', icon: 'arrow-left' },
+				{ method: 'changeFilterOptions', title: 'Recently viewed', icon: 'arrow-left' },
+				{ special: 'divider' },
+				{ method: 'changeFilterOptions', title: 'Reverse direction', icon: 'move' },
+				{ special: 'divider' },
+				{ special: 'group', title: 'Show in results' },
+				{ method: 'changeFilterOptions', title: 'Description', icon: 'text' },
+				{ method: 'changeFilterOptions', title: 'Labels', icon: 'label' },
+				{ method: 'changeFilterOptions', title: 'Date', icon: 'calendar' }
 			]
 		}
 	},
@@ -98,6 +100,8 @@ export default {
 		this.init()
 	},
 	methods: {
+		changeFilterOptions() {},
+
 		async init() {
 			let vm = this
 			let loadTimer = _.delay(function() {
@@ -112,7 +116,6 @@ export default {
 				vm.loading = false
 			})
 		},
-
 
 		dragStart(article, $event) {
 			EventBus.fire('method/categoryList', { method: 'showCategoryDropzones', arguments: [true, false, 'string'] })

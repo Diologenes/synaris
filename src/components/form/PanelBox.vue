@@ -1,33 +1,31 @@
 <template>
-	<div v-click-outside="boxClose" class="c-panelbox c-contextmenu" :class="computedWrapperClass">
+	<div v-click-outside="boxClose" class="c-panelbox c-contextmenu" :class="wrapperClasses">
 		<!-- prefix -->
 		<div v-if="prefix" class="c-panelbox__prefix" @click="boxClick()" v-text="prefix"></div>
 
 		<!-- item -->
-		<div class="c-panelbox__item" :class="computedItemClass" @click="boxClick()" v-text="text"></div>
+		<div class="c-panelbox__item" :class="panelClasses" @click="boxClick()" v-text="text"></div>
 
 		<!-- contextmenu container (slot) -->
-		<div v-if="hasDefaultSlot" class="c-contextmenu__container" :class="computedSlotClass">
+		<div v-if="hasDefaultSlot" class="c-contextmenu__container" :class="slotClasses">
 			<div class="c-contextmenu__container-inner">
 				<slot />
 			</div>
 		</div>
 
-		<!-- contextmenu container (list) -->
-		<div v-if="options" class="c-contextmenu__container" :class="computedContextClass">
-			<div class="c-contextmenu__container-inner">
-				<ul class="c-contextmenu__list">
-					<transition v-for="(option, key) in options" :key="key">
-						<li v-if="option.type === 'route'" class="c-contextmenu__list-item" @click="itemClick(option)">
-							<b-link router-tag="a" :to="option.route" :class="linkClasses(option)">{{ option.title }}</b-link>
-						</li>
-						<li v-if="option.type === 'method'" class="c-contextmenu__list-item" @click="itemClick(option)">
-							<span :class="linkClasses(option)">{{ option.title }}</span>
-						</li>
-						<li v-if="option.type === 'divider'" class="c-contextmenu__list-item c-contextmenu__list-item--divider"></li>
-					</transition>
-				</ul>
-			</div>
+		<!-- contextmenu new -->
+		<div class="c-layermenu" :class="{ 'c-layermenu--is-active': isFoldout, 'c-layermenu--is-foldout': isFoldout }" ref="popper" tabindex="-1">
+			<ul class="c-layermenu__wrap">
+				<transition v-for="(option, key) in options" :key="key">
+					<li v-if="typeof option.method !== 'undefined'" class="c-layermenu__item" @click="select(option)">
+						<span class="c-layermenu__link"><span v-if="option.icon" :class="itemIcon(option)"></span>{{ option.title }}</span>
+					</li>
+					<li v-if="option.special === 'divider'" class="c-layermenu__divider"></li>
+					<li v-if="option.special === 'group'" class="layermenu__item">
+						<span class="c-layermenu__group"><span v-if="option.icon" :class="itemIcon(option)"></span>{{ option.title }}</span>
+					</li>
+				</transition>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -64,7 +62,7 @@ export default {
 		},
 
 		// wrapper class
-		computedWrapperClass() {
+		wrapperClasses() {
 			let cssClasses = []
 			if (this.additionalClass) {
 				cssClasses.push(this.additionalClass)
@@ -95,7 +93,7 @@ export default {
 		},
 
 		// item class
-		computedItemClass() {
+		panelClasses() {
 			let cssClasses = []
 			if (this.icon) {
 				cssClasses.push('u-icon--' + this.icon)
@@ -107,21 +105,8 @@ export default {
 			}
 		},
 
-		// contextmenu class (not slot)
-		computedContextClass() {
-			let cssClasses = []
-			if (this.contextSize) {
-				cssClasses.push('c-contextmenu__container--size-' + this.contextSize)
-			}
-			if (cssClasses.length > 0) {
-				return cssClasses.join(' ')
-			} else {
-				return ''
-			}
-		},
-
 		// slot class
-		computedSlotClass() {
+		slotClasses() {
 			let cssClasses = []
 			if (this.slotClass) {
 				cssClasses.push(this.slotClass)
@@ -137,18 +122,9 @@ export default {
 		}
 	},
 	methods: {
-		// link classes
-		linkClasses(option) {
-			let cssClasses = []
-			cssClasses.push('c-contextmenu__list-link')
-			if (option.icon) {
-				cssClasses.push('c-contextmenu__list-link--has-icon')
-				cssClasses.push('u-icon--' + option.icon)
-			}
-			if (cssClasses.length > 0) {
-				return cssClasses.join(' ')
-			} else {
-				return ''
+		itemIcon(option) {
+			if (typeof option.icon !== 'undefined') {
+				return 'c-layermenu__icon u-icon--' + option.icon
 			}
 		},
 
@@ -166,7 +142,7 @@ export default {
 		},
 
 		// on item in options clicked
-		itemClick(option) {
+		select(option) {
 			this.$emit('select', option)
 			this.boxClose()
 		}
