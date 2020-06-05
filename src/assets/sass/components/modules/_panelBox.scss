@@ -20,22 +20,6 @@
 	}
   }
 
-  &--color {
-	&-dark {
-	  .c-panelbox__item,
-	  .c-panelbox__prefix {
-		background: clr(bg, d-1, 5);
-	  }
-	}
-	&-secondary {
-	  .c-panelbox__item,
-	  .c-panelbox__prefix {
-		background: clr(clr, alt);
-		color: clr(txt, alt);
-	  }
-	}
-  }
-
   &--size {
 	&-large {
 	  .c-panelbox__item {
@@ -81,7 +65,7 @@
 	display: flex;
 	flex: 1 1 auto;
 	height: 1.75rem;
-	background: clr(bg, d-1);
+	background: clr(bg, l-1);
 	justify-content: flex-start;
 	align-items: center;
 	padding: 0 1rem;
@@ -89,7 +73,7 @@
 	border-top-left-radius: $border-radius-1;
 	margin-right: 2px;
 	color: clr(txt);
-	@include textStyle(smallUppercase);
+	@include textStyle(small);
 	@include transitionAll();
 
 	&--size {

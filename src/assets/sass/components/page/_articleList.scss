@@ -64,6 +64,16 @@
 		}
 	}
 
+	&__date {
+		@include textStyle(tiny);
+		color: clr(txt, base);
+		margin-bottom: .5rem;
+		
+		&--low-opacity {
+			opacity: .5;
+		}
+	}
+
 	&__title {
 		@include textStyle(regular);
 		color: clr(txt, alt);

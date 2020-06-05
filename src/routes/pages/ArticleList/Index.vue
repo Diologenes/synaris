@@ -8,7 +8,16 @@
 						<span class="u-hash" v-if="category">{{ category.title }}</span>
 					</div>
 					<div class="c-panel-section__options">
-						<form-panel-box :options="filterOptions" :clickable="true" icon="filter" />
+						<panel-box :clickable="true" icon="filter">
+							<panel-box-header title="Order by" />
+							<panel-box-radio value="title" title="Title" icon="move" :group="filterOptionsOrderBy" dispatchToStore="settings/filterOrderBy" />
+							<panel-box-radio value="updatedAt" title="Last modified" icon="move" :group="filterOptionsOrderBy" dispatchToStore="settings/filterOrderBy" />
+							<panel-box-divider />
+							<panel-box-toggle title="Reverse order" icon="change" :active="filterOptionsReverseOrder" dispatchToStore="settings/filterReverseOrder" />
+							<panel-box-divider />
+							<panel-box-toggle title="Show date" icon="calendar" :active="filterOptionsShowDate" dispatchToStore="settings/filterShowDate" />
+							<panel-box-toggle title="Show description" icon="text" :active="filterOptionsShowDescription" dispatchToStore="settings/filterShowDescription" />
+						</panel-box>
 					</div>
 				</div>
 				<!-- panel section -->
@@ -30,8 +39,11 @@
 							class="c-article-list__link"
 							active-class="c-article-list__link--is-active"
 						>
+							<div v-if="filterOptionsShowDate" class="c-article-list__date">
+								{{ article.updatedAt | formatDate('DateTime') }} <span class="c-article-list__date--low-opacity">({{ article.updatedAt | formatDate('fromNow') }})</span>
+							</div>
 							<div class="c-article-list__title">{{ article.title }}</div>
-							<div class="c-article-list__description">{{ article.description }}</div>
+							<div v-if="filterOptionsShowDescription" class="c-article-list__description">{{ article.description }}</div>
 						</b-link>
 					</div>
 				</perfect-scrollbar>
@@ -68,31 +80,24 @@ export default {
 		},
 		articleListWindowWidth() {
 			return this.$store.getters['settings/articleListWindowWidth']
+		},
+		filterOptionsShowDescription() {
+			return this.$store.getters['settings/filterShowDescription']
+		},
+		filterOptionsShowDate() {
+			return this.$store.getters['settings/filterShowDate']
+		},
+		filterOptionsOrderBy() {
+			return this.$store.getters['settings/filterOrderBy']
+		},
+		filterOptionsReverseOrder() {
+			return this.$store.getters['settings/filterReverseOrder']
 		}
 	},
 	data() {
 		return {
 			loading: false,
-			contextObject: null,
-			filterOptions: [
-				{ type: 'header', title: 'Order by' },
-				{
-					type: 'radiogroup',
-					method: 'changeFilterOptions',
-					options: [
-						{ title: 'Title', value: 'title', active: true },
-						{ title: 'Recently updated', value: 'modifyDate', active: false },
-						{ title: 'Recently viewed', value: 'lastVisit', active: false }
-					]
-				},
-				{ type: 'divider' },
-				{ type: 'toggle', method: 'changeFilterOptions', title: 'Reverse sorting', icon: 'move', active: false  },
-				{ type: 'divider' },
-				{ type: 'header', title: 'Show in results' },
-				{ type: 'toggle', method: 'changeFilterOptions', title: 'Description', icon: 'text', active: true  },
-				{ type: 'toggle', method: 'changeFilterOptions', title: 'Labels', icon: 'label', active: false  },
-				{ type: 'toggle', method: 'changeFilterOptions', title: 'Date', icon: 'calendar', active: false  }
-			]
+			contextObject: null
 		}
 	},
 	watch: {
@@ -106,8 +111,6 @@ export default {
 		this.init()
 	},
 	methods: {
-		changeFilterOptions() {},
-
 		async init() {
 			let vm = this
 			let loadTimer = _.delay(function() {
@@ -120,6 +123,7 @@ export default {
 			Promise.all(promises).then(() => {
 				clearTimeout(loadTimer)
 				vm.loading = false
+				console.log(vm.articles)
 			})
 		},
 

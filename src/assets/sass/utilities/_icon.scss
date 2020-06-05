@@ -166,5 +166,8 @@
   &--calendar {
     @include iconFont('\0076');
   }
+  &--change {
+    @include iconFont('\0031');
+  }
 }
 

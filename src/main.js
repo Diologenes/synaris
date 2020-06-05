@@ -6,6 +6,7 @@ import { router } from './routes/routes'
 import BootstrapVue from 'bootstrap-vue'
 import PerfectScrollbar from 'vue2-perfect-scrollbar'
 require('./services/EventBus')
+require('./filters/formatDate')
 require('./components/components')
 const db = require('./database/models')
 

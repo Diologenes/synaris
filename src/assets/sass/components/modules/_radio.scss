@@ -11,6 +11,7 @@
 		.c-radio__pin {
 			transform: scale(0.7);
 			background: clr(txt, base);
+			border: 3px solid transparent;
 		}
 	}
 
@@ -23,7 +24,8 @@
 		flex: 0 0 auto;
 
 		&--is-active {
-            background: clr(clr, base);
+			border: 3px solid clr(clr, base);
+            background: transparent;
 			transform: scale(1);
 		}
 	}
