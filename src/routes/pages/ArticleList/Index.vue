@@ -75,17 +75,23 @@ export default {
 			loading: false,
 			contextObject: null,
 			filterOptions: [
-				{ special: 'group', title: 'Order by' },
-				{ method: 'changeFilterOptions', title: 'Title', icon: 'arrow-left' },
-				{ method: 'changeFilterOptions', title: 'Modify date', icon: 'arrow-left' },
-				{ method: 'changeFilterOptions', title: 'Recently viewed', icon: 'arrow-left' },
-				{ special: 'divider' },
-				{ method: 'changeFilterOptions', title: 'Reverse direction', icon: 'move' },
-				{ special: 'divider' },
-				{ special: 'group', title: 'Show in results' },
-				{ method: 'changeFilterOptions', title: 'Description', icon: 'text' },
-				{ method: 'changeFilterOptions', title: 'Labels', icon: 'label' },
-				{ method: 'changeFilterOptions', title: 'Date', icon: 'calendar' }
+				{ type: 'header', title: 'Order by' },
+				{
+					type: 'radiogroup',
+					method: 'changeFilterOptions',
+					options: [
+						{ title: 'Title', value: 'title', active: true },
+						{ title: 'Recently updated', value: 'modifyDate', active: false },
+						{ title: 'Recently viewed', value: 'lastVisit', active: false }
+					]
+				},
+				{ type: 'divider' },
+				{ type: 'toggle', method: 'changeFilterOptions', title: 'Reverse sorting', icon: 'move', active: false  },
+				{ type: 'divider' },
+				{ type: 'header', title: 'Show in results' },
+				{ type: 'toggle', method: 'changeFilterOptions', title: 'Description', icon: 'text', active: true  },
+				{ type: 'toggle', method: 'changeFilterOptions', title: 'Labels', icon: 'label', active: false  },
+				{ type: 'toggle', method: 'changeFilterOptions', title: 'Date', icon: 'calendar', active: false  }
 			]
 		}
 	},

@@ -38,7 +38,7 @@
 
     &__item {
         @include textStyle('nonBreak');
-        margin: .25rem 0;
+        margin: .125rem 0;
         display: flex;
         align-content: center;
         align-items: center;
@@ -46,6 +46,15 @@
 
     &__icon {
         flex: 0 0 1.5rem;
+    }
+
+    &__suffix {
+        flex: 0 0 auto;
+        margin-left: 1rem;
+    }
+
+    &__text {
+        flex: 1 1 auto;
     }
 
     &__group {
@@ -64,10 +73,12 @@
         @include textStyle('contextMenu');
         @include textStyle('nonSelect');
         display: flex;
-        flex: 1;
+        flex: 1 1 auto;
         padding: .75rem 1.5rem;
         color: clr(txt, alt);
         cursor: pointer;
+        align-items: center;
+
         &:hover {
             text-decoration: none;
             background: clr(bg, d-3);

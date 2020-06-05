@@ -17,13 +17,50 @@
 		<div class="c-layermenu" :class="{ 'c-layermenu--is-active': isFoldout, 'c-layermenu--is-foldout': isFoldout }" ref="popper" tabindex="-1">
 			<ul class="c-layermenu__wrap">
 				<transition v-for="(option, key) in options" :key="key">
-					<li v-if="typeof option.method !== 'undefined'" class="c-layermenu__item" @click="select(option)">
-						<span class="c-layermenu__link"><span v-if="option.icon" :class="itemIcon(option)"></span>{{ option.title }}</span>
-					</li>
-					<li v-if="option.special === 'divider'" class="c-layermenu__divider"></li>
-					<li v-if="option.special === 'group'" class="layermenu__item">
+					<!-- header -->
+					<li v-if="option.type === 'header'" class="layermenu__item">
 						<span class="c-layermenu__group"><span v-if="option.icon" :class="itemIcon(option)"></span>{{ option.title }}</span>
 					</li>
+					<!-- divider -->
+					<li v-if="option.type === 'divider'" class="c-layermenu__divider"></li>
+
+					<!-- method -->
+					<li v-if="option.type === 'method'" class="c-layermenu__item" @click="select(option)">
+						<span class="c-layermenu__link"><span v-if="option.icon" :class="itemIcon(option)"></span>{{ option.title }}</span>
+					</li>
+
+					<!-- radiogroup -->
+					<span v-if="option.type === 'radiogroup'">
+						<transition v-for="(option, optionIndex) in option.options" :key="optionIndex">
+							<li class="c-layermenu__item" @click="select(option)">
+								<span class="c-layermenu__link">
+									<span v-if="option.icon" :class="itemIcon(option)"></span>
+									<span class="c-layermenu__text">{{ option.title }}</span>
+									<span class="c-layermenu__suffix">
+										<span class="c-radio">
+											<span class="c-radio__pin" :class="{'c-radio__pin--is-active': option.active}"></span>
+										</span>
+									</span>
+								</span>
+							</li>
+						</transition>
+					</span>
+
+				<!-- toggle -->
+					<span v-if="option.type === 'toggle'">
+						<li class="c-layermenu__item" @click="select(option)">
+								<span class="c-layermenu__link">
+									<span v-if="option.icon" :class="itemIcon(option)"></span>
+									<span class="c-layermenu__text">{{ option.title }}</span>
+									<span class="c-layermenu__suffix">
+										<span class="c-toggle">
+											<span class="c-toggle__pin" :class="{'c-toggle__pin--is-active': option.active}"></span>
+										</span>
+									</span>
+								</span>
+							</li>
+					</span>
+
 				</transition>
 			</ul>
 		</div>

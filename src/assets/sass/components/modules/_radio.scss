@@ -1,0 +1,30 @@
+.c-radio {
+	width: 1.0rem;
+	height: 1.0rem;
+	border-radius: 100%;
+	background: clr(bg, l-1);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&:hover {
+		.c-radio__pin {
+			transform: scale(0.7);
+			background: clr(txt, base);
+		}
+	}
+
+	&__pin {
+		@include transitionAll();
+		width: inherit;
+		height: inherit;
+		border-radius: inherit;
+		transform: scale(0);
+		flex: 0 0 auto;
+
+		&--is-active {
+            background: clr(clr, base);
+			transform: scale(1);
+		}
+	}
+}

@@ -1,0 +1,24 @@
+.c-toggle {
+    width: 2.5rem;
+	height: 1.0rem;
+	border-radius: .25rem;
+	background: clr(bg, l-1);
+    display: flex;
+    position: relative;
+    
+    &__pin {
+        @include transitionAll();
+        left: 0;
+        position: absolute;
+        width: 1.25rem;
+        height: inherit;
+        border-radius: inherit;
+        background: clr(txt, base);
+    
+        &--is-active {
+            margin-left: 1.25rem;
+            background: clr(clr, base);
+        }
+    }
+
+}
