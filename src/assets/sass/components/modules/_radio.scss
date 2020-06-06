@@ -16,12 +16,13 @@
 	}
 
 	&__pin {
-		@include transitionAll();
+        transition: all 250ms cubic-bezier(.53,-0.3,.12,1.64);
 		width: inherit;
 		height: inherit;
 		border-radius: inherit;
 		transform: scale(0);
 		flex: 0 0 auto;
+		border: 3px solid transparent;
 
 		&--is-active {
 			border: 3px solid clr(clr, base);

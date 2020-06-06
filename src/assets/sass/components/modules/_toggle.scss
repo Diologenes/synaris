@@ -5,9 +5,9 @@
 	background: clr(bg, l-1);
     display: flex;
     position: relative;
-    
+
     &__pin {
-        @include transitionAll();
+        transition: all 250ms cubic-bezier(.53,-0.3,.12,1.64);
         left: 0;
         position: absolute;
         width: 1.25rem;

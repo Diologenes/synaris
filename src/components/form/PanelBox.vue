@@ -1,13 +1,13 @@
 <template>
 	<div ref="panelBox" v-click-outside="close" class="c-panelbox c-contextmenu" :class="wrapperClasses">
 		<!-- prefix -->
-		<div v-if="prefix" class="c-panelbox__prefix" @click="click()" v-text="prefix"></div>
+		<div v-if="prefix" class="c-panelbox__prefix" @click="open()" v-text="prefix"></div>
 
 		<!-- item -->
-		<div class="c-panelbox__item" :class="panelClasses" @mouseenter="debouncedCancelClose" @click="click()" v-text="text"></div>
+		<div class="c-panelbox__item" :class="panelClasses" @mouseenter="debouncedCancelClose" @click="open()" v-text="text"></div>
 
 		<!-- slot / layermenu -->
-		<div @mouseleave="debouncedClose" @mouseenter="debouncedCancelClose" v-if="hasDefaultSlot" class="c-layermenu" :class="{ 'c-layermenu--is-active': isFoldout, 'c-layermenu--is-foldout': isFoldout }" ref="popper" tabindex="-1">
+		<div ref="popperPanelBox" @mouseleave="debouncedClose" @mouseenter="debouncedCancelClose" v-if="hasDefaultSlot" class="c-layermenu" :class="{ 'c-layermenu--is-active': isFoldout, 'c-layermenu--is-foldout': isFoldout }" tabindex="-1">
 			<div class="c-layermenu__wrap">
 				<slot />
 			</div>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { createPopper } from '@popperjs/core'
 import ClickOutside from 'vue-click-outside'
 
 export default {
@@ -102,13 +103,32 @@ export default {
 		},
 
 		// on box clicked
-		click() {
+		open() {
 			if (this.clickable) {
 				this.$emit('submit')
 				if (this.hasDefaultSlot) {
 					this.isFoldout = !this.isFoldout
 				}
 			}
+
+			createPopper(this.$refs.panelBox, this.$refs.popperPanelBox, {
+				placement: 'bottom-end',
+				strategy: 'fixed',
+				modifiers: [
+					{
+						name: 'offset',
+						options: {
+							offset: [0, 10]
+						}
+					},
+					{
+						name: 'preventOverflow',
+						options: {
+							boundariesElement: 'window'
+						}
+					}
+				]
+			})
 		},
 
 		// on box closed
