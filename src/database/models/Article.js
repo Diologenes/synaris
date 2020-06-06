@@ -22,6 +22,9 @@ class Article extends Sequelize.Model {
 				categoryId: {
 					type: DataTypes.INTEGER
 				},
+				isFavourite: {
+					type: DataTypes.INTEGER
+				},
 				visitedAt: {
 					type: DataTypes.DATE
 				}

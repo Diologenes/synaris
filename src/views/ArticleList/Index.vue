@@ -42,7 +42,7 @@
 		<router-view />
 
 		<modal-delete-article :item="contextObject" />
-		<LayerMenu @select="contextArticleSelect" ref="layermenuArticle" :options="[{ method: 'delete', title: 'Delete ...', icon: 'delete' }]" />
+		<LayerMenu @select="contextArticleSelect" ref="layermenuArticle" :options="contextOptions" />
 	</div>
 </template>
 
@@ -85,7 +85,8 @@ export default {
 	data() {
 		return {
 			loading: false,
-			contextObject: null
+			contextObject: null,
+			contextOptions: []
 		}
 	},
 	watch: {
@@ -99,13 +100,15 @@ export default {
 		this.getArticles()
 	},
 	methods: {
-		async getArticles() {
+		async getArticles(resetArticles = true) {
 			let vm = this
 			let loadTimer = _.delay(function() {
 				vm.loading = true
 			}, 500)
 			let promises = []
-			vm.$store.dispatch('article/resetArticles')
+			if (resetArticles) {
+				vm.$store.dispatch('article/resetArticles')
+			}
 			await promises.push(vm.$store.dispatch('article/getByCategory', { category: vm.$route.params.category }))
 			await promises.push(vm.$store.dispatch('collection/setCurrentCategoryById', vm.$route.params.category))
 			Promise.all(promises).then(() => {
@@ -135,6 +138,13 @@ export default {
 		},
 
 		openContextMenu($event, article) {
+			console.log(article.isFavourite)
+			this.contextOptions = [{ special: 'divider' }, { method: 'delete', title: 'Delete ...', icon: 'delete' }]
+			if (article.isFavourite === null || article.isFavourite === 0) {
+				this.contextOptions.unshift({ method: 'toggleFavourites', title: 'Add to favorites', icon: 'star' })
+			} else {
+				this.contextOptions.unshift({ method: 'toggleFavourites', title: 'Remove from favorites', icon: 'star' })
+			}
 			this.$refs.layermenuArticle.open($event, article)
 		},
 
@@ -142,10 +152,24 @@ export default {
 			let vm = this
 			vm.contextObject = option.payload
 			switch (option.method) {
+				case 'toggleFavourites':
+					vm.toggleFavourites(vm.contextObject)
+					break
 				case 'delete':
 					vm.$root.$emit('bv::show::modal', 'modal-delete-article')
 					break
 			}
+		},
+
+		toggleFavourites(article) {
+			if (article.isFavourite === null || article.isFavourite === 0) {
+				article.isFavourite = true
+			} else {
+				article.isFavourite = false
+			}
+			article.save({ silent: true, fields: ['isFavourite'] }).then(() => {
+				this.getArticles(false)
+			})
 		}
 	}
 }

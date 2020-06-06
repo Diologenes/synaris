@@ -107,9 +107,9 @@ const actions = {
 			//ordering
 			let orderDirection = 'ASC'
 			let isOrderReversed = context.rootState.settings.filterReverseOrder
-			let orderColumn =  context.rootState.settings.filterOrderBy
+			let orderColumn = context.rootState.settings.filterOrderBy
 			if (orderColumn === 'title') {
-				orderColumn = db.Sequelize.fn("UPPER", db.Sequelize.col(orderColumn)) // use uppercase for title in where clause since sqlite is case sensitive 
+				orderColumn = db.Sequelize.fn('UPPER', db.Sequelize.col(orderColumn)) // use uppercase for title in where clause since sqlite is case sensitive
 				orderDirection = isOrderReversed ? 'DESC' : 'ASC'
 			}
 			if (orderColumn === 'updatedAt' || orderColumn === 'visitedAt') {
@@ -119,14 +119,13 @@ const actions = {
 			// query
 			db.Article.findAll({
 				where: query,
-				order: [[orderColumn, orderDirection]]
+				order: [['isFavourite', 'DESC'], [orderColumn, orderDirection]]
 			})
 				.then((response) => {
 					setTimeout(function() {
 						context.commit('articles', response)
 						resolve(response)
 					}, 0)
-	
 				})
 				.catch((e) => console.error(e))
 		})

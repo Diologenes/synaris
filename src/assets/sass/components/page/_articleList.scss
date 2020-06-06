@@ -42,6 +42,7 @@
 	&__content {
 		flex: 1 1 auto;
 		position: relative;
+		padding-right: 1px;
 	}
 
 	&__item {
@@ -52,7 +53,7 @@
 	&__link {
 		@include transitionAll();
 		@include activeNavigator();
-
+		position: relative;
 		padding: 2rem 1.5rem;
 		display: flex;
 		flex-direction: column;
@@ -86,5 +87,15 @@
 		@include textStyle(small);
 		color: clr(txt, base);
 		margin-top: 1rem;
+	}
+
+	&__favourite-badge {
+		position: absolute;
+		top: .75rem;
+		right: -.25rem;
+		width: 2rem;
+		height: 2rem;
+		color: clr(txt, base);
+
 	}
 }
