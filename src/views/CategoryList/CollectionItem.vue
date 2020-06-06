@@ -66,10 +66,8 @@ export default {
 		}
 	},
 	computed: {
-		isCollapsed: {
-			get() {
-				return this.$store.getters['settings/collapsedCollections'].includes(this.collection.id) ? true : false
-			}
+		isCollapsed() {
+			return this.$store.getters['settings/collapsedCollections'].includes(this.collection.id) ? true : false
 		}
 	},
 	methods: {
