@@ -8,7 +8,8 @@ const getDefaultState = () => {
 		filterShowDescription: JSON.parse(localStorage.getItem('filterShowDescription')) || true,
 		filterShowDate: JSON.parse(localStorage.getItem('filterShowDate')) || true,
 		filterOrderBy: JSON.parse(localStorage.getItem('filterOrderBy')) || 'title',
-		filterReverseOrder: JSON.parse(localStorage.getItem('filterReverseOrder')) || false
+		filterReverseOrder: JSON.parse(localStorage.getItem('filterReverseOrder')) || false,
+		markNewUntilDays: JSON.parse(localStorage.getItem('markNewUntilDays')) || 1
 	}
 }
 
@@ -43,6 +44,10 @@ const getters = {
 
 	filterReverseOrder(state) {
 		return state.filterReverseOrder
+	},
+
+	markNewUntilDays(state) {
+		return state.markNewUntilDays
 	}
 }
 
@@ -86,6 +91,11 @@ const mutations = {
 		localStorage.setItem('filterReverseOrder', JSON.stringify(value))
 		state.filterReverseOrder = value
 	},
+
+	markNewUntilDays(state, value) {
+		localStorage.setItem('markNewUntilDays', JSON.stringify(value))
+		state.markNewUntilDays = value
+	},
 }
 
 // actions
@@ -126,6 +136,10 @@ const actions = {
 
 	filterReverseOrder(context, value) {
 		context.commit('filterReverseOrder', value)
+	},
+
+	markNewUntilDays(context, value) {
+		context.commit('markNewUntilDays', value)
 	}
 }
 

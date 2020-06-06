@@ -66,11 +66,14 @@
 
 	&__date {
 		@include textStyle(tiny);
+		display: flex;
+		align-content: center;
 		color: clr(txt, base);
 		margin-bottom: .5rem;
 		
-		&--low-opacity {
+		&-ago {
 			opacity: .5;
+			margin-left: .5rem;
 		}
 	}
 

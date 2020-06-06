@@ -1,0 +1,8 @@
+.c-badge {
+    @include textStyle(tiny);
+    padding: .05rem .5rem;
+    background: clr(clr, base);
+    color: clr(txt, alt);
+    display: inline-flex;
+    border-radius: .25rem;
+}

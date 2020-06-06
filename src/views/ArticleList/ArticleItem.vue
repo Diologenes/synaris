@@ -11,7 +11,7 @@
 		active-class="c-article-list__link--is-active"
 	>
 		<div v-if="showDate" class="c-article-list__date">
-			{{ article.updatedAt | formatDate('DateTime') }} <span class="c-article-list__date--low-opacity">({{ article.updatedAt | formatDate('fromNow') }})</span>
+			{{ article.updatedAt | formatDate('DateTime') }} <span class="c-article-list__date-ago">({{ article.updatedAt | formatDate('fromNow') }})</span> <span v-if="isNew" class="c-badge u-m__lr--2">New</span>
 		</div>
 		<div class="c-article-list__title">{{ article.title }}</div>
 		<div v-if="showDescription" class="c-article-list__description">{{ article.description }}</div>
@@ -19,20 +19,33 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
 	props: {
 		article: {
 			type: Object,
 			default: null
-        },
-        showDate: {
-            type: Boolean,
-            default: true
-        },
-        showDescription: {
-            type: Boolean,
-            default: true
-        },
+		},
+		showDate: {
+			type: Boolean,
+			default: true
+		},
+		showDescription: {
+			type: Boolean,
+			default: true
+		}
+	},
+	computed: {
+		markNewUntilDays() {
+			return this.$store.getters['settings/markNewUntilDays']
+		},
+		isNew() {
+			if (this.$options.filters.formatDate(this.article.updatedAt, 'dayDiff') <= this.markNewUntilDays) {
+				return true
+			}
+			return false
+		}
 	},
 	methods: {
 		dragStart(...parameters) {

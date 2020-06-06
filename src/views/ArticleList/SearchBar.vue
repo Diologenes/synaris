@@ -1,7 +1,7 @@
 <template>
 	<div class="c-panel-filter">
 		<div class="c-panel-filter__wrap">
-			<input v-model="filter" @keyup="submit" :class="{ 'c-panel-filter__input--is-active': isFilter }" class="c-panel-filter__input" type="text" placeholder="Filter articles ..." />
+			<input ref="searchbarInput" v-model="filter" @keyup.esc="restore" @keyup="submit" :class="{ 'c-panel-filter__input--is-active': isFilter }" class="c-panel-filter__input" type="text" placeholder="Filter articles ..." />
 			<div :class="{ 'c-panel-filter__close--is-active': isFilter }" class="c-panel-filter__close"><button @click="restore" class="u-icon--close"></button></div>
 		</div>
 		<div class="c-panel-filter__status" :class="{ 'c-panel-filter__status--is-active': isFilter }">
@@ -44,6 +44,7 @@ export default {
 		}, 400),
 
 		restore() {
+			this.$refs.searchbarInput.blur()
 			this.$store.dispatch('article/setSearchWord', '')
 			this.submit()
 		}
