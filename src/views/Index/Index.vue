@@ -1,5 +1,5 @@
 <template>
-	<div class="c-page c-page__default">
+	<div class="c-page c-page__default c-page__view--index">
 		<div class="c-panel">
 			<div class="c-panel__list">
 				<div class="c-panel__gradient"></div>
