@@ -1,10 +1,8 @@
 'use strict'
+const electron = require('electron')
+const { app, protocol, BrowserWindow } = electron
 
-import { app, protocol, BrowserWindow } from 'electron'
-import {
-	createProtocol
-	/* installVueDevtools */
-} from 'vue-cli-plugin-electron-builder/lib'
+import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -17,6 +15,7 @@ protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: tru
 function createWindow() {
 	// Create the browser window.
 	win = new BrowserWindow({
+		show: false,
 		width: 800,
 		height: 600,
 		webPreferences: {
@@ -24,15 +23,18 @@ function createWindow() {
 		}
 	})
 
+	win.maximize()
+	win.show()
+
 	// prevent new electron window by using middle mouse button
-	win.webContents.on('new-window', function (event, url) {
+	win.webContents.on('new-window', function(event, url) {
 		event.preventDefault()
 	})
-  
+
 	if (process.env.WEBPACK_DEV_SERVER_URL) {
 		// Load the url of the dev server if in development mode
 		win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-		if (!process.env.IS_TEST) win.webContents.openDevTools()
+		// if (!process.env.IS_TEST) win.webContents.openDevTools()
 	} else {
 		createProtocol('app')
 		// Load the index.html when not in development

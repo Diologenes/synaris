@@ -13,6 +13,9 @@ Vue.filter('formatDate', function(value, format) {
 		if (format === 'fromNow') {
 			return moment(value).fromNow()
 		}
+		if (format === 'dayDiff') {
+			return moment().diff(value, 'days')
+		}
 		return moment(value).format(formatted)
 	}
 })

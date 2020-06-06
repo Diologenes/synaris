@@ -10,6 +10,15 @@ require('./filters/formatDate')
 require('./components')
 const db = require('./database/models')
 
+db.sequelize.beforeConnect((config) => {
+	console.log('BEFORE CONNECT:', config);
+})
+
+db.sequelize.afterConnect((connection, config) => {
+	console.log('AFRER CONNECT:', connection, config);
+})
+
+
 Vue.use(BootstrapVue)
 Vue.use(PerfectScrollbar)
 

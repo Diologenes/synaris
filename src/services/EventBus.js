@@ -3,7 +3,6 @@ import Vue from 'vue'
 window.EventBus = new class {
 
 	constructor() {
-		console.log('EventBus started')
 		this.vue = new Vue()
 	}
 
