@@ -11,16 +11,19 @@ class Article extends Sequelize.Model {
 					}
 				},
 				description: {
-					type: Sequelize.STRING
+					type: DataTypes.STRING
 				},
 				content: {
-					type: Sequelize.TEXT
+					type: DataTypes.TEXT
 				},
 				tags: {
-					type: Sequelize.TEXT
+					type: DataTypes.TEXT
 				},
 				categoryId: {
 					type: DataTypes.INTEGER
+				},
+				visitedAt: {
+					type: DataTypes.DATE
 				}
 			},
 			{ sequelize, tableName: 'Articles', modelName: 'article' }

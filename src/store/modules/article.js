@@ -112,7 +112,7 @@ const actions = {
 				orderColumn = db.Sequelize.fn("UPPER", db.Sequelize.col(orderColumn)) // use uppercase for title in where clause since sqlite is case sensitive 
 				orderDirection = isOrderReversed ? 'DESC' : 'ASC'
 			}
-			if (orderColumn === 'updatedAt') {
+			if (orderColumn === 'updatedAt' || orderColumn === 'visitedAt') {
 				orderDirection = isOrderReversed ? 'ASC' : 'DESC'
 			}
 

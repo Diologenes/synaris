@@ -11,7 +11,8 @@
 						<panel-box :clickable="true" icon="filter">
 							<panel-box-header title="Order by" />
 							<panel-box-radio @select="getArticles" value="title" title="Title" icon="move" :group="filterOptionsOrderBy" dispatchToStore="settings/filterOrderBy" />
-							<panel-box-radio @select="getArticles" value="updatedAt" title="Last modified" icon="move" :group="filterOptionsOrderBy" dispatchToStore="settings/filterOrderBy" />
+							<panel-box-radio @select="getArticles" value="updatedAt" title="Recently modified" icon="move" :group="filterOptionsOrderBy" dispatchToStore="settings/filterOrderBy" />
+							<panel-box-radio @select="getArticles" value="visitedAt" title="Recently viewed" icon="move" :group="filterOptionsOrderBy" dispatchToStore="settings/filterOrderBy" />
 							<panel-box-divider />
 							<panel-box-toggle @select="getArticles" title="Reverse order" icon="change" :active="filterOptionsReverseOrder" dispatchToStore="settings/filterReverseOrder" />
 							<panel-box-divider />

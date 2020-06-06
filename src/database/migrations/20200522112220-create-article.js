@@ -19,10 +19,15 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       tags: {
-        type: Sequelize.TEXT
+        type: Sequelize.STRING(500),
       },
       categoryId: {
         type: Sequelize.INTEGER
+      },
+      isFavourite: {
+        type: Sequelize.INTEGER(1),
+        defaultValue: null,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -31,7 +36,12 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      visitedAt: {
+        defaultValue: null,
+        allowNull: true,
+        type: Sequelize.DATE
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
