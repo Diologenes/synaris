@@ -30,7 +30,7 @@
 				<!-- scrollbar -->
 				<perfect-scrollbar class="c-article-list__content" v-if="!loading">
 					<div v-for="article in articles" :key="article.id" class="c-article-list__item">
-						<article-item @dragStart="dragStart" @dragEnd="dragEnd" :article="article" :showDate="filterOptionsShowDate" :showDescription="filterOptionsShowDescription" />
+						<article-item @dragStart="dragStart" @dragEnd="dragEnd" @contextmenu="openContextMenu" :article="article" :showDate="filterOptionsShowDate" :showDescription="filterOptionsShowDescription" />
 					</div>
 				</perfect-scrollbar>
 				<!-- scrollbar -->
@@ -134,8 +134,11 @@ export default {
 			EventBus.fire('method/categoryList', { method: 'hideCategoryDropzones' })
 		},
 
+		openContextMenu($event, article) {
+			this.$refs.layermenuArticle.open($event, article)
+		},
+
 		contextArticleSelect(option) {
-			console.log('contextArticleSelect')
 			let vm = this
 			vm.contextObject = option.payload
 			switch (option.method) {

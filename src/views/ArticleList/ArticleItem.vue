@@ -1,6 +1,6 @@
 <template>
 	<b-link
-		@contextmenu.prevent="$refs.layermenuArticle.open($event, article)"
+		@contextmenu.prevent="dispatchContextMenu($event, article)"
 		@dragover.prevent
 		@dragstart="dragStart(article, $event)"
 		@dragend="dragEnd($event)"
@@ -40,6 +40,7 @@ export default {
 		markNewUntilDays() {
 			return this.$store.getters['settings/markNewUntilDays']
 		},
+
 		isNew() {
 			if (this.$options.filters.formatDate(this.article.updatedAt, 'dayDiff') <= this.markNewUntilDays) {
 				return true
@@ -51,8 +52,13 @@ export default {
 		dragStart(...parameters) {
 			this.$emit('dragStart', ...parameters)
 		},
+
 		dragEnd(...parameters) {
 			this.$emit('dragEnd', ...parameters)
+		},
+
+		dispatchContextMenu(...parameters) {
+			this.$emit('contextmenu', ...parameters)
 		}
 	}
 }
