@@ -104,11 +104,11 @@ export default {
 			let vm = this
 			let loadTimer = _.delay(function() {
 				vm.loading = true
+				if (resetArticles) {
+					vm.$store.dispatch('article/resetArticles')
+				}
 			}, 500)
 			let promises = []
-			if (resetArticles) {
-				vm.$store.dispatch('article/resetArticles')
-			}
 			await promises.push(vm.$store.dispatch('article/getByCategory', { category: vm.$route.params.category }))
 			await promises.push(vm.$store.dispatch('collection/setCurrentCategoryById', vm.$route.params.category))
 			Promise.all(promises).then(() => {
