@@ -70,6 +70,7 @@ const actions = {
 	getByCategory(context, payload) {
 		return new Promise((resolve) => {
 			let query = {}
+
 			query.categoryId = payload.category // join category id
 			if (context.state.searchWord.length > 0) {
 				// if searchword exists
@@ -103,8 +104,22 @@ const actions = {
 				}
 			}
 
+			//ordering
+			let orderDirection = 'ASC'
+			let isOrderReversed = context.rootState.settings.filterReverseOrder
+			let orderColumn =  context.rootState.settings.filterOrderBy
+			if (orderColumn === 'title') {
+				orderColumn = db.Sequelize.fn("UPPER", db.Sequelize.col(orderColumn)) // use uppercase for title in where clause since sqlite is case sensitive 
+				orderDirection = isOrderReversed ? 'DESC' : 'ASC'
+			}
+			if (orderColumn === 'updatedAt') {
+				orderDirection = isOrderReversed ? 'ASC' : 'DESC'
+			}
+
+			// query
 			db.Article.findAll({
-				where: query
+				where: query,
+				order: [[orderColumn, orderDirection]]
 			})
 				.then((response) => {
 					setTimeout(function() {

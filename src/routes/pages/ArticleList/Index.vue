@@ -10,11 +10,12 @@
 					<div class="c-panel-section__options">
 						<panel-box :clickable="true" icon="filter">
 							<panel-box-header title="Order by" />
-							<panel-box-radio value="title" title="Title" icon="move" :group="filterOptionsOrderBy" dispatchToStore="settings/filterOrderBy" />
-							<panel-box-radio value="updatedAt" title="Last modified" icon="move" :group="filterOptionsOrderBy" dispatchToStore="settings/filterOrderBy" />
+							<panel-box-radio @select="getArticles" value="title" title="Title" icon="move" :group="filterOptionsOrderBy" dispatchToStore="settings/filterOrderBy" />
+							<panel-box-radio @select="getArticles" value="updatedAt" title="Last modified" icon="move" :group="filterOptionsOrderBy" dispatchToStore="settings/filterOrderBy" />
 							<panel-box-divider />
-							<panel-box-toggle title="Reverse order" icon="change" :active="filterOptionsReverseOrder" dispatchToStore="settings/filterReverseOrder" />
+							<panel-box-toggle @select="getArticles" title="Reverse order" icon="change" :active="filterOptionsReverseOrder" dispatchToStore="settings/filterReverseOrder" />
 							<panel-box-divider />
+							<panel-box-header title="Show extra fields" />
 							<panel-box-toggle title="Show date" icon="calendar" :active="filterOptionsShowDate" dispatchToStore="settings/filterShowDate" />
 							<panel-box-toggle title="Show description" icon="text" :active="filterOptionsShowDescription" dispatchToStore="settings/filterShowDescription" />
 						</panel-box>
@@ -103,15 +104,15 @@ export default {
 	watch: {
 		$route(to, from) {
 			if (to.params.category !== from.params.category) {
-				this.init()
+				this.getArticles()
 			}
 		}
 	},
 	mounted() {
-		this.init()
+		this.getArticles()
 	},
 	methods: {
-		async init() {
+		async getArticles() {
 			let vm = this
 			let loadTimer = _.delay(function() {
 				vm.loading = true
@@ -123,7 +124,6 @@ export default {
 			Promise.all(promises).then(() => {
 				clearTimeout(loadTimer)
 				vm.loading = false
-				console.log(vm.articles)
 			})
 		},
 
