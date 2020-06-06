@@ -39,9 +39,9 @@
 <script>
 import _ from 'lodash'
 import { mapGetters } from 'vuex'
-import modalAddCategory from '@/components/modals/AddCategory'
-import modalDeleteCategory from '@/components/modals/DeleteCategory'
-import modalRenameCategory from '@/components/modals/RenameCategory'
+import modalAddCategory from '@/components/Modals/AddCategory'
+import modalDeleteCategory from '@/components/Modals/DeleteCategory'
+import modalRenameCategory from '@/components/Modals/RenameCategory'
 import CollectionItem from './CollectionItem.vue'
 
 export default {

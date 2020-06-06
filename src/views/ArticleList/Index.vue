@@ -64,7 +64,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import searchBar from './SearchBar'
-import modalDeleteArticle from '@/components/modals/DeleteArticle'
+import modalDeleteArticle from '@/components/Modals/DeleteArticle'
 import _ from 'lodash'
 
 export default {

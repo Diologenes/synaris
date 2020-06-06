@@ -2,12 +2,12 @@ import './assets/sass/app.scss'
 import Vue from 'vue'
 import App from './App.vue'
 import { store } from './store/index'
-import { router } from './routes/routes'
+import { router } from './routes'
 import BootstrapVue from 'bootstrap-vue'
 import PerfectScrollbar from 'vue2-perfect-scrollbar'
 require('./services/EventBus')
 require('./filters/formatDate')
-require('./components/components')
+require('./components')
 const db = require('./database/models')
 
 Vue.use(BootstrapVue)
