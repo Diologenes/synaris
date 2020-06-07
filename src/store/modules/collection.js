@@ -58,7 +58,6 @@ const actions = {
 	},
 
 	getAll(context) {
-		let vm = this
 		return new Promise((resolve) => {
 			db.Collection.findAll({
 				order: [

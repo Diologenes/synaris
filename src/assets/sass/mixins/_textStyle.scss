@@ -21,6 +21,13 @@
 		white-space: nowrap;
 	}
 
+	@if $style == 'prominentHeadline' {
+		text-transform: uppercase;
+		font-weight: 600;
+		font-size: 1.5rem;
+		line-height: 1;
+	}
+
 	@if $style == 'headline' {
 		font-weight: 600;
 		font-size: 1.15rem;
