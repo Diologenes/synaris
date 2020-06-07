@@ -137,6 +137,7 @@
 		position: relative;
 
 		&:hover,
+		&:focus,
 		&--is-active {
 			color: clr(txt, alt);
 			background: clr(bg, d-1, 7);

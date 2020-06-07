@@ -2,7 +2,7 @@
 	<div class="c-panel-filter">
 		<div class="c-panel-filter__wrap">
 			<input ref="searchbarInput" v-model="filter" @keyup.esc="restore" @keyup="submit" :class="{ 'c-panel-filter__input--is-active': isFilter }" class="c-panel-filter__input" type="text" placeholder="Filter articles ..." />
-			<div :class="{ 'c-panel-filter__close--is-active': isFilter }" class="c-panel-filter__close"><button @click="restore" class="u-icon--close"></button></div>
+			<div :class="{ 'c-panel-filter__close--is-active': isFilter }" class="c-panel-filter__close"><button tabindex="-1" @click="restore" class="u-icon--close"></button></div>
 		</div>
 		<div class="c-panel-filter__status" :class="{ 'c-panel-filter__status--is-active': isFilter }">
 			<span v-if="articles">
@@ -16,15 +16,17 @@
 <script>
 export default {
 	props: {
-        category: {
-            type: Object,
-            default: null
-        },
-        articles: {
-            type: Array,
-            default: []
-        }
-    },
+		category: {
+			type: Object,
+			default: null
+		},
+		articles: {
+			type: Array,
+			default() {
+				return []
+			}
+		}
+	},
 	computed: {
 		filter: {
 			get() {

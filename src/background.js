@@ -23,11 +23,10 @@ function createWindow() {
 		}
 	})
 
-	const splash = new BrowserWindow({ width: 280, height: 160, transparent: true, frame: false, alwaysOnTop: true })
-
-	// @TODO: Is this needed? => createProtocol('app')
-	createProtocol('app')
-	splash.loadURL('app://./loading.html')
+	// const splash = new BrowserWindow({ width: 280, height: 160, transparent: true, frame: false, alwaysOnTop: true })
+	// // @TODO: Is this needed? => createProtocol('app')
+	// createProtocol('app')
+	// splash.loadURL('app://./loading.html')
 
 	// prevent new electron window by using middle mouse button
 	win.webContents.on('new-window', function(event) {
@@ -46,10 +45,10 @@ function createWindow() {
 
 	win.once('ready-to-show', () => {
 		setTimeout(() => {
-			splash.destroy()
+			// splash.destroy()
 			win.maximize()
 			win.show()
-		}, 3000)
+		}, 300)
 	})
 
 	win.on('closed', () => {

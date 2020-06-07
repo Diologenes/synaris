@@ -59,6 +59,7 @@
 		flex-direction: column;
 
 		&:hover,
+		&:focus,
 		&--is-active {
 			text-decoration: none;
 			background: clr(bg, d-1, 7);
