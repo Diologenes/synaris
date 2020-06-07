@@ -9,15 +9,16 @@ module.exports = {
 	lintOnSave: false,
 	pluginOptions: {
 		electronBuilder: {
+			// noAppProtocol: true,
 			builderOptions: {
-        files: ['**/*'],
-        extraFiles: [
-          {
-            "from": "src/database/storage",
-            "to": "src/database/storage",
-            "filter": ["**/*"]
-          },
-        ],
+				files: ['**/*'],
+				extraFiles: [
+					{
+						from: 'src/database/storage',
+						to: 'src/database/storage',
+						filter: ['**/*']
+					}
+				],
 				appId: 'com.braindump.app', // appId
 				// nsis (nullsoft scriptable install system) - windows installer
 				nsis: {
