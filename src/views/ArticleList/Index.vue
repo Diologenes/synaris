@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import searchBar from './SearchBar'
 import articleItem from './ArticleItem'
 import modalDeleteArticle from '@/components/Modals/DeleteArticle'
@@ -122,7 +121,7 @@ export default {
 		},
 
 		dragStart(article, $event) {
-			EventBus.fire('method/categoryList', { method: 'showCategoryDropzones', arguments: [true, false, 'string'] })
+			window.EventBus.fire('method/categoryList', { method: 'showCategoryDropzones', arguments: [true, false, 'string'] })
 			this.$refs.layermenuArticle.close()
 			let payload = JSON.stringify({
 				type: 'article',
@@ -137,8 +136,8 @@ export default {
 			$event.dataTransfer.setData('draggedObject', payload)
 		},
 
-		dragEnd($event) {
-			EventBus.fire('method/categoryList', { method: 'hideCategoryDropzones' })
+		dragEnd() {
+			window.EventBus.fire('method/categoryList', { method: 'hideCategoryDropzones' })
 		},
 
 		openContextMenu($event, article) {
