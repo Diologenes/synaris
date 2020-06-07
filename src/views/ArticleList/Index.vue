@@ -19,6 +19,7 @@
 							<panel-box-header title="Show extra fields" />
 							<panel-box-toggle title="Show date" icon="calendar" :active="filterOptionsShowDate" dispatchToStore="settings/filterShowDate" />
 							<panel-box-toggle title="Show description" icon="text" :active="filterOptionsShowDescription" dispatchToStore="settings/filterShowDescription" />
+							<panel-box-toggle title="Show tags" icon="label" :active="filterOptionsShowTags" dispatchToStore="settings/filterShowTags" />
 						</panel-box>
 					</div>
 				</div>
@@ -30,7 +31,7 @@
 				<!-- scrollbar -->
 				<perfect-scrollbar class="c-article-list__content" v-if="!loading">
 					<div v-for="article in articles" :key="article.id" class="c-article-list__item">
-						<article-item @dragStart="dragStart" @dragEnd="dragEnd" @contextmenu="openContextMenu" :article="article" :showDate="filterOptionsShowDate" :showDescription="filterOptionsShowDescription" />
+						<article-item @dragStart="dragStart" @dragEnd="dragEnd" @contextmenu="openContextMenu" :article="article" :showDate="filterOptionsShowDate" :showDescription="filterOptionsShowDescription" :showTags="filterOptionsShowTags" />
 					</div>
 				</perfect-scrollbar>
 				<!-- scrollbar -->
@@ -69,11 +70,14 @@ export default {
 		articleListWindowWidth() {
 			return this.$store.getters['settings/articleListWindowWidth']
 		},
+		filterOptionsShowDate() {
+			return this.$store.getters['settings/filterShowDate']
+		},
 		filterOptionsShowDescription() {
 			return this.$store.getters['settings/filterShowDescription']
 		},
-		filterOptionsShowDate() {
-			return this.$store.getters['settings/filterShowDate']
+		filterOptionsShowTags() {
+			return this.$store.getters['settings/filterShowTags']
 		},
 		filterOptionsOrderBy() {
 			return this.$store.getters['settings/filterOrderBy']

@@ -7,6 +7,7 @@ const getDefaultState = () => {
 		collapsedCollections: JSON.parse(localStorage.getItem('collapsedCollections')) || [],
 		filterShowDescription: JSON.parse(localStorage.getItem('filterShowDescription')) || true,
 		filterShowDate: JSON.parse(localStorage.getItem('filterShowDate')) || true,
+		filterShowTags: JSON.parse(localStorage.getItem('filterShowTags')) || true,
 		filterOrderBy: JSON.parse(localStorage.getItem('filterOrderBy')) || 'title',
 		filterReverseOrder: JSON.parse(localStorage.getItem('filterReverseOrder')) || false,
 		markNewUntilDays: JSON.parse(localStorage.getItem('markNewUntilDays')) || 1
@@ -29,13 +30,16 @@ const getters = {
 	collapsedCollections(state) {
 		return state.collapsedCollections
 	},
+	filterShowDate(state) {
+		return state.filterShowDate
+	},
 
 	filterShowDescription(state) {
 		return state.filterShowDescription
 	},
 
-	filterShowDate(state) {
-		return state.filterShowDate
+	filterShowTags(state) {
+		return state.filterShowTags
 	},
 
 	filterOrderBy(state) {
@@ -72,14 +76,19 @@ const mutations = {
 		state.collapsedCollections = value
 	},
 
+	filterShowDate(state, value) {
+		localStorage.setItem('filterShowDate', JSON.stringify(value))
+		state.filterShowDate = value
+	},
+
 	filterShowDescription(state, value) {
 		localStorage.setItem('filterShowDescription', JSON.stringify(value))
 		state.filterShowDescription = value
 	},
 
-	filterShowDate(state, value) {
-		localStorage.setItem('filterShowDate', JSON.stringify(value))
-		state.filterShowDate = value
+	filterShowTags(state, value) {
+		localStorage.setItem('filterShowTags', JSON.stringify(value))
+		state.filterShowTags = value
 	},
 
 	filterOrderBy(state, value) {
@@ -121,13 +130,17 @@ const actions = {
 		}
 		commit('collapsedCollections', state.collapsedCollections)
 	},
+	
+	filterShowDate(context, value) {
+		context.commit('filterShowDate', value)
+	},
 
 	filterShowDescription(context, value) {
 		context.commit('filterShowDescription', value)
 	},
 
-	filterShowDate(context, value) {
-		context.commit('filterShowDate', value)
+	filterShowTags(context, value) {
+		context.commit('filterShowTags', value)
 	},
 
 	filterOrderBy(context, value) {

@@ -17,11 +17,13 @@
 		</div>
 		<div class="c-article-list__title">{{ article.title }}</div>
 		<div v-if="showDescription" class="c-article-list__description">{{ article.description }}</div>
+		<div v-if="showTags && tags.length > 0" class="c-article-list__tags c-tag">
+			<span class="c-tag__item" v-for="tag in tags" :key="tag">{{ tag | textCrop(25) }}</span>
+		</div>
 	</b-link>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
 	props: {
@@ -34,6 +36,10 @@ export default {
 			default: true
 		},
 		showDescription: {
+			type: Boolean,
+			default: true
+		},
+		showTags: {
 			type: Boolean,
 			default: true
 		}
@@ -53,6 +59,12 @@ export default {
 				return true
 			}
 			return false
+		},
+		tags() {
+			if (this.article.tags !== null) {
+				return this.article.tags.split(',')
+			} 
+			return []
 		}
 	},
 	methods: {
