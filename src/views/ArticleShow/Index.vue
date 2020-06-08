@@ -7,14 +7,33 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
-export default {
-	components: {},
-	computed: {},
-	data() {
-		return {}
-	},
-	methods: {}
-}
+	export default {
+		data() {
+			return {}
+		},
+		computed: {
+			category() {
+				return this.$store.getters['article/currentCategory']
+			},
+			article() {
+				return this.$store.getters['article/currentArticle']
+			}
+		},
+		watch: {
+			$route(to, from) {
+				if (to.params.article !== from.params.article) {
+					this.getArticle()
+				}
+			}
+		},
+		mounted() {
+			this.getArticle()
+		},
+		methods: {
+			async getArticle() {
+				let vm = this
+				vm.$store.dispatch('article/setCurrentArticle', vm.$route.params.article)
+			}
+		}
+	}
 </script>

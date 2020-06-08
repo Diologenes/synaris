@@ -103,6 +103,9 @@
 			category() {
 				return this.$store.getters['collection/currentCategory']
 			},
+			currentArticle() {
+				return this.$store.getters['article/currentArticle']
+			},
 			articles() {
 				return this.$store.getters['article/articles']
 			},
@@ -141,16 +144,12 @@
 		},
 		mounted() {
 			this.getArticles()
-
-			// @TODO: check this!
-			this.scrollToCurrentArticle()
 		},
 		methods: {
-			// @TODO: if current article route is set in vuex 
 			scrollToCurrentArticle() {
 				let scrollableWrapper = document.querySelector('#articleListContent')
-				if (scrollableWrapper) {
-					let activeElement = document.querySelector('#articleId__44')
+				if (scrollableWrapper && this.currentArticle !== null) {
+					let activeElement = document.querySelector(`#articleId__${this.currentArticle.id}`)
 					if (activeElement) {
 						scrollableWrapper.scrollTo({
 							top: activeElement.offsetTop
@@ -158,20 +157,22 @@
 					}
 				}
 			},
+
 			async getArticles(resetArticles = true) {
 				let vm = this
+				let promises = []
 				let loadTimer = _.delay(function() {
 					vm.loading = true
-					if (resetArticles) {
-						vm.$store.dispatch('article/resetArticles')
-					}
 				}, 500)
-				let promises = []
+				if (resetArticles) {
+					vm.$store.dispatch('article/resetArticles')
+				}
 				await promises.push(vm.$store.dispatch('article/getByCategory', { category: vm.$route.params.category }))
 				await promises.push(vm.$store.dispatch('collection/setCurrentCategoryById', vm.$route.params.category))
 				Promise.all(promises).then(() => {
 					clearTimeout(loadTimer)
 					vm.loading = false
+					this.scrollToCurrentArticle()
 				})
 			},
 

@@ -29,6 +29,7 @@
 					@dragstart="dragStart('category', categoryIndex, collectionIndex, category, $event)"
 					@dragend="dragEnd()"
 					@drop="dragFinish(category, collection, categoryIndex, collectionIndex, $event)"
+					@click="resetCurrentArticle()"
 					draggable="true"
 					router-tag="a"
 					:to="{ name: 'articleList', params: { category: category.id } }"
@@ -49,47 +50,52 @@
 </template>
 
 <script>
-export default {
-	props: {
-		collection: {
-			type: Object,
-			default: null
+	export default {
+		props: {
+			collection: {
+				type: Object,
+				default: null
+			},
+			collectionIndex: {
+				type: Number,
+				default: 0
+			}
 		},
-		collectionIndex: {
-			type: Number,
-			default: 0
-		}
-	},
-	data() {
-		return {
-			collectionCollapsed: false
-		}
-	},
-	computed: {
-		isCollapsed() {
-			return this.$store.getters['settings/collapsedCollections'].includes(this.collection.id) ? true : false
-		}
-	},
-	methods: {
-		collapseToggle() {
-			this.$store.dispatch('settings/modifyCollapsedCollection', this.collection.id)
+		data() {
+			return {
+				collectionCollapsed: false
+			}
 		},
+		computed: {
+			isCollapsed() {
+				return this.$store.getters['settings/collapsedCollections'].includes(this.collection.id) ? true : false
+			}
+		},
+		methods: {
+			resetCurrentArticle() {
+				console.log('article/resetCurrentArticle');
+				this.$store.dispatch('article/resetCurrentArticle')
+			},
 
-		dragStart(...parameters) {
-			this.$emit('dragStart', ...parameters)
-		},
+			collapseToggle() {
+				this.$store.dispatch('settings/modifyCollapsedCollection', this.collection.id)
+			},
 
-		dragEnd() {
-			this.$emit('dragEnd')
-		},
+			dragStart(...parameters) {
+				this.$emit('dragStart', ...parameters)
+			},
 
-		dragFinish(...parameters) {
-			this.$emit('dragFinish', ...parameters)
-		},
+			dragEnd() {
+				this.$emit('dragEnd')
+			},
 
-		dispatchContextMenu(...parameters) {
-			this.$emit('contextmenu', ...parameters)
+			dragFinish(...parameters) {
+				this.$emit('dragFinish', ...parameters)
+			},
+
+			dispatchContextMenu(...parameters) {
+				this.$emit('contextmenu', ...parameters)
+			}
 		}
 	}
-}
 </script>

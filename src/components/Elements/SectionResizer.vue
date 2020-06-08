@@ -100,7 +100,6 @@
 			move($event) {
 				if (this.enabled) {
 					if (this.direction === 'horizontal') {
-						console.log(this.bindedElement.offsetLeft)
 						this.calculatedDimension = this.calculateDimension($event.clientX, this.bindedElement.offsetLeft)
 						this.bindedElement.style.width = this.pixelValue(this.calculatedDimension)
 					}

@@ -38,7 +38,6 @@
 
 <script>
 import _ from 'lodash'
-import { mapGetters } from 'vuex'
 import modalAddCategory from '@/components/Modals/AddCategory'
 import modalDeleteCategory from '@/components/Modals/DeleteCategory'
 import modalRenameCategory from '@/components/Modals/RenameCategory'

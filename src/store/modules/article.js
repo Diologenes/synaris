@@ -7,7 +7,7 @@ const getDefaultState = () => {
 		articles: null,
 		currentArticle: null,
 		searchWord: '',
-		lastRoute: localStorage.getItem('articleLastRoute') || null,
+		lastRoute: localStorage.getItem('articleLastRoute') || null
 	}
 }
 
@@ -74,8 +74,23 @@ const actions = {
 		context.commit('articles', value)
 	},
 
-	currentArticle(context, value) {
-		context.commit('currentArticle', value)
+	resetCurrentArticle(context) {
+		context.commit('currentArticle', null)
+	},
+
+	setCurrentArticle(context, articleId) {
+		return new Promise(resolve => {
+			db.Article.findOne({
+				where: { id: articleId }
+			})
+				.then(response => {
+					setTimeout(function() {
+						context.commit('currentArticle', response)
+						resolve(response)
+					}, 0)
+				})
+				.catch(e => console.error(e))
+		})
 	},
 
 	setSearchWord(context, value) {
