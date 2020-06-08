@@ -11,7 +11,14 @@
 				<!-- scrollbar -->
 				<perfect-scrollbar class="c-category__content">
 					<transition v-for="(collection, collectionIndex) in collections" :key="collection.id">
-						<collection-item @dragStart="dragStart" @dragEnd="dragEnd" @dragFinish="dragFinish" @contextmenu="openContextMenu" :collection="collection" :collectionIndex="collectionIndex" />
+						<collection-item
+							@dragStart="dragStart"
+							@dragEnd="dragEnd"
+							@dragFinish="dragFinish"
+							@contextmenu="openContextMenu"
+							:collection="collection"
+							:collectionIndex="collectionIndex"
+						/>
 					</transition>
 				</perfect-scrollbar>
 				<!-- scrollbar -->
@@ -37,194 +44,199 @@
 </template>
 
 <script>
-import _ from 'lodash'
-import modalAddCategory from '@/components/Modals/AddCategory'
-import modalDeleteCategory from '@/components/Modals/DeleteCategory'
-import modalRenameCategory from '@/components/Modals/RenameCategory'
-import CollectionItem from './CollectionItem.vue'
+	import _ from 'lodash'
+	import modalAddCategory from '@/components/Modals/AddCategory'
+	import modalDeleteCategory from '@/components/Modals/DeleteCategory'
+	import modalRenameCategory from '@/components/Modals/RenameCategory'
+	import CollectionItem from './CollectionItem.vue'
 
-export default {
-	components: {
-		modalAddCategory,
-		modalDeleteCategory,
-		modalRenameCategory,
-		CollectionItem
-	},
-	data() {
-		return {
-			contextObject: null
-		}
-	},
-	computed: {
-		collections: {
-			get() {
-				return this.$store.getters['collection/collections']
+	export default {
+		components: {
+			modalAddCategory,
+			modalDeleteCategory,
+			modalRenameCategory,
+			CollectionItem
+		},
+		data() {
+			return {
+				contextObject: null
 			}
 		},
-		categoryWindowWidth: {
-			get() {
-				return this.$store.getters['settings/categoryWindowWidth']
+		computed: {
+			collections: {
+				get() {
+					return this.$store.getters['collection/collections']
+				}
+			},
+			categoryWindowWidth: {
+				get() {
+					return this.$store.getters['settings/categoryWindowWidth']
+				}
 			}
-		}
-	},
-	mounted() {
-		this.$store.dispatch('collection/getAll')
+		},
+		mounted() {
+			this.$store.dispatch('collection/getAll')
 
-		// EventBus for method/categoryList. Intake params e.g. "{method: 'showCategoryDropzones', arguments: [true, false, 'string']}"
-		// Calls a method inside of this class
-		EventBus.listen('method/categoryList', (params) => {
-			if (typeof params.arguments !== 'undefined') {
-				this[params.method](...params.arguments)
-			} else {
-				this[params.method]()
-			}
-		})
-	},
-	methods: {
-		showCategoryDropzones: _.debounce((ignoreEmptyDropzones = false) => {
-			const identifierClass = 'c-category__dropzone'
-			const activeClass = 'c-category__dropzone--is-active'
-			let items = []
-			if (ignoreEmptyDropzones) {
-				items = window.document.querySelectorAll('.' + identifierClass + ':not(.c-category__dropzone--is-empty)')
-			} else {
-				items = window.document.getElementsByClassName(identifierClass)
-			}
-			items.forEach((element) => {
-				element.classList.add(activeClass)
-			})
-		}, 30),
-
-		hideCategoryDropzones() {
-			const identifierClass = 'c-category__dropzone'
-			const activeClass = 'c-category__dropzone--is-active'
-			let items = window.document.getElementsByClassName(identifierClass)
-			items.forEach((element) => {
-				element.classList.remove(activeClass)
+			// EventBus for method/categoryList. Intake params e.g. "{method: 'showCategoryDropzones', arguments: [true, false, 'string']}"
+			// Calls a method inside of this class
+			window.EventBus.listen('method/categoryList', params => {
+				if (typeof params.arguments !== 'undefined') {
+					this[params.method](...params.arguments)
+				} else {
+					this[params.method]()
+				}
 			})
 		},
+		methods: {
+			showCategoryDropzones: _.debounce((ignoreEmptyDropzones = false) => {
+				const identifierClass = 'c-category__dropzone'
+				const activeClass = 'c-category__dropzone--is-active'
+				let items = []
+				if (ignoreEmptyDropzones) {
+					items = window.document.querySelectorAll('.' + identifierClass + ':not(.c-category__dropzone--is-empty)')
+				} else {
+					items = window.document.getElementsByClassName(identifierClass)
+				}
+				items.forEach(element => {
+					element.classList.add(activeClass)
+				})
+			}, 30),
 
-		dragStart(type, categoryIndex, collectionIndex, object, $event) {
-			// define payload and dataTransfer
-			let payload = JSON.stringify({
-				type: type,
-				categoryIndex: categoryIndex,
-				collectionIndex: collectionIndex
-			})
+			hideCategoryDropzones() {
+				const identifierClass = 'c-category__dropzone'
+				const activeClass = 'c-category__dropzone--is-active'
+				let items = window.document.getElementsByClassName(identifierClass)
+				items.forEach(element => {
+					element.classList.remove(activeClass)
+				})
+			},
 
-			var ghostElement = document.createElement('p')
-			ghostElement.classList.add('c-dnd__ghost')
-			ghostElement.innerHTML = object.title
-			document.body.appendChild(ghostElement)
-			$event.dataTransfer.setDragImage(ghostElement, 0, 0)
-			$event.dataTransfer.setData('draggedObject', payload)
+			dragStart(type, categoryIndex, collectionIndex, object, $event) {
+				// define payload and dataTransfer
+				let payload = JSON.stringify({
+					type: type,
+					categoryIndex: categoryIndex,
+					collectionIndex: collectionIndex
+				})
 
-			// define style behavior for ...
-			switch (type) {
-				case 'category':
-					this.showCategoryDropzones()
-					break
-				case 'collection':
-					break
-			}
-		},
+				var ghostElement = document.createElement('p')
+				ghostElement.classList.add('c-dnd__ghost')
+				ghostElement.innerHTML = object.title
+				document.body.appendChild(ghostElement)
+				$event.dataTransfer.setDragImage(ghostElement, 0, 0)
+				$event.dataTransfer.setData('draggedObject', payload)
 
-		dragEnd() {
-			var elem = document.querySelector('.c-dnd__ghost')
-			elem.parentNode.removeChild(elem)
-			this.hideCategoryDropzones()
-		},
+				// define style behavior for ...
+				switch (type) {
+					case 'category':
+						this.showCategoryDropzones()
+						break
+					case 'collection':
+						break
+				}
+			},
 
-		dragFinish(category, collection, categoryDropIndex, collectionDropIndex, $event) {
-			// dragged payload
-			let payload = JSON.parse($event.dataTransfer.getData('draggedObject'))
+			dragEnd() {
+				var elem = document.querySelector('.c-dnd__ghost')
+				elem.parentNode.removeChild(elem)
+				this.hideCategoryDropzones()
+			},
 
-			let vm = this
-			let writeData = false
-			switch (payload.type) {
-				case 'article':
-					if (typeof category !== 'undefined' || category !== null) {
-						vm.$db.Article.findOne({
-							where: {
-								id: payload.article.id
-							}
-						}).then((article) => {
-							if (article.categoryId !== category.id) {
-								article.categoryId = category.id
-								article.save().then(() => {
-									vm.$store.dispatch('article/getByCategory', { category: vm.$store.getters['collection/currentCategory'].id })
-									vm.$store.dispatch('collection/getAll')
-								})
-							}
-						})
+			dragFinish(category, collection, categoryDropIndex, collectionDropIndex, $event) {
+				// dragged payload
+				let payload = JSON.parse($event.dataTransfer.getData('draggedObject'))
+
+				let vm = this
+				let writeData = false
+				switch (payload.type) {
+					case 'article': {
+						if (typeof category !== 'undefined' || category !== null) {
+							vm.$db.Article.findOne({
+								where: {
+									id: payload.article.id
+								}
+							}).then(article => {
+								if (article.categoryId !== category.id) {
+									article.categoryId = category.id
+									article.save().then(() => {
+										vm.$store.dispatch('article/getByCategory', { category: vm.$store.getters['collection/currentCategory'].id })
+										vm.$store.dispatch('collection/getAll')
+									})
+								}
+							})
+						}
+						break
 					}
-					break
-				case 'category':
-					let elementToMove = vm.collections[payload.collectionIndex].categories[payload.categoryIndex]
-					// move element in same collection
-					if (payload.collectionIndex === collectionDropIndex) {
-						// continue if drag and drop is not the same
-						if (payload.categoryIndex !== categoryDropIndex) {
+					case 'category': {
+						let elementToMove = vm.collections[payload.collectionIndex].categories[payload.categoryIndex]
+						// move element in same collection
+						if (payload.collectionIndex === collectionDropIndex) {
+							// continue if drag and drop is not the same
+							if (payload.categoryIndex !== categoryDropIndex) {
+								vm.collections[payload.collectionIndex].categories.splice(payload.categoryIndex, 1)
+								vm.collections[payload.collectionIndex].categories.splice(categoryDropIndex, 0, elementToMove)
+								writeData = true
+							}
+						}
+						// move element in another collection
+						if (payload.collectionIndex !== collectionDropIndex) {
 							vm.collections[payload.collectionIndex].categories.splice(payload.categoryIndex, 1)
-							vm.collections[payload.collectionIndex].categories.splice(categoryDropIndex, 0, elementToMove)
+							vm.collections[collectionDropIndex].categories.splice(categoryDropIndex, 0, elementToMove)
 							writeData = true
 						}
+						break
 					}
-					// move element in another collection
-					if (payload.collectionIndex !== collectionDropIndex) {
-						vm.collections[payload.collectionIndex].categories.splice(payload.categoryIndex, 1)
-						vm.collections[collectionDropIndex].categories.splice(categoryDropIndex, 0, elementToMove)
-						writeData = true
+					case 'collection': {
+						if (payload.collectionIndex !== collectionDropIndex) {
+							let collectionToMove = vm.collections[payload.collectionIndex]
+							vm.collections.splice(payload.collectionIndex, 1)
+							vm.collections.splice(collectionDropIndex, 0, collectionToMove)
+							writeData = true
+						}
+						break
 					}
-					break
-				case 'collection':
-					if (payload.collectionIndex !== collectionDropIndex) {
-						let collectionToMove = vm.collections[payload.collectionIndex]
-						vm.collections.splice(payload.collectionIndex, 1)
-						vm.collections.splice(collectionDropIndex, 0, collectionToMove)
-						writeData = true
-					}
-					break
-			}
+				}
 
-			if (writeData) {
-				vm.persistSorting()
-			}
-		},
+				if (writeData) {
+					vm.persistSorting()
+				}
+			},
 
-		persistSorting() {
-			let vm = this
-			let promises = []
-			vm.collections.forEach((collection, collectionIndex) => {
-				collection.sorting = collectionIndex
-				promises.push(collection.save({ fields: ['sorting'] }))
-				collection.categories.forEach((category, categoryIndex) => {
-					category.sorting = categoryIndex
-					category.collectionId = collection.id
-					promises.push(category.save())
+			persistSorting() {
+				let vm = this
+				let promises = []
+				vm.collections.forEach((collection, collectionIndex) => {
+					collection.sorting = collectionIndex
+					promises.push(collection.save({ fields: ['sorting'] }))
+					collection.categories.forEach((category, categoryIndex) => {
+						category.sorting = categoryIndex
+						category.collectionId = collection.id
+						promises.push(category.save())
+					})
 				})
-			})
-			Promise.all(promises).then(() => {
-				vm.$store.dispatch('collection/update', this.collections)
-			})
-		},
+				Promise.all(promises).then(() => {
+					vm.$store.dispatch('collection/update', this.collections)
+				})
+			},
 
-		openContextMenu($event, collection) {
-			this.$refs.layermenuCategory.open($event, collection)
-		},
+			openContextMenu($event, collection) {
+				this.$refs.layermenuCategory.open($event, collection)
+			},
 
-		processContextMenu(option) {
-			let vm = this
-			vm.contextObject = option.payload
-			switch (option.method) {
-				case 'delete':
-					vm.$root.$emit('bv::show::modal', 'modal-delete-category')
-					break
-				case 'rename':
-					vm.$root.$emit('bv::show::modal', 'modal-rename-category')
-					break
+			processContextMenu(option) {
+				let vm = this
+				vm.contextObject = option.payload
+				switch (option.method) {
+					case 'delete': {
+						vm.$root.$emit('bv::show::modal', 'modal-delete-category')
+						break
+					}
+					case 'rename': {
+						vm.$root.$emit('bv::show::modal', 'modal-rename-category')
+						break
+					}
+				}
 			}
 		}
 	}
-}
 </script>
