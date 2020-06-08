@@ -6,7 +6,8 @@ const getDefaultState = () => {
 	return {
 		articles: null,
 		currentArticle: null,
-		searchWord: ''
+		searchWord: '',
+		lastRoute: localStorage.getItem('articleLastRoute') || null,
 	}
 }
 
@@ -18,11 +19,17 @@ const getters = {
 	articles(state) {
 		return state.articles
 	},
+
 	currentArticle(state) {
 		return state.currentArticle
 	},
+
 	searchWord(state) {
 		return state.searchWord
+	},
+
+	lastRoute(state) {
+		return state.lastRoute
 	}
 }
 
@@ -31,17 +38,25 @@ const mutations = {
 	resetStore(state) {
 		Object.assign(state, getDefaultState())
 	},
+
 	articles(state, value) {
 		state.articles = value
 	},
+
 	currentArticle(state, value) {
 		state.currentArticle = value
 	},
+
 	searchWord(state, value) {
 		if (value !== '') {
 			value.trim().replace(/\s{2,}/g, ' ')
 		}
 		state.searchWord = value
+	},
+
+	lastRoute(state, value) {
+		localStorage.setItem('articleLastRoute', JSON.stringify(value))
+		state.lastRoute = value
 	}
 }
 
@@ -68,7 +83,7 @@ const actions = {
 	},
 
 	getByCategory(context, payload) {
-		return new Promise((resolve) => {
+		return new Promise(resolve => {
 			let query = {}
 
 			query.categoryId = payload.category // join category id
@@ -80,7 +95,7 @@ const actions = {
 
 				// build subqueries
 				let subQuery = []
-				searchWordArray.forEach((searchWord) => {
+				searchWordArray.forEach(searchWord => {
 					searchWord = `%${searchWord}%`
 					subQuery.push({
 						[Op.or]: [
@@ -119,16 +134,23 @@ const actions = {
 			// query
 			db.Article.findAll({
 				where: query,
-				order: [['isFavourite', 'DESC'], [orderColumn, orderDirection]]
+				order: [
+					['isFavourite', 'DESC'],
+					[orderColumn, orderDirection]
+				]
 			})
-				.then((response) => {
+				.then(response => {
 					setTimeout(function() {
 						context.commit('articles', response)
 						resolve(response)
 					}, 0)
 				})
-				.catch((e) => console.error(e))
+				.catch(e => console.error(e))
 		})
+	},
+
+	lastRoute(context, value) {
+		context.commit('lastRoute', value)
 	}
 }
 

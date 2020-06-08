@@ -3,7 +3,7 @@
 		<div class="c-panel">
 			<div class="c-panel__list">
 				<div class="c-panel__gradient"></div>
-				<b-link class="c-panel__item" active-class="c-panel__item--is-active" :exact="false" router-tag="a" :to="{ name: 'categoryList' }">
+				<b-link class="c-panel__item" active-class="c-panel__item--is-active" :exact="false" router-tag="a" :to="articleLastRoute">
 					<div class="c-panel__box u-icon--bookmark"></div>
 				</b-link>
 				<b-link class="c-panel__item" active-class="c-panel__item--is-active" :exact="false" router-tag="a" :to="{ name: 'search' }">
@@ -20,6 +20,13 @@
 
 <script>
 export default {
-	components: {}
+	computed: {
+		articleLastRoute() {
+			if (this.$store.getters['article/lastRoute'] !== null) {
+				return this.$store.getters['article/lastRoute']
+			}
+			return { name: 'categoryList' }
+		},
+	},
 }
 </script>

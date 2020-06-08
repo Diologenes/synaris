@@ -1,16 +1,17 @@
+import constants from '@/config/constants'
 
 // default state
 const getDefaultState = () => {
 	return {
-		categoryWindowWidth: localStorage.getItem('categoryWindowWidth') || '16rem',
-		articleListWindowWidth: localStorage.getItem('articleListWindowWidth') || '25rem',
+		categoryWindowWidth: localStorage.getItem('categoryWindowWidth') || constants.defaults.store.settings.categoryWindowWidth,
+		articleListWindowWidth: localStorage.getItem('articleListWindowWidth') || constants.defaults.store.settings.articleListWindowWidth,
 		collapsedCollections: JSON.parse(localStorage.getItem('collapsedCollections')) || [],
-		filterShowDescription: JSON.parse(localStorage.getItem('filterShowDescription')) || true,
-		filterShowDate: JSON.parse(localStorage.getItem('filterShowDate')) || true,
-		filterShowTags: JSON.parse(localStorage.getItem('filterShowTags')) || true,
-		filterOrderBy: JSON.parse(localStorage.getItem('filterOrderBy')) || 'title',
-		filterReverseOrder: JSON.parse(localStorage.getItem('filterReverseOrder')) || false,
-		markNewUntilDays: JSON.parse(localStorage.getItem('markNewUntilDays')) || 1
+		filterShowDescription: JSON.parse(localStorage.getItem('filterShowDescription')) || constants.defaults.store.settings.filterShowDescription,
+		filterShowDate: JSON.parse(localStorage.getItem('filterShowDate')) || constants.defaults.store.settings.filterShowDate,
+		filterShowTags: JSON.parse(localStorage.getItem('filterShowTags')) || constants.defaults.store.settings.filterShowTags,
+		filterOrderBy: JSON.parse(localStorage.getItem('filterOrderBy')) || constants.defaults.store.settings.filterOrderBy,
+		filterReverseOrder: JSON.parse(localStorage.getItem('filterReverseOrder')) || constants.defaults.store.settings.filterReverseOrder,
+		markNewUntilDays: JSON.parse(localStorage.getItem('markNewUntilDays')) || constants.defaults.store.settings.markNewUntilDays
 	}
 }
 
@@ -104,7 +105,7 @@ const mutations = {
 	markNewUntilDays(state, value) {
 		localStorage.setItem('markNewUntilDays', JSON.stringify(value))
 		state.markNewUntilDays = value
-	},
+	}
 }
 
 // actions
@@ -130,7 +131,7 @@ const actions = {
 		}
 		commit('collapsedCollections', state.collapsedCollections)
 	},
-	
+
 	filterShowDate(context, value) {
 		context.commit('filterShowDate', value)
 	},
