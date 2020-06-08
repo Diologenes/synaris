@@ -4,7 +4,7 @@
 		<div v-if="showDate" class="c-article-list__date">
 			{{ article.updatedAt | formatDate('DateTime') }} <span class="c-article-list__date-ago">({{ article.updatedAt | formatDate('fromNow') }})</span> <span v-if="isNew" class="c-badge u-m__lr--2">New</span>
 		</div>
-		<div class="c-article-list__title">{{ article.id }} {{ article.title }}</div>
+		<div class="c-article-list__title">{{ article.title }}</div>
 		<div v-if="showDescription" class="c-article-list__description">{{ article.description }}</div>
 		<div v-if="showTags && tags.length > 0" class="c-article-list__tags c-tag">
 			<span class="c-tag__item" v-for="tag in tags" :key="tag">{{ tag | textCrop(25) }}</span>
