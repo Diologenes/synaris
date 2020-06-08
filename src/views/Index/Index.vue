@@ -25,7 +25,7 @@ export default {
 	computed: {
 		articleLastRoute() {
 			if (this.$store.getters['article/lastRoute'] !== null && this.$route.meta.belongsTo !== constants.router.belongsTo.library) {
-				return this.$store.getters['article/lastRoute']
+				return this.$store.getters['article/lastRoute'] // takes the "to.fullPath" route
 			}
 			return { name: 'categoryList' }
 		},

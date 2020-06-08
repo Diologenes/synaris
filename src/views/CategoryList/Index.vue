@@ -23,15 +23,23 @@
 				</perfect-scrollbar>
 				<!-- scrollbar -->
 
+				<!--  create new collection / category button -->
 				<div v-b-modal.modal-create-new-category class="c-create-button c-button c-button--primary c-button--bullseye u-icon--more"></div>
+
+				<!--  section resizer -->
 				<section-resizer :min="200" :max="1000" bindRef="resizerCategory" dispatchToStore="settings/categoryWindowWidth" />
 			</div>
 		</div>
 
+		<!--  nested route -->
 		<router-view />
+
+		<!--  modal section -->
 		<modal-add-category />
 		<modal-delete-category :item="contextObject" />
 		<modal-rename-category :item="contextObject" />
+
+		<!--  layer menu -->
 		<LayerMenu
 			ref="layermenuCategory"
 			@select="processContextMenu"

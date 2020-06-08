@@ -146,6 +146,8 @@
 			this.getArticles()
 		},
 		methods: {
+
+			// scroll to current article if set (e.g. coming from search route back to articleShow view)
 			scrollToCurrentArticle() {
 				let scrollableWrapper = document.querySelector('#articleListContent')
 				if (scrollableWrapper && this.currentArticle !== null) {
@@ -158,6 +160,7 @@
 				}
 			},
 
+			// get article list and current category if entering or modifying this route
 			async getArticles(resetArticles = true) {
 				let vm = this
 				let promises = []
@@ -176,6 +179,7 @@
 				})
 			},
 
+			// draging the article to categoryList view for reassigning the belonging category
 			dragStart(article, $event) {
 				window.EventBus.fire('method/categoryList', { method: 'showCategoryDropzones', arguments: [true, false, 'string'] })
 				this.$refs.layermenuArticle.close()
@@ -192,10 +196,12 @@
 				$event.dataTransfer.setData('draggedObject', payload)
 			},
 
+			// emit via eventbus to deactivate the active drag classes
 			dragEnd() {
 				window.EventBus.fire('method/categoryList', { method: 'hideCategoryDropzones' })
 			},
 
+			// opens the contextMenu with dynamic options
 			openContextMenu($event, article) {
 				console.log(article.isFavourite)
 				this.contextOptions = [{ special: 'divider' }, { method: 'delete', title: 'Delete ...', icon: 'delete' }]
@@ -207,6 +213,7 @@
 				this.$refs.layermenuArticle.open($event, article)
 			},
 
+			// process click on contextMenu action
 			contextArticleSelect(option) {
 				let vm = this
 				vm.contextObject = option.payload
@@ -220,6 +227,7 @@
 				}
 			},
 
+			// toggles the favourites in article list view. saves the data to db
 			toggleFavourites(article) {
 				if (article.isFavourite === null || article.isFavourite === 0) {
 					article.isFavourite = true
