@@ -19,10 +19,12 @@
 </template>
 
 <script>
+import constants from '@/config/constants'
+
 export default {
 	computed: {
 		articleLastRoute() {
-			if (this.$store.getters['article/lastRoute'] !== null) {
+			if (this.$store.getters['article/lastRoute'] !== null && this.$route.meta.belongsTo !== constants.router.belongsTo.library) {
 				return this.$store.getters['article/lastRoute']
 			}
 			return { name: 'categoryList' }
