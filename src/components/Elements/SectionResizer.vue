@@ -90,9 +90,10 @@
 				if (this.enabled && this.calculatedDimension >= this.min && this.calculatedDimension <= this.max) {
 					this.hover = false
 					this.enabled = false
-					this.$emit('value', this.pixelString(this.calculatedDimension))
+					let pixelValue = this.pixelValue(this.calculatedDimension)
+					this.$emit('value', pixelValue)
 					if (typeof this.dispatchToStore !== 'undefined') {
-						this.$store.dispatch(this.dispatchToStore, this.pixelString(this.calculatedDimension))
+						this.$store.dispatch(this.dispatchToStore, pixelValue)
 					}
 				}
 			},
@@ -101,7 +102,7 @@
 					if (this.direction === 'horizontal') {
 						console.log(this.bindedElement.offsetLeft)
 						this.calculatedDimension = this.calculateDimension($event.clientX, this.bindedElement.offsetLeft)
-						this.bindedElement.style.width = this.pixelString(this.calculatedDimension)
+						this.bindedElement.style.width = this.pixelValue(this.calculatedDimension)
 					}
 				}
 			},
@@ -116,7 +117,7 @@
 				return dimension
 			},
 
-			pixelString(value) {
+			pixelValue(value) {
 				return `${value}px`
 			}
 		}
