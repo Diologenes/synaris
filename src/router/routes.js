@@ -7,8 +7,6 @@ import articleShow from '@/views/ArticleShow/Index'
 import search from '@/views/Search/Index'
 import settings from '@/views/Settings/Index'
 
-console.log(constants);
-
 // route definitions
 const routes = [
 	{

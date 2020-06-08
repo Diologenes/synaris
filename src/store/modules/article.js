@@ -7,7 +7,7 @@ const getDefaultState = () => {
 		articles: null,
 		currentArticle: null,
 		searchWord: '',
-		lastRoute: localStorage.getItem('articleLastRoute') || null
+		lastRoute: JSON.parse(localStorage.getItem('articleLastRoute')) || null
 	}
 }
 

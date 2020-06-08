@@ -9,7 +9,8 @@ const router = new VueRouter({
 	routes
 })
 
-router.afterEach((to) => {
+router.afterEach((to, from) => {
+	console.log('ROUTE AFTER', to, from)
 	if (to.meta.belongsTo === constants.router.belongsTo.library) {
 		store.dispatch('article/lastRoute', to.fullPath)
 	}
