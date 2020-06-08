@@ -91,7 +91,7 @@ export default {
 		}
 	},
 	mounted() {
-		EventBus.listen('panelBoxClose', () => {
+		window.EventBus.listen('panelBoxClose', () => {
 			this.close()
 		})
 	},
