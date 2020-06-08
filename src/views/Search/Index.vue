@@ -1,15 +1,10 @@
 <template>
 	<div class="c-page c-page__default c-page__view--search">
 		<div class="c-search__search" :class="{ 'c-search__search--is-foldout': !show.result }">
-			<div
-				class="c-search__title"
-				:class="{
-					'c-search__title--is-active': !show.result
-				}"
-			>
+			<div class="c-search__title" :class="{ 'c-search__title--is-active': !show.result }">
 				Search for something ...
 			</div>
-			<input v-model="query.search" @keyup="keypress()" class="c-search__input" type="text" />
+			<input ref="globalSearch" v-model="query.search" @keyup="keypress()" class="c-search__input" type="text" />
 		</div>
 
 		<div :class="{ 'c-search__result--is-foldout': show.result }" class="c-search__result">
@@ -50,7 +45,14 @@
 				return this.$store.getters['search/searchword']
 			}
 		},
+		mounted() {
+			this.focusInput()
+		},
 		methods: {
+			focusInput() {
+				this.$refs.globalSearch.focus()
+			},
+
 			async keypress() {
 				let vm = this
 				if (vm.query.search.length > 0) {
