@@ -27,5 +27,10 @@ module.exports = {
 				}
 			}
 		}
+	},
+	chainWebpack: config => {
+		config.externals({
+			sqlite3: 'commonjs sqlite3'
+		})
 	}
 }
