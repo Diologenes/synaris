@@ -1,23 +1,30 @@
 <template>
-	<div class="c-page c-page__default c-page__view--search">
-		<div class="c-search__search" :class="{ 'c-search__search--is-foldout': !show.result }">
-			<div class="c-search__title" :class="{ 'c-search__title--is-active': !show.result }">
+	<div class="c-page c-page__default c-page__view--search c-search" :class="{ 'c-search--is-active': hasSearchWords }">
+		<div class="c-search__searchbox">
+			<div class="c-search__headline">
 				Search for something ...
 			</div>
-			<input ref="globalSearch" v-model="query.search" @keyup="keypress()" class="c-search__input" type="text" />
+			<input ref="globalSearch" v-model="searchWord" @keyup="keypress()" class="c-search__input" type="text" />
 		</div>
 
-		<div :class="{ 'c-search__result--is-foldout': show.result }" class="c-search__result">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="c-search__item col col-2" v-for="(result, index) in query.result" :key="index">
+		<perfect-scrollbar class="c-search__result" :class="{ 'c-search__result--no-result': hasResults === false }">
+			<prominent-message
+				:active="query.result.length === 0 && query.loading === false"
+				title="No results found"
+				description="Maybe you should try something else"
+				icon="info"
+				className="c-search__prominent-message"
+			/>
+			<div class="c-search__items" v-if="query.result.length > 0 && query.loading === false">
+				<div class="c-search__item" v-for="(result, index) in query.result" :key="index">
+					<b-link :to="{ path: 'categories/' + result.categoryId + '/' + result.id }" class="c-search__link">
 						<div class="c-search__box">
 							<article-content :article="result" />
 						</div>
-					</div>
+					</b-link>
 				</div>
 			</div>
-		</div>
+		</perfect-scrollbar>
 	</div>
 </template>
 
@@ -26,14 +33,12 @@
 		data() {
 			return {
 				show: {
-					result: false,
-					preview: false
+					foldout: false
 				},
-
 				query: {
-					search: '',
-					isStarted: false,
-					result: []
+					result: [],
+					timer: null,
+					loading: true
 				}
 			}
 		},
@@ -41,9 +46,34 @@
 			result() {
 				return this.$store.getters['search/result']
 			},
-			searchword() {
-				return this.$store.getters['search/searchword']
+			hasSearchWords() {
+				if (this.searchWord.length > 0) {
+					return true
+				}
+				return false
+			},
+			hasResults() {
+				if (this.result && this.result.length > 0) {
+					return true
+				}
+				return false
+			},
+			searchWord: {
+				get() {
+					let value = this.$store.getters['search/searchWord']
+					return value
+				},
+				set(value) {
+					this.$store.dispatch('search/setSearchWord', value)
+				}
 			}
+		},
+		beforeRouteEnter(to, from, next) {
+			next(vm => {
+				vm.query.result = []
+				vm.query.loading = true
+				vm.getResult(true)
+			})
 		},
 		mounted() {
 			this.focusInput()
@@ -53,19 +83,29 @@
 				this.$refs.globalSearch.focus()
 			},
 
-			async keypress() {
-				let vm = this
-				if (vm.query.search.length > 0) {
-					vm.query.isStarted = true
-					vm.show.result = true
-				} else {
-					vm.query.isStarted = false
-					vm.show.result = false
-				}
+			keypress() {
+				this.submitSearchWord()
+				this.query.loading = true
+			},
 
-				await vm.$store.dispatch('search/setSearchWord', vm.query.search)
+			submitSearchWord: _.debounce(function() {
+				this.searchWord.length > 0 ? (this.show.foldout = true) : ((this.show.foldout = false), (this.query.result = []))
+				this.getResult()
+			}, 250),
+
+			getResult(noDelay = false) {
+				let vm = this
+				let delay = noDelay === true ? 0 : 500
+				clearTimeout(vm.query.timer)
+				if (vm.searchWord.length === 0) {
+					vm.query.result = []
+					return
+				}
 				vm.$store.dispatch('search/getResult').then(result => {
-					vm.query.result = result
+					vm.query.timer = setTimeout(() => {
+						vm.query.result = result
+						vm.query.loading = false
+					}, delay)
 				})
 			}
 		}

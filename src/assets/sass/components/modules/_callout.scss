@@ -1,0 +1,9 @@
+.c-callout {
+    padding: 1rem 2rem;
+    border-radius: .25rem;
+
+    &--info {
+        color: clr(txt, alt);
+        background:clr(clr, base);
+    }
+}

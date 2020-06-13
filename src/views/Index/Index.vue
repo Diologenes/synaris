@@ -14,21 +14,21 @@
 				</b-link>
 			</div>
 		</div>
-		<router-view />
+		<router-view></router-view>
 	</div>
 </template>
 
 <script>
-import constants from '@/config/constants'
+	import constants from '@/config/constants'
 
-export default {
-	computed: {
-		articleLastRoute() {
-			if (this.$store.getters['article/lastRoute'] !== null && this.$route.meta.belongsTo !== constants.router.belongsTo.library) {
-				return this.$store.getters['article/lastRoute'] // takes the "to.fullPath" route
+	export default {
+		computed: {
+			articleLastRoute() {
+				if (this.$store.getters['article/lastRoute'] !== null && this.$route.meta.belongsTo !== constants.router.belongsTo.library) {
+					return this.$store.getters['article/lastRoute'] // takes the "to.fullPath" route
+				}
+				return { name: 'categoryList' }
 			}
-			return { name: 'categoryList' }
-		},
-	},
-}
+		}
+	}
 </script>

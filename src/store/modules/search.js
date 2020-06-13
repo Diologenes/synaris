@@ -91,7 +91,7 @@ const actions = {
 			// query
 			db.Article.findAll({
 				where: query,
-				order: [['isFavourite', 'DESC']]
+				order: [['title', 'ASC']]
 			})
 				.then((response) => {
 					setTimeout(function() {

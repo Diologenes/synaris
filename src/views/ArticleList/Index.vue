@@ -146,17 +146,12 @@
 			this.getArticles()
 		},
 		methods: {
-
 			// scroll to current article if set (e.g. coming from search route back to articleShow view)
 			scrollToCurrentArticle() {
 				let scrollableWrapper = document.querySelector('#articleListContent')
 				if (scrollableWrapper && this.currentArticle !== null) {
 					let activeElement = document.querySelector(`#articleId__${this.currentArticle.id}`)
-					if (activeElement) {
-						scrollableWrapper.scrollTo({
-							top: activeElement.offsetTop
-						})
-					}
+					activeElement ? scrollableWrapper.scrollTo({ top: activeElement.offsetTop }) : false
 				}
 			},
 
@@ -203,13 +198,10 @@
 
 			// opens the contextMenu with dynamic options
 			openContextMenu($event, article) {
-				console.log(article.isFavourite)
+				let favouriteTitle = ''
 				this.contextOptions = [{ special: 'divider' }, { method: 'delete', title: 'Delete ...', icon: 'delete' }]
-				if (article.isFavourite === null || article.isFavourite === 0) {
-					this.contextOptions.unshift({ method: 'toggleFavourites', title: 'Add to favorites', icon: 'star' })
-				} else {
-					this.contextOptions.unshift({ method: 'toggleFavourites', title: 'Remove from favorites', icon: 'star' })
-				}
+				article.isFavourite ? (favouriteTitle = 'Remove from favorites') : (favouriteTitle = 'Add to favorites')
+				this.contextOptions.unshift({ method: 'toggleFavourites', title: favouriteTitle, icon: 'star' })
 				this.$refs.layermenuArticle.open($event, article)
 			},
 
@@ -218,22 +210,20 @@
 				let vm = this
 				vm.contextObject = option.payload
 				switch (option.method) {
-					case 'toggleFavourites':
+					case 'toggleFavourites': {
 						vm.toggleFavourites(vm.contextObject)
 						break
-					case 'delete':
+					}
+					case 'delete': {
 						vm.$root.$emit('bv::show::modal', 'modal-delete-article')
 						break
+					}
 				}
 			},
 
 			// toggles the favourites in article list view. saves the data to db
 			toggleFavourites(article) {
-				if (article.isFavourite === null || article.isFavourite === 0) {
-					article.isFavourite = true
-				} else {
-					article.isFavourite = false
-				}
+				article.isFavourite = !article.isFavourite
 				article.save({ silent: true, fields: ['isFavourite'] }).then(() => {
 					this.getArticles(false)
 				})
