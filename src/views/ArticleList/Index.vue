@@ -62,28 +62,32 @@
 
 				<!-- if no articles -->
 				<div class="c-article-list__no-content" v-if="!loading && articles && articles.length === 0">
-					<prominent-message
-						:active="true"
-						title="No articles found"
-						description="Let's create something new"
-						icon="stop"
-						iconSize="sm"
-					/>
+					<prominent-message :active="true" title="No articles found" description="Let's create something new" icon="stop" iconSize="sm" />
 				</div>
 				<!-- if no articles -->
 
 				<!-- scrollbar -->
 				<perfect-scrollbar id="articleListContent" class="c-article-list__content" v-if="!loading && articles && articles.length > 0">
 					<div :id="'articleId__' + article.id" v-for="article in articles" :key="article.id" class="c-article-list__item">
-						<article-item
-							@dragStart="dragStart"
-							@dragEnd="dragEnd"
-							@contextmenu="openContextMenu"
-							:article="article"
-							:showDate="filterOptionsShowDate"
-							:showDescription="filterOptionsShowDescription"
-							:showTags="filterOptionsShowTags"
-						/>
+						<b-link
+							@contextmenu.prevent="openContextMenu($event, article)"
+							@dragover.prevent
+							@dragstart="dragStart(article, $event)"
+							@dragend="dragEnd($event)"
+							draggable="true"
+							router-tag="a"
+							:to="{ name: 'articleShow', params: { article: article.id } }"
+							class="c-article-list__link"
+							active-class="c-article-list__link--is-active"
+						>
+							<article-content
+								:article="article"
+								:showDate="filterOptionsShowDate"
+								:showDescription="filterOptionsShowDescription"
+								:showTags="filterOptionsShowTags"
+								:showFavouriteBadge="true"
+							/>
+						</b-link>
 					</div>
 				</perfect-scrollbar>
 				<!-- scrollbar -->
@@ -102,14 +106,12 @@
 <script>
 	import { mapGetters as vuexStore } from 'vuex'
 	import searchBar from './SearchBar'
-	import articleItem from './ArticleItem'
 	import modalDeleteArticle from '@/components/Modals/DeleteArticle'
 	import _ from 'lodash'
 
 	export default {
 		components: {
 			searchBar,
-			articleItem,
 			modalDeleteArticle
 		},
 		computed: {

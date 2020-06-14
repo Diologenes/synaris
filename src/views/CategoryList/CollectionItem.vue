@@ -72,33 +72,32 @@
 			}
 		},
 		methods: {
-
 			// resets the current article on click on the category link
 			resetCurrentArticle() {
 				this.$store.dispatch('article/resetCurrentArticle')
 			},
 
-			// collapseToggle: emit to parent 
+			// collapseToggle: emit to parent
 			collapseToggle() {
 				this.$store.dispatch('settings/modifyCollapsedCollection', this.collection.id)
 			},
 
-			// dragStart: emit to parent 
+			// dragStart: emit to parent
 			dragStart(...parameters) {
 				this.$emit('dragStart', ...parameters)
 			},
 
-			// dragEnd: emit to parent 
+			// dragEnd: emit to parent
 			dragEnd() {
 				this.$emit('dragEnd')
 			},
 
-			// dragFinish: emit to parent 
+			// dragFinish: emit to parent
 			dragFinish(...parameters) {
 				this.$emit('dragFinish', ...parameters)
 			},
 
-			// dispatchContextMenu: emit to parent 
+			// dispatchContextMenu: emit to parent
 			dispatchContextMenu(...parameters) {
 				this.$emit('contextmenu', ...parameters)
 			}
