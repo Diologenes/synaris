@@ -100,7 +100,7 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
+	import { mapGetters as vuexStore } from 'vuex'
 	import searchBar from './SearchBar'
 	import articleItem from './ArticleItem'
 	import modalDeleteArticle from '@/components/Modals/DeleteArticle'
@@ -113,7 +113,7 @@
 			modalDeleteArticle
 		},
 		computed: {
-			...mapGetters({
+			...vuexStore({
 				category: 'collection/currentCategory',
 				currentArticle: 'article/currentArticle',
 				articles: 'article/articles',

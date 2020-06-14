@@ -53,6 +53,7 @@
 
 <script>
 	import _ from 'lodash'
+	import { mapGetters as vuexStore } from 'vuex'
 	import modalAddCategory from '@/components/Modals/AddCategory'
 	import modalDeleteCategory from '@/components/Modals/DeleteCategory'
 	import modalRenameCategory from '@/components/Modals/RenameCategory'
@@ -71,16 +72,10 @@
 			}
 		},
 		computed: {
-			collections: {
-				get() {
-					return this.$store.getters['collection/collections']
-				}
-			},
-			categoryWindowWidth: {
-				get() {
-					return this.$store.getters['settings/categoryWindowWidth']
-				}
-			}
+			...vuexStore({
+				collections: 'collection/collections',
+				categoryWindowWidth: 'settings/categoryWindowWidth',
+			})
 		},
 		mounted() {
 			this.$store.dispatch('collection/getAll')

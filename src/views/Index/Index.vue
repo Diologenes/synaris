@@ -24,6 +24,7 @@
 	export default {
 		computed: {
 			articleLastRoute() {
+				// used e.g. for switching between search and article list
 				if (this.$store.getters['article/lastRoute'] !== null && this.$route.meta.belongsTo !== constants.router.belongsTo.library) {
 					return this.$store.getters['article/lastRoute'] // takes the "to.fullPath" route
 				}

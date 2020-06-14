@@ -20,6 +20,29 @@ $color-palette: (
         )
 );
 
+// $color-palette: (
+//         'bg': (
+//                 'base': #ffffff,
+//                 'd-1': #fafafa,
+//                 'd-2': #eeeeee,
+//                 'd-3': #d7dadd,
+//                 'l-1': #f0f0f0,
+//         ),
+//         'txt': (
+//                 'base': #4e4e4e,
+//                 'alt': #202020,
+//                 'dark': #2a2b2c,
+//         ),
+//         'clr': (
+//                 'base': #fe5e44,
+//                 'info': #fec052,
+//                 'alt': #2cc799,
+//                 'alt-2': #2ec4c9,
+//                 'error': #ea5163
+//         )
+// );
+
+
 
 // clr
 @function clr($name: 'txt', $variant: 'base', $lvl: 0, $mode: 'b') {
