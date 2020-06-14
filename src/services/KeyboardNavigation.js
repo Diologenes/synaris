@@ -17,6 +17,10 @@ const KeyboardNavigation = {
 				e.preventDefault()
 				this.routeKeySwitch('search')
 			}
+			if (e.key === '3' && (e.ctrlKey || e.metaKey)) {
+				e.preventDefault()
+				this.$root.$emit('bv::show::modal', 'modal-global-settings')
+			}
 		}
 		document.addEventListener('keydown', this._keyListener.bind(this))
 	},

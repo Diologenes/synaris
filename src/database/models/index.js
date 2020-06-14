@@ -2,14 +2,14 @@ import Sequelize from 'sequelize'
 import Collection from './Collection'
 import Category from './Category'
 import Article from './Article'
-import path from 'path'
+import electronFileStorage from '@/store/electron/Index'
+import dbInstaller from '@/database/installer/Install'
 
-const dbPath = path.resolve('src/database/storage/database.sqlite')
-console.log(`DB path: ${dbPath}`)
+dbInstaller()
 
 const sequelize = new Sequelize({
-	dialect: 'sqlite',
-	storage: dbPath
+	dialect: electronFileStorage.get('databaseDialect'),
+	storage: electronFileStorage.get('sqlitePath')
 })
 
 const models = {
@@ -19,8 +19,8 @@ const models = {
 }
 
 Object.values(models)
-	.filter((model) => typeof model.associate === 'function')
-	.forEach((model) => model.associate(models))
+	.filter(model => typeof model.associate === 'function')
+	.forEach(model => model.associate(models))
 
 const db = {
 	...models,

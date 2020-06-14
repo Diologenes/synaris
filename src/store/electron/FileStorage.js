@@ -3,12 +3,18 @@ const path = require('path');
 const fs = require('fs');
 
 class FileStorage {
-  constructor(opts) {
+  constructor(parameter) {
     const userDataPath = (electron.app || electron.remote.app).getPath('userData');
-    console.log('userDataPath', userDataPath)
-    this.path = path.join(userDataPath, opts.configName + '.json');
-    console.log('this.path',this.path)
-    this.data = parseDataFile(this.path, opts.defaults);
+
+    // console.log('XXuserData', electron.remote.app.getPath('userData'));
+    // console.log('XXappData', electron.remote.app.getPath('appData'));    
+    // console.log('electron.remote.app.getAppPath()', electron.remote.app.getAppPath());
+    // console.log('process.cwd()', path.join(process.cwd(), 'src/database/storage/database.sqlite'));
+    // console.log('__dirname', __dirname);
+    // console.log('process.cwd()', path.join(__dirname, '/src'));
+
+    this.path = path.join(userDataPath, parameter.configName + '.json');
+    this.data = parseDataFile(this.path, parameter.defaults);
   }
   
   get(key) {

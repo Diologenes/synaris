@@ -1,6 +1,17 @@
 <template>
 	<b-modal size="xl" id="modal-global-settings" ref="modalGlobalSettings" centered title="Settings" :hide-footer="true">
 		<tab-container>
+			<tab-item title="Database">
+				<div class="c-definition-list">
+					<div class="c-definition-list__header">Local database</div>
+					<div>Braindump uses an SQLite3 database to store data. You can change your directory here</div>
+					<div>DB path: {{ dbPath }}</div>
+					<label>
+						<div class="c-button c-button--primary">Select database file</div>
+						<input style="display:none;" type="file" accept=".sqlite,.sqlite3,.db" @change="handleFileChange" />
+					</label>
+				</div>
+			</tab-item>
 			<tab-item title="Keyboard Shortcuts">
 				<div class="row">
 					<div class="col-6">
@@ -55,17 +66,6 @@
 					</div>
 				</div>
 			</tab-item>
-			<tab-item title="Database">
-				<div class="c-definition-list">
-					<div class="c-definition-list__header">Local database</div>
-					<div class="c-definition-list__item">
-						<div class="c-definition-list__label">Create new category</div>
-						<div class="c-definition-list__value">
-							<div class="c-definition-list__code"><span>CTRL</span> + <span>G</span></div>
-						</div>
-					</div>
-				</div>
-			</tab-item>
 			<tab-item title="Reset configuration">TBD</tab-item>
 			<tab-item title="About">
 				<div class="row">
@@ -94,21 +94,30 @@
 </template>
 
 <script>
+	import path from 'path'
+
 	export default {
 		data() {
 			return {}
 		},
+		computed: {
+			dbPath() {
+				return this.$electronFileStorage.get('sqlitePath')
+			}
+		},
+		mounted() {
+			this.dbSettings()
+		},
 		methods: {
-			// submit the create channel
-			handleOk(evt) {
-				evt.preventDefault()
+			dbSettings() {
+				console.log(this.$electronFileStorage.get('sqlitePath'))
 			},
 
-			// handle close
-			handleClose() {
-				this.$nextTick(() => {
-					this.$bvModal.hide('modal-global-settings')
-				})
+			handleFileChange($event) {
+				let customDbPath = $event.target.files[0].path
+				if (customDbPath !== null) {
+					this.$electronFileStorage.set('sqlitePath', customDbPath)
+				}
 			}
 		}
 	}
