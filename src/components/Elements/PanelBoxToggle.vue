@@ -4,9 +4,7 @@
 			<div :class="iconClass"></div>
 			<div class="c-layermenu__text">{{ title }}</div>
 			<div class="c-layermenu__suffix">
-				<div class="c-toggle">
-					<div class="c-toggle__pin" :class="{ 'c-toggle__pin--is-active': active }"></div>
-				</div>
+				<form-toggle :active="active" />
 			</div>
 		</div>
 	</div>

@@ -4,9 +4,7 @@
 			<div :class="iconClass"></div>
 			<div class="c-layermenu__text">{{ title }}</div>
 			<div class="c-layermenu__suffix">
-				<div class="c-radio">
-					<div class="c-radio__pin" :class="{ 'c-radio__pin--is-active': active }"></div>
-				</div>
+				<form-radio :active="active" />
 			</div>
 		</div>
 	</div>

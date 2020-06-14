@@ -13,6 +13,8 @@ import ArticleContent from '@/components/Elements/ArticleContent'
 import ProminentMessage from '@/components/Elements/ProminentMessage'
 import TabContainer from '@/components/Elements/TabContainer'
 import TabItem from '@/components/Elements/TabItem'
+import FormToggle from '@/components/Elements/FormToggle'
+import FormRadio from '@/components/Elements/FormRadio'
 
 Vue.component('PanelBox', PanelBox)
 Vue.component('PanelBoxToggle', PanelBoxToggle)
@@ -27,3 +29,5 @@ Vue.component('ArticleContent', ArticleContent)
 Vue.component('ProminentMessage', ProminentMessage) 
 Vue.component('TabContainer', TabContainer) 
 Vue.component('TabItem', TabItem) 
+Vue.component('FormToggle', FormToggle) 
+Vue.component('FormRadio', FormRadio) 
