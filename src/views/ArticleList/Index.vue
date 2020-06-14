@@ -60,8 +60,20 @@
 				<search-bar :category="category" :articles="articles" />
 				<loader :active="loading" />
 
+				<!-- if no articles -->
+				<div class="c-article-list__no-content" v-if="!loading && articles && articles.length === 0">
+					<prominent-message
+						:active="true"
+						title="No articles found"
+						description="Let's create something new"
+						icon="stop"
+						iconSize="sm"
+					/>
+				</div>
+				<!-- if no articles -->
+
 				<!-- scrollbar -->
-				<perfect-scrollbar id="articleListContent" class="c-article-list__content" v-if="!loading">
+				<perfect-scrollbar id="articleListContent" class="c-article-list__content" v-if="!loading && articles && articles.length > 0">
 					<div :id="'articleId__' + article.id" v-for="article in articles" :key="article.id" class="c-article-list__item">
 						<article-item
 							@dragStart="dragStart"
@@ -88,6 +100,7 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
 	import searchBar from './SearchBar'
 	import articleItem from './ArticleItem'
 	import modalDeleteArticle from '@/components/Modals/DeleteArticle'
@@ -100,33 +113,17 @@
 			modalDeleteArticle
 		},
 		computed: {
-			category() {
-				return this.$store.getters['collection/currentCategory']
-			},
-			currentArticle() {
-				return this.$store.getters['article/currentArticle']
-			},
-			articles() {
-				return this.$store.getters['article/articles']
-			},
-			articleListWindowWidth() {
-				return this.$store.getters['settings/articleListWindowWidth']
-			},
-			filterOptionsShowDate() {
-				return this.$store.getters['settings/filterShowDate']
-			},
-			filterOptionsShowDescription() {
-				return this.$store.getters['settings/filterShowDescription']
-			},
-			filterOptionsShowTags() {
-				return this.$store.getters['settings/filterShowTags']
-			},
-			filterOptionsOrderBy() {
-				return this.$store.getters['settings/filterOrderBy']
-			},
-			filterOptionsReverseOrder() {
-				return this.$store.getters['settings/filterReverseOrder']
-			}
+			...mapGetters({
+				category: 'collection/currentCategory',
+				currentArticle: 'article/currentArticle',
+				articles: 'article/articles',
+				articleListWindowWidth: 'settings/articleListWindowWidth',
+				filterOptionsShowDate: 'settings/filterShowDate',
+				filterOptionsShowDescription: 'settings/filterShowDescription',
+				filterOptionsShowTags: 'settings/filterShowTags',
+				filterOptionsOrderBy: 'settings/filterOrderBy',
+				filterOptionsReverseOrder: 'settings/filterReverseOrder'
+			})
 		},
 		data() {
 			return {

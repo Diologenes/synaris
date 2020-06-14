@@ -1,6 +1,6 @@
 <template>
 	<div class="c-prominent-message" :class="wrapperClass" v-if="active">
-		<div class="c-prominent-message__icon" :class="iconClass"></div>
+		<div class="c-prominent-message__icon" :class="iconClass" v-if="icon"></div>
 		<div class="c-prominent-message__title" v-if="title">{{ title }}</div>
 		<div class="c-prominent-message__description" v-if="description">{{ description }}</div>
 	</div>
@@ -25,6 +25,10 @@
 				type: String,
 				default: ''
 			},
+			iconSize: {
+				type: String,
+				default: ''
+			},
 			className: {
 				type: String,
 				default: ''
@@ -32,10 +36,15 @@
 		},
 		computed: {
 			iconClass() {
+				let classArray = []
+				classArray.push('u-icon')
 				if (this.icon) {
-					return `u-icon u-icon--${this.icon}`
+					classArray.push(`u-icon--${this.icon}`)
 				}
-				return ''
+				if (this.iconSize) {
+					classArray.push(`c-prominent-message__icon--${this.iconSize}`)
+				}
+				return classArray.join(' ')
 			},
 			wrapperClass() {
 				if (this.className) {

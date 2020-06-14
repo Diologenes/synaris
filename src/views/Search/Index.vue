@@ -12,7 +12,7 @@
 				:active="query.result.length === 0 && query.loading === false"
 				title="No results found"
 				description="Maybe you should try something else"
-				icon="info"
+				icon="search"
 				className="c-search__prominent-message"
 			/>
 			<div class="c-search__items" v-if="query.result.length > 0 && query.loading === false">

@@ -169,5 +169,9 @@
   &--change {
     @include iconFont('\0031');
   }
+
+  &--stop {
+    @include iconFont('\0045');
+  }
 }
 
