@@ -3,58 +3,15 @@
 		<div class="c-article-list">
 			<div class="c-article-list__wrap" ref="resizerArticleList" :style="{ width: articleListWindowWidth }">
 				<!-- panel section -->
-				<div class="c-panel-section">
-					<div class="c-panel-section__title">
-						<span class="u-hash" v-if="category">{{ category.title }}</span>
-					</div>
-					<div class="c-panel-section__options">
-						<panel-box :clickable="true" icon="filter">
-							<panel-box-header title="Order by" />
-							<panel-box-radio
-								@select="getArticles"
-								value="title"
-								title="Title"
-								icon="move"
-								:group="filterOptionsOrderBy"
-								dispatchToStore="settings/filterOrderBy"
-							/>
-							<panel-box-radio
-								@select="getArticles"
-								value="updatedAt"
-								title="Recently modified"
-								icon="move"
-								:group="filterOptionsOrderBy"
-								dispatchToStore="settings/filterOrderBy"
-							/>
-							<panel-box-radio
-								@select="getArticles"
-								value="visitedAt"
-								title="Recently viewed"
-								icon="move"
-								:group="filterOptionsOrderBy"
-								dispatchToStore="settings/filterOrderBy"
-							/>
-							<panel-box-divider />
-							<panel-box-toggle
-								@select="getArticles"
-								title="Reverse order"
-								icon="change"
-								:active="filterOptionsReverseOrder"
-								dispatchToStore="settings/filterReverseOrder"
-							/>
-							<panel-box-divider />
-							<panel-box-header title="Show extra fields" />
-							<panel-box-toggle title="Show date" icon="calendar" :active="filterOptionsShowDate" dispatchToStore="settings/filterShowDate" />
-							<panel-box-toggle
-								title="Show description"
-								icon="text"
-								:active="filterOptionsShowDescription"
-								dispatchToStore="settings/filterShowDescription"
-							/>
-							<panel-box-toggle title="Show tags" icon="label" :active="filterOptionsShowTags" dispatchToStore="settings/filterShowTags" />
-						</panel-box>
-					</div>
-				</div>
+				<header-panel
+					@change="getArticles"
+					:category="category"
+					:filterOptionsOrderBy="filterOptionsOrderBy"
+					:filterOptionsReverseOrder="filterOptionsReverseOrder"
+					:filterOptionsShowDate="filterOptionsShowDate"
+					:filterOptionsShowDescription="filterOptionsShowDescription"
+					:filterOptionsShowTags="filterOptionsShowTags"
+				/>
 				<!-- panel section -->
 
 				<search-bar :category="category" :articles="articles" />
@@ -106,12 +63,14 @@
 <script>
 	import { mapGetters as vuexStore } from 'vuex'
 	import searchBar from './SearchBar'
+	import headerPanel from './HeaderPanel'
 	import modalDeleteArticle from '@/components/Modals/DeleteArticle'
 	import _ from 'lodash'
 
 	export default {
 		components: {
 			searchBar,
+			headerPanel,
 			modalDeleteArticle
 		},
 		computed: {
@@ -146,7 +105,7 @@
 		},
 		methods: {
 			// scroll to current article if set (e.g. coming from search route back to articleShow view)
-			scrollToCurrentArticle() {
+			scrollToActiveArticle() {
 				let scrollableWrapper = document.querySelector('#articleListContent')
 				if (scrollableWrapper && this.currentArticle !== null) {
 					let activeElement = document.querySelector(`#articleId__${this.currentArticle.id}`)
@@ -155,7 +114,7 @@
 			},
 
 			// get article list and current category if entering or modifying this route
-			async getArticles(resetArticles = true) {
+			async getArticles(resetArticles = true, scrollToActiveArticle = true) {
 				let vm = this
 				let promises = []
 				let loadTimer = _.delay(function() {
@@ -169,7 +128,7 @@
 				Promise.all(promises).then(() => {
 					clearTimeout(loadTimer)
 					vm.loading = false
-					this.scrollToCurrentArticle()
+					scrollToActiveArticle ? this.scrollToActiveArticle() : false
 				})
 			},
 
@@ -224,7 +183,7 @@
 			toggleFavourites(article) {
 				article.isFavourite = !article.isFavourite
 				article.save({ silent: true, fields: ['isFavourite'] }).then(() => {
-					this.getArticles(false)
+					this.getArticles(false, false)
 				})
 			}
 		}
