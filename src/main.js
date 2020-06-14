@@ -1,4 +1,5 @@
 import './assets/sass/app.scss'
+import db from './database/models'
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store/index'
@@ -9,7 +10,6 @@ require('./services/EventBus')
 require('./filters/formatDate')
 require('./filters/textCrop')
 require('./components')
-import db from './database/models'
 
 Vue.prototype.$db = db
 Vue.use(BootstrapVue)

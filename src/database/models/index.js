@@ -2,7 +2,8 @@ import Sequelize from 'sequelize'
 import Collection from './Collection'
 import Category from './Category'
 import Article from './Article'
-const path = require('path')
+import path from 'path'
+
 const dbPath = path.resolve('src/database/storage/database.sqlite')
 console.log(`DB path: ${dbPath}`)
 
