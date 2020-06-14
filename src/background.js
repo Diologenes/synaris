@@ -20,10 +20,10 @@ function createWindow() {
 		}
 	})
 
-	// const splash = new BrowserWindow({ width: 280, height: 160, transparent: true, frame: false, alwaysOnTop: true })
+	const splash = new BrowserWindow({ width: 280, height: 160, transparent: true, frame: false, alwaysOnTop: true })
 	// // @TODO: Is this needed? => createProtocol('app')
-	// createProtocol('app')
-	// splash.loadURL('app://./loading.html')
+	createProtocol('app')
+	splash.loadURL('app://./loading.html')
 
 	mainWindow.webContents.on('new-window', function(event) {
 		event.preventDefault()
@@ -38,10 +38,10 @@ function createWindow() {
 
 	mainWindow.once('ready-to-show', () => {
 		setTimeout(() => {
-			// splash.destroy()
+			splash.destroy()
 			mainWindow.maximize()
 			mainWindow.show()
-		}, 300)
+		}, 250)
 	})
 
 	mainWindow.on('closed', () => {
