@@ -71,6 +71,10 @@
 		font-size: 0.8rem;
 	}
 
+	@if $style == 'bold' {
+		font-weight: 600;
+	}
+
 	@if $style == 'uppercase' {
 		text-transform: uppercase;
 	}
@@ -87,5 +91,9 @@
 
 	@if $style == 'contextMenu' {
 		@include textStyle(tiny);
+	}
+
+	@if $style == 'monospace' {
+		font-family: monospace;
 	}
 }

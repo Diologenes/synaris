@@ -11,7 +11,9 @@ import LayerMenu from '@/components/Elements/LayerMenu'
 import SectionResizer from '@/components/Elements/SectionResizer'
 import ArticleContent from '@/components/Elements/ArticleContent'
 import ProminentMessage from '@/components/Elements/ProminentMessage'
- 
+import TabContainer from '@/components/Elements/TabContainer'
+import TabItem from '@/components/Elements/TabItem'
+
 Vue.component('PanelBox', PanelBox)
 Vue.component('PanelBoxToggle', PanelBoxToggle)
 Vue.component('PanelBoxRadio', PanelBoxRadio)
@@ -23,3 +25,5 @@ Vue.component('LayerMenu', LayerMenu)
 Vue.component('SectionResizer', SectionResizer)
 Vue.component('ArticleContent', ArticleContent)
 Vue.component('ProminentMessage', ProminentMessage) 
+Vue.component('TabContainer', TabContainer) 
+Vue.component('TabItem', TabItem) 

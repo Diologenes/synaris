@@ -1,0 +1,49 @@
+.c-definition-list {
+    @include textStyle(nonSelect);
+	display: flex;
+	flex-direction: column;
+	margin-bottom: -1rem;
+
+    &__header {
+        @include textStyle(small);
+        @include textStyle(bold);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+	&__item {
+        display: flex;
+        width: 100%;
+		margin-bottom: 1rem;
+		align-items: center;
+    }
+    
+	&__label {
+        @include textStyle(small);
+        color: clr(txt, alt);
+		flex: 1 1 auto;
+    }
+    
+	&__value {
+		flex: 0 1 auto;
+	}
+
+	&__code {
+		@include textStyle(monospace);
+		background: clr(bg, d-1);
+		border-radius: 0.25rem;
+		color: clr(txt, alt);
+        padding: 0.5rem 0.5rem;
+        
+        span {
+            background: clr(bg, l-1);
+            border-radius: 0.25rem;
+            color: clr(txt, alt);
+            padding: 0.25rem 1rem;
+        }
+	}
+}

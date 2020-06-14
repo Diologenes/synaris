@@ -1,0 +1,64 @@
+.c-tabs {
+	&__header {
+		display: flex;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		position: relative;
+
+		&:after {
+			content: '';
+			width: 100%;
+			position: absolute;
+			height: 2px;
+			background: clr(bg, d-2);
+			top: 100%;
+		}
+	}
+
+	&__title {
+		@include textStyle(nonSelect);
+		@include textStyle(tiny);
+        @include textStyle(bold);
+        @include textStyle(uppercase);
+		flex: 0 1 auto;
+		color: clr(txt, base);
+		margin: 0;
+		padding: 0 0 1rem 0;
+		margin-right: 2rem;
+		position: relative;
+		cursor: pointer;
+
+		&:hover {
+			color: clr(clr, base);
+        }
+        
+        &:after {
+            @include transitionAll();
+            content: '';
+            transform: scale(0);
+            position: absolute;
+            height: 2px;
+            background: transparent;
+            top: 100%;
+            z-index: 2;
+        }
+
+		&--is-active {
+			color: clr(clr, base);
+
+			&:after {
+				transform: scale(1);
+				width: 100%;
+				background: clr(clr, base);
+			}
+		}
+	}
+
+    &__container {
+        margin: 2rem 0 0 0;
+    }
+
+	&__item {
+	}
+}
