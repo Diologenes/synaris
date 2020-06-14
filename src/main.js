@@ -9,7 +9,7 @@ require('./services/EventBus')
 require('./filters/formatDate')
 require('./filters/textCrop')
 require('./components')
-const db = require('./database/models')
+import db from './database/models'
 
 Vue.prototype.$db = db
 Vue.use(BootstrapVue)

@@ -1,4 +1,4 @@
-const db = require('@/database/models')
+import db from '@/database/models'
 
 // default state
 const getDefaultState = () => {

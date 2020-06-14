@@ -1,4 +1,7 @@
-const Sequelize = require('sequelize')
+import Sequelize from 'sequelize'
+import Collection from './Collection'
+import Category from './Category'
+import Article from './Article'
 const path = require('path')
 const dbPath = path.resolve('src/database/storage/database.sqlite')
 console.log(`DB path: ${dbPath}`)
@@ -7,10 +10,6 @@ const sequelize = new Sequelize({
 	dialect: 'sqlite',
 	storage: dbPath
 })
-
-const Collection = require('./Collection')
-const Category = require('./Category')
-const Article = require('./Article')
 
 const models = {
 	Collection: Collection.init(sequelize, Sequelize),
@@ -28,4 +27,4 @@ const db = {
 	sequelize
 }
 
-module.exports = db
+export default db

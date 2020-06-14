@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize')
+import Sequelize from 'sequelize'
 
 class Collection extends Sequelize.Model {
 	static init(sequelize, DataTypes) {
@@ -22,4 +22,4 @@ class Collection extends Sequelize.Model {
 	}
 }
 
-module.exports = Collection
+export default Collection
