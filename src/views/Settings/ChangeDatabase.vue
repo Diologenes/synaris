@@ -4,7 +4,7 @@
 
 		<div>Braindump uses an SQLite3 database to store data. You can change your directory here</div>
 
-		<div>DB path: {{ dbPath }}</div>
+		<div>DB path: {{ dbPath }} / FileSize: {{ dbFileSize }}</div>
 
 		<label>
 			<div class="c-button c-button--primary">Change database file path</div>
@@ -18,10 +18,13 @@
 			centered
 			title="Change database path"
 			@ok="acceptNewDatabase"
-			@cancel="cancelChangeDatabase"
+			:no-close-on-esc="true"
+			:no-close-on-backdrop="true"
 		>
 			Do you want to <b>switch to new database path</b>? Your current database will not be deleted.
 		</b-modal>
+
+		<button class="c-button c-button--secondary" @click="openInFinder">Open File Explorer</button>
 
 		<b-modal
 			size="sm"
@@ -40,6 +43,9 @@
 </template>
 
 <script>
+	import { getFileSize } from '@/services/FileSystem'
+	const { shell } = require('electron')
+
 	export default {
 		data() {
 			return {
@@ -51,9 +57,16 @@
 		computed: {
 			dbPath() {
 				return this.$electronFileStorage.get('sqlitePath')
+			},
+			dbFileSize() {
+				return getFileSize(this.dbPath)
 			}
 		},
 		methods: {
+			openInFinder() {
+				shell.showItemInFolder(this.dbPath)
+			},
+
 			handleFileChange($event) {
 				this.newDbPath = $event.target.files[0].path
 				if (this.newDbPath !== null) {

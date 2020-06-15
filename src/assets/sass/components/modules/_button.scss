@@ -33,6 +33,11 @@
 		color: clr(txt, alt);
 	}
 
+	&--secondary {
+		background-color: clr(bg, d-2);
+		color: clr(txt, alt);
+	}
+
 	&--bullseye {
 		width: 3rem;
 		height: 3rem;
