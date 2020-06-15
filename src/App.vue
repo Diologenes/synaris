@@ -1,8 +1,8 @@
 <template>
 	<div id="app">
 		<router-view />
-		<notification />
 		<keyboard-navigation />
+		<notification />
 	</div>
 </template>
 

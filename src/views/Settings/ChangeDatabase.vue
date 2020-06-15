@@ -7,7 +7,7 @@
 		<div>DB path: {{ dbPath }}</div>
 
 		<label>
-			<div class="c-button c-button--primary">Change database file</div>
+			<div class="c-button c-button--primary">Change database file path</div>
 			<input style="display:none;" type="file" accept=".sqlite,.sqlite3,.db" @change="handleFileChange" />
 		</label>
 
@@ -16,11 +16,11 @@
 			id="modal-change-database"
 			ref="modalChangeDatabase"
 			centered
-			title="Change database"
+			title="Change database path"
 			@ok="acceptNewDatabase"
 			@cancel="cancelChangeDatabase"
 		>
-			Do you want to activate new database?
+			Do you want to <b>switch to new database path</b>? Your current database will not be deleted.
 		</b-modal>
 
 		<b-modal
@@ -53,14 +53,7 @@
 				return this.$electronFileStorage.get('sqlitePath')
 			}
 		},
-		mounted() {
-			this.dbSettings()
-		},
 		methods: {
-			dbSettings() {
-				console.log(this.$electronFileStorage.get('sqlitePath'))
-			},
-
 			handleFileChange($event) {
 				this.newDbPath = $event.target.files[0].path
 				if (this.newDbPath !== null) {
@@ -68,16 +61,11 @@
 				}
 			},
 
-			cancelChangeDatabase($event) {
-				console.log('test')
-				console.log($event)
-			},
-
-			acceptNewDatabase() { 
+			acceptNewDatabase() {
 				clearTimeout(this.newDbTimer)
 				this.$root.$emit('bv::hide::modal', 'modal-change-database')
 				this.$root.$emit('bv::show::modal', 'modal-load-new-database')
-        this.$electronFileStorage.set('sqlitePath', this.newDbPath)        
+				this.$electronFileStorage.set('sqlitePath', this.newDbPath)
 				this.newDbTimer = setTimeout(() => window.location.reload(), 2000)
 			}
 		}

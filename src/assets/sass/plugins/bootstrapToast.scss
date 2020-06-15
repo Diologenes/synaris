@@ -1,0 +1,30 @@
+.b-toast {
+	@include textStyle(nonSelect);
+}
+
+.toast {
+	border-radius: 0.25rem;
+	overflow: hidden;
+}
+
+.toast-header {
+	@include textStyle(small);
+	@include textStyle(uppercase);
+	padding: 1rem 1rem 0 1rem;
+}
+
+.toast-body {
+	@include textStyle(tiny);
+	padding: 1rem 1rem;
+	color: clr(txt, alt);
+}
+
+.b-toast-danger.b-toast-solid .toast {
+	background-color: clr(clr, base);
+}
+
+.toast .toast-header {
+	color: clr(txt, alt) !important;
+	background-color: transparent !important;
+	border-bottom-color: transparent !important;
+}
