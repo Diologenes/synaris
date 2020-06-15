@@ -74,7 +74,7 @@
 		computed: {
 			...vuexStore({
 				collections: 'collection/collections',
-				categoryWindowWidth: 'settings/categoryWindowWidth',
+				categoryWindowWidth: 'settings/categoryWindowWidth'
 			})
 		},
 		mounted() {
@@ -158,15 +158,16 @@
 								where: {
 									id: payload.article.id
 								}
-							}).then(article => {
-								if (article.categoryId !== category.id) {
-									article.categoryId = category.id
-									article.save().then(() => {
-										vm.$store.dispatch('article/getByCategory', { category: vm.$store.getters['collection/currentCategory'].id })
-										vm.$store.dispatch('collection/getAll')
-									})
-								}
 							})
+								.then(article => {
+									if (article.categoryId !== category.id) {
+										article.categoryId = category.id
+										article.save().then(() => {
+											vm.$store.dispatch('article/getByCategory', { category: vm.$store.getters['collection/currentCategory'].id })
+											vm.$store.dispatch('collection/getAll')
+										})
+									}
+								})
 						}
 						break
 					}

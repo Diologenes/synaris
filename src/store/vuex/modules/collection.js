@@ -14,7 +14,7 @@ const state = getDefaultState()
 // getters
 const getters = {
 	collections(state) {
-		return state.collections 
+		return state.collections
 	},
 	currentCategory(state) {
 		return state.currentCategory
@@ -45,20 +45,22 @@ const actions = {
 	},
 
 	setCurrentCategoryById(context, categoryId) {
-		return new Promise((resolve) => {
+		return new Promise(resolve => {
 			db.Category.findOne({
-				where: {id: categoryId}
+				where: { id: categoryId }
 			})
-				.then((response) => {
+				.then(response => {
 					context.commit('currentCategory', response)
 					resolve(response)
 				})
-				.catch((e) => console.error(e))
+				.catch((err) => {
+					window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
+				})
 		})
 	},
 
 	getAll(context) {
-		return new Promise((resolve) => {
+		return new Promise(resolve => {
 			db.Collection.findAll({
 				order: [
 					['sorting', 'ASC'], // order Collections.sorting first
@@ -78,11 +80,13 @@ const actions = {
 					}
 				]
 			})
-				.then((response) => {
+				.then(response => {
 					context.commit('collections', response)
 					resolve(response)
 				})
-				.catch((e) => console.error(e))
+				.catch((err) => {
+					window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
+				})
 		})
 	}
 }

@@ -2,15 +2,7 @@
 	<b-modal size="xl" id="modal-global-settings" ref="modalGlobalSettings" centered title="Settings" :hide-footer="true">
 		<tab-container>
 			<tab-item title="Database">
-				<div class="c-definition-list">
-					<div class="c-definition-list__header">Local database</div>
-					<div>Braindump uses an SQLite3 database to store data. You can change your directory here</div>
-					<div>DB path: {{ dbPath }}</div>
-					<label>
-						<div class="c-button c-button--primary">Select database file</div>
-						<input style="display:none;" type="file" accept=".sqlite,.sqlite3,.db" @change="handleFileChange" />
-					</label>
-				</div>
+				<settings-change-database />
 			</tab-item>
 			<tab-item title="Keyboard Shortcuts">
 				<div class="row">
@@ -94,29 +86,14 @@
 </template>
 
 <script>
+	import settingsChangeDatabase from '@/views/Settings/ChangeDatabase'
+
 	export default {
 		data() {
 			return {}
 		},
-		computed: {
-			dbPath() {
-				return this.$electronFileStorage.get('sqlitePath')
-			}
-		},
-		mounted() {
-			this.dbSettings()
-		},
-		methods: {
-			dbSettings() {
-				console.log(this.$electronFileStorage.get('sqlitePath'))
-			},
-
-			handleFileChange($event) {
-				let customDbPath = $event.target.files[0].path
-				if (customDbPath !== null) {
-					this.$electronFileStorage.set('sqlitePath', customDbPath)
-				}
-			}
+		components: {
+			settingsChangeDatabase
 		}
 	}
 </script>

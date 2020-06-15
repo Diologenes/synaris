@@ -11,9 +11,6 @@ const constants = {
 				filterReverseOrder: false,
 				markNewUntilDays: 1
 			}
-		},
-		database: {
-			templateFilePath: 'src/database/storage/database.sqlite',
 		}
 	},
 	router: {

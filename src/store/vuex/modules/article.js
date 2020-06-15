@@ -89,7 +89,9 @@ const actions = {
 						resolve(response)
 					}, 0)
 				})
-				.catch(e => console.error(e))
+				.catch(err => {
+					window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
+				})
 		})
 	},
 

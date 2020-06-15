@@ -5,7 +5,6 @@ import categoryList from '@/views/CategoryList/Index'
 import articleList from '@/views/ArticleList/Index'
 import articleShow from '@/views/ArticleShow/Index'
 import search from '@/views/Search/Index'
-import settings from '@/views/Settings/Index'
 
 // route definitions
 const routes = [
@@ -46,11 +45,6 @@ const routes = [
 				path: '/search',
 				name: 'search',
 				component: search
-			},
-			{
-				path: '/settings',
-				name: 'settings',
-				component: settings
 			}
 		]
 	}

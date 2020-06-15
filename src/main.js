@@ -12,6 +12,9 @@ require('./filters/formatDate')
 require('./filters/textCrop')
 require('./components')
 
+import { ToastPlugin } from 'bootstrap-vue'
+Vue.use(ToastPlugin)
+
 Vue.prototype.$electronFileStorage = electronFileStorage
 Vue.prototype.$db = db
 Vue.use(BootstrapVue)

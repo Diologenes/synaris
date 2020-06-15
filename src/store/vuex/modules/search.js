@@ -19,7 +19,7 @@ const getters = {
 	},
 	searchWord(state) {
 		return state.searchWord
-	},
+	}
 }
 
 // mutations
@@ -53,7 +53,7 @@ const actions = {
 	},
 
 	getResult(context) {
-		return new Promise((resolve) => {
+		return new Promise(resolve => {
 			let query = {}
 
 			if (context.state.searchWord.length > 0) {
@@ -64,7 +64,7 @@ const actions = {
 
 				// build subqueries
 				let subQuery = []
-				searchWordArray.forEach((searchWord) => {
+				searchWordArray.forEach(searchWord => {
 					searchWord = `%${searchWord}%`
 					subQuery.push({
 						[Op.or]: [
@@ -93,13 +93,15 @@ const actions = {
 				where: query,
 				order: [['title', 'ASC']]
 			})
-				.then((response) => {
+				.then(response => {
 					setTimeout(function() {
 						context.commit('result', response)
 						resolve(response)
 					}, 0)
 				})
-				.catch((e) => console.error(e))
+				.catch(err => {
+					window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
+				})
 		})
 	}
 }
