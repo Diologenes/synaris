@@ -13,7 +13,9 @@ function createWindow() {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
 		show: false,
+		minWidth: 800,
 		width: 800,
+		minHeight: 600,
 		height: 600,
 		frame: false,
 		titleBarStyle: 'hidden',
