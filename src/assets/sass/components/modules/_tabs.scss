@@ -28,18 +28,18 @@
 
 		&:hover {
 			color: clr(clr, base);
-        }
-        
-        &:after {
-            @include transitionAll();
-            content: '';
-            transform: scale(0);
-            position: absolute;
-            height: 2px;
-            background: transparent;
-            top: 100%;
-            z-index: 2;
-        }
+		}
+
+		&:after {
+			@include transitionAll();
+			content: '';
+			transform: scale(0);
+			position: absolute;
+			height: 2px;
+			background: transparent;
+			top: 100%;
+			z-index: 2;
+		}
 
 		&--is-active {
 			color: clr(clr, base) !important;
@@ -52,10 +52,7 @@
 		}
 	}
 
-    &__container {
-        margin: 2rem 0 0 0;
-    }
-
-	&__item {
+	&__container {
+		margin: 2rem 0 0 0;
 	}
 }

@@ -1,78 +1,70 @@
 .c-applicationwindow-bar {
-  height: 2rem;
-  background: clr(bg, d-1);
-  border-bottom: 1px solid clr(bg, d-2);
-  width: 100%;
-  display: flex;
-  align-items: center;
-  user-select: none;
-  -webkit-app-region: drag;
-  flex: 0 0 auto;
-  z-index: 100000000;
-  position: relative;
+	height: 2rem;
+	background: clr(bg, d-1);
+	border-bottom: 1px solid clr(bg, d-2);
+	width: 100%;
+	display: flex;
+	align-items: center;
+	user-select: none;
+	-webkit-app-region: drag;
+	flex: 0 0 auto;
+	z-index: 100000000;
+	position: relative;
 
-  &__title {
-    @include textStyle(tiny);
-    @include textStyle(bold);
-    color: clr(txt, base);
-    flex: 1 1 auto;
-    margin: 0 0 0 1rem;
-    text-transform: uppercase;
-  }
+	&__title {
+		@include textStyle(tiny);
+		@include textStyle(bold);
+		color: clr(txt, base);
+		flex: 1 1 auto;
+		margin: 0 0 0 1rem;
+		text-transform: uppercase;
+	}
 
-  &__controls {
-    flex: 0 0 auto;
-  }
+	&__controls {
+		flex: 0 0 auto;
+	}
 
-  &__control {
-    @include transitionAll();
-    -webkit-app-region: no-drag;
-    background: transparent;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    width: 3rem;
-    height: calc(2rem - 1px);
-    color: clr(txt, base);
+	&__control {
+		@include transitionAll();
+		-webkit-app-region: no-drag;
+		background: transparent;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		outline: 0;
+		width: 3rem;
+		height: calc(2rem - 1px);
+		color: clr(txt, base);
 
-    &:focus {
-      outline: 0;
-    }
+		&:focus {
+			outline: 0;
+		}
 
-    &:hover {
-      background: clr(bg, d-1, 4, 'w');
-    }
+		&:hover {
+			background: clr(bg, d-1, 4, 'w');
+		}
 
-    &:before {
-      font-size: 10px;
-      text-shadow: none;
-    }
+		&:before {
+			font-size: 10px;
+			text-shadow: none;
+		}
 
-    &--minimize {
-
-    }
-
-    &--maximize {
-
-    }
-
-    &--close {
-      &:hover {
-        background: clr(clr, base);
-        color: clr(txt, alt);
-      }
-    }
-  }
+		&--close {
+			&:hover {
+				background: clr(clr, base);
+				color: clr(txt, alt);
+			}
+		}
+	}
 }
 
 .c-applicationwindow-content {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  right: 0;
-  top: 1.75rem;
-  bottom: 0;
-  overflow: auto;
-  display: flex;
+	position: absolute;
+	width: 100%;
+	left: 0;
+	right: 0;
+	top: 1.75rem;
+	bottom: 0;
+	overflow: auto;
+	display: flex;
 }
