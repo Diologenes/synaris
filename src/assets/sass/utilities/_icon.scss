@@ -175,5 +175,8 @@
   &--storage {
     @include iconFont('\002d');
   }
+  &--refresh {
+    @include iconFont('\0059');
+  }
 }
 

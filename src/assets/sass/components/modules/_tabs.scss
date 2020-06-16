@@ -24,7 +24,6 @@
 		margin-right: 2rem;
 		position: relative;
 		cursor: pointer;
-		@include textStyle(hyphens);
 
 		&:hover {
 			color: clr(clr, base);

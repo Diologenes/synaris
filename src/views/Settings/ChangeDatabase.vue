@@ -5,6 +5,7 @@
 		</div>
 		<div class="col">
 			<div class="c-txt c-txt-title-base u-m__b--4">Mounted database</div>
+
 			<div class="c-boxed c-txt c-txt-text-tiny-alt u-m__b--4">
 				<div class="row">
 					<div class="col">{{ dbPath }}</div>
@@ -15,9 +16,10 @@
 			<div class="row">
 				<div class="col ">
 					<div class="float-right">
-						<button class="c-button c-button--secondary" @click="openInFinder">Open File Explorer</button>
+						<button class="c-button c-button--icon-before c-button--secondary u-icon--win-window" @click="openInFinder">Open File Explorer</button>
+						<button class="u-m__l--4 c-button c-button--icon-before c-button--secondary u-icon--download" @click="exportDatabase">Export database</button>
 						<label>
-							<div class="u-m__l--4 c-button c-button--primary">Change database mount</div>
+							<div class="u-m__l--4 c-button c-button--icon-before c-button--primary u-icon--refresh">Change database mount</div>
 							<input style="display:none;" type="file" accept=".sqlite,.sqlite3,.db" @change="handleFileChange" />
 						</label>
 					</div>
@@ -39,16 +41,19 @@
 
 			<b-modal
 				size="sm"
-				id="modal-load-new-database"
-				ref="modalLoadNewDatabase"
+				id="modal-loading-database"
+				ref="modalLoadingDatabase"
 				centered
-				title="Change database"
 				:hide-footer="true"
 				:hide-header="true"
 				:no-close-on-esc="true"
 				:no-close-on-backdrop="true"
 			>
 				<loader :active="true" />
+			</b-modal>
+
+			<b-modal size="sm" id="modal-database-exported" ref="modalDatabaseExported" title="Database export" centered :ok-only="true">
+				Database successfully exported.
 			</b-modal>
 		</div>
 	</div>
@@ -57,6 +62,9 @@
 <script>
 	import { getFileSize } from '@/services/FileSystem'
 	const { shell } = require('electron')
+	const app = require('electron').remote
+	const dialog = app.dialog
+	const fs = require('fs')
 
 	export default {
 		data() {
@@ -89,9 +97,59 @@
 			acceptNewDatabase() {
 				clearTimeout(this.newDbTimer)
 				this.$root.$emit('bv::hide::modal', 'modal-change-database')
-				this.$root.$emit('bv::show::modal', 'modal-load-new-database')
+				this.$root.$emit('bv::show::modal', 'modal-loading-database')
 				this.$electronFileStorage.set('sqlitePath', this.newDbPath)
 				this.newDbTimer = setTimeout(() => window.location.reload(), 2000)
+			},
+
+			exportDatabase() {
+				dialog.showSaveDialog(
+					{
+						filters: [
+							{
+								name: 'sqlite',
+								extensions: ['sqlite']
+							}
+						]
+					},
+					fileName => {
+						if (fileName === undefined || fileName === '') {
+							return
+						}
+						fs.readFile(this.dbPath, (err, fileContent) => {
+							if (err) {
+								return
+							}
+							this.$root.$emit('bv::show::modal', 'modal-loading-database')
+							fs.writeFile(fileName, fileContent, err => {
+								this.$root.$emit('bv::hide::modal', 'modal-loading-database')
+								if (err) {
+									return
+								}
+								this.$root.$emit('bv::show::modal', 'modal-database-exported')
+							})
+						})
+					}
+				)
+
+				// dialog.showSaveDialog(fileName => {
+
+				// if (fileName === undefined) {
+				// 	return
+				// }
+				// fs.readFile(this.dbPath, (err, fileContent) => {
+				// 	if (err) {
+				// 		return
+				// 	}
+				// 	fs.writeFile(fileName, fileContent, err => {
+				// 		if (err) {
+				// 			return
+				// 		}
+
+				// 		alert('The file has been succesfully saved')
+				// 	})
+				// })
+				// })
 			}
 		}
 	}
