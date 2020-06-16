@@ -52,12 +52,9 @@
 		border-bottom: 1px solid clr(bg, d-2);
 
 		&-title {
-			@include textStyle(tiny);
-			@include textStyle(uppercase);
 			cursor: pointer;
 			font-weight: 600;
 			flex: 1 1 auto;
-			color: clr(txt, base);
 			padding: 0.5rem 1.5rem;
 			margin: 2px 0;
 			border: 1px transparent;
@@ -127,19 +124,16 @@
 	&__link {
 		@include transitionAll();
 		@include activeNavigator();
-
 		flex: 1;
 		display: flex;
 		padding: 0.5rem 1.5rem;
 		align-items: center;
-		color: clr(txt, alt);
 		margin: 0 0;
 		position: relative;
 
 		&:hover,
 		&:focus,
 		&--is-active {
-			color: clr(txt, alt);
 			background: clr(bg, d-1, 7);
 			text-decoration: none;
 		}
@@ -147,7 +141,6 @@
 		&-title {
 			flex: 1 1 auto;
 			margin-right: 1rem;
-			@include textStyle(small);
 		}
 
 		&-indicator {

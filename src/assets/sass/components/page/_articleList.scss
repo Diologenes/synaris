@@ -73,10 +73,8 @@
 	}
 
 	&__date {
-		@include textStyle(tiny);
 		display: flex;
 		align-content: center;
-		color: clr(txt, base);
 		margin-bottom: 0.5rem;
 
 		&-ago {
@@ -85,14 +83,7 @@
 		}
 	}
 
-	&__title {
-		@include textStyle(regular);
-		color: clr(txt, alt);
-	}
-
 	&__description {
-		@include textStyle(small);
-		color: clr(txt, base);
 		margin-top: 1rem;
 	}
 

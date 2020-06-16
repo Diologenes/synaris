@@ -1,5 +1,5 @@
 <template>
-	<div class="c-layermenu__group">{{ title }}</div>
+	<div class="c-layermenu__group c-txt c-txt-title-base">{{ title }}</div>
 </template>
 
 <script>

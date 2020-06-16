@@ -1,6 +1,6 @@
 <template>
 	<div class="c-panel-section">
-		<div class="c-panel-section__title">
+		<div class="c-panel-section__title c-txt c-txt-head-base">
 			<span class="u-hash" v-if="category">{{ category.title }}</span>
 		</div>
 		<div class="c-panel-section__options">

@@ -24,7 +24,6 @@
       }
 
     &__item {
-        @include textStyle('nonBreak');
         margin: .125rem 0;
         display: flex;
         align-content: center;
@@ -45,31 +44,23 @@
     }
 
     &__group {
-        @include textStyle('contextMenu');
-        @include textStyle('nonSelect');
-        @include textStyle('uppercase');
         font-weight: 600;
         display: flex;
         flex: 1;
         padding: .75rem 1.5rem .75rem ;
-        color: clr(txt, base);
     }
 
     &__link {
         @include transitionAll();
-        @include textStyle('contextMenu');
-        @include textStyle('nonSelect');
         display: flex;
         flex: 1 1 auto;
         padding: .75rem 1.5rem;
-        color: clr(txt, alt);
         cursor: pointer;
         align-items: center;
 
         &:hover {
             text-decoration: none;
             background: clr(bg, d-3);
-            color: clr(txt, alt);
         }
     }
 }

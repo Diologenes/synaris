@@ -1,6 +1,6 @@
 <template>
 	<div class="c-layermenu__item">
-		<div class="c-layermenu__link" @click="clickItem(active)">
+		<div class="c-layermenu__link c-txt c-txt-text-tiny" @click="clickItem(active)">
 			<div :class="iconClass"></div>
 			<div class="c-layermenu__text">{{ title }}</div>
 			<div class="c-layermenu__suffix">

@@ -11,7 +11,7 @@
 			@dragend="dragEnd()"
 			draggable="true"
 		>
-			<div class="c-category__group-name">{{ collection.title }}</div>
+			<div class="c-category__group-name c-txt c-txt-title-base">{{ collection.title }}</div>
 			<div class="c-category__group-toggle u-icon--arrow-left" :class="{ 'c-category__group-toggle--is-collapsed': isCollapsed }"></div>
 		</div>
 
@@ -36,7 +36,7 @@
 					class="c-category__link"
 					active-class="c-category__link--is-active"
 				>
-					<div class="c-category__link-title" :title="category.title">{{ category.title }}</div>
+					<div class="c-category__link-title c-txt-text-base" :title="category.title">{{ category.title }}</div>
 					<div class="c-category__link-indicator">
 						<div class="c-panelbox">
 							<div class="c-panelbox__item">{{ category.dataValues.articleCount }}</div>

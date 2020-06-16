@@ -1,0 +1,42 @@
+.c-txt {
+	@include textStyle(nonSelect);
+
+	&-head {
+		&-base {
+			@include textStyle(regularUppercase);
+			color: clr(txt, alt);
+		}
+	}
+
+	&-title {
+		&-base {
+			@include textStyle(tiny);
+			@include textStyle(bold);
+			@include textStyle(uppercase);
+			color: clr(txt, base);
+		}
+	}
+
+	&-text {
+		&-base {
+			@include textStyle(small);
+			color: clr(txt, alt);
+		}
+		&-regular {
+            @include textStyle(regular);
+            color: clr(txt, alt);
+        }
+		&-small {
+            @include textStyle(small);
+            color: clr(txt, base);
+        }
+		&-tiny {
+			@include textStyle(tiny);
+			color: clr(txt, alt);
+        }
+        &-tiny-alt {
+            @include textStyle(tiny);
+            color: clr(txt, base);
+        }
+	}
+}

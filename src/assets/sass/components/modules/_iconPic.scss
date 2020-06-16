@@ -1,0 +1,28 @@
+.c-icon-pic {
+    border-radius: .25rem;
+    display: flex;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+
+    &:before {
+        flex: 0 0 auto;
+        position: relative;
+    }
+
+    &--xxl {
+        width: 8rem;
+        height: 8rem;
+        font-size: 5rem;
+    }
+
+    &--base {
+        background: clr(clr, base);
+        color: clr(txt, alt)
+    }
+
+    &--alt {
+        background: clr(bg, d-2);
+        color: clr(txt, base)
+    }
+}

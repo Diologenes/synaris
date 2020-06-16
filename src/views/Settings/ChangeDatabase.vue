@@ -1,44 +1,56 @@
 <template>
-	<div class="c-definition-list">
-		<div class="c-definition-list__header">Local database</div>
+	<div class="row">
+		<div class="col-auto">
+			<div class="c-icon-pic c-icon-pic--xxl c-icon-pic--base u-icon--storage"></div>
+		</div>
+		<div class="col">
+			<div class="c-txt c-txt-title-base u-m__b--4">Mounted database</div>
+			<div class="c-boxed c-txt c-txt-text-tiny-alt u-m__b--4">
+				<div class="row">
+					<div class="col">{{ dbPath }}</div>
+					<div class="col-auto">{{ dbFileSize }}</div>
+				</div>
+			</div>
 
-		<div>Braindump uses an SQLite3 database to store data. You can change your directory here</div>
+			<div class="row">
+				<div class="col ">
+					<div class="float-right">
+						<button class="c-button c-button--secondary" @click="openInFinder">Open File Explorer</button>
+						<label>
+							<div class="u-m__l--4 c-button c-button--primary">Change database mount</div>
+							<input style="display:none;" type="file" accept=".sqlite,.sqlite3,.db" @change="handleFileChange" />
+						</label>
+					</div>
+				</div>
+			</div>
 
-		<div>DB path: {{ dbPath }} / FileSize: {{ dbFileSize }}</div>
+			<b-modal
+				size="sm"
+				id="modal-change-database"
+				ref="modalChangeDatabase"
+				centered
+				title="Change database path"
+				@ok="acceptNewDatabase"
+				:no-close-on-esc="true"
+				:no-close-on-backdrop="true"
+			>
+				Do you want to <b>switch to new database path</b>? Your current database will not be deleted.
+			</b-modal>
 
-		<label>
-			<div class="c-button c-button--primary">Change database file path</div>
-			<input style="display:none;" type="file" accept=".sqlite,.sqlite3,.db" @change="handleFileChange" />
-		</label>
-
-		<b-modal
-			size="sm"
-			id="modal-change-database"
-			ref="modalChangeDatabase"
-			centered
-			title="Change database path"
-			@ok="acceptNewDatabase"
-			:no-close-on-esc="true"
-			:no-close-on-backdrop="true"
-		>
-			Do you want to <b>switch to new database path</b>? Your current database will not be deleted.
-		</b-modal>
-
-		<button class="c-button c-button--secondary" @click="openInFinder">Open File Explorer</button>
-
-		<b-modal
-			size="sm"
-			id="modal-load-new-database"
-			ref="modalLoadNewDatabase"
-			centered
-			title="Change database"
-			:hide-footer="true"
-			:hide-header="true"
-			:no-close-on-esc="true"
-			:no-close-on-backdrop="true"
-		>
-			<loader :active="true" />
-		</b-modal>
+			<b-modal
+				size="sm"
+				id="modal-load-new-database"
+				ref="modalLoadNewDatabase"
+				centered
+				title="Change database"
+				:hide-footer="true"
+				:hide-header="true"
+				:no-close-on-esc="true"
+				:no-close-on-backdrop="true"
+			>
+				<loader :active="true" />
+			</b-modal>
+		</div>
 	</div>
 </template>
 

@@ -4,7 +4,7 @@
 			<div class="c-category__wrap" ref="resizerCategory" :style="{ width: categoryWindowWidth }">
 				<!-- panel section -->
 				<div class="c-panel-section u-m__b--4">
-					<div class="c-panel-section__title">Categories</div>
+					<div class="c-panel-section__title c-txt c-txt-head-base">Categories</div>
 				</div>
 				<!-- panel section -->
 

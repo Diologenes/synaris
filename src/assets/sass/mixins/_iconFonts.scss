@@ -3,7 +3,8 @@ $iconFontPath: '../fonts';
 @font-face {
 	font-family: 'glyphter';
 	src: url('#{$iconFontPath}/glyphter.eot');
-	src: url('#{$iconFontPath}/glyphter.eot?#iefix') format('embedded-opentype'), url('#{$iconFontPath}/glyphter.woff') format('woff'), url('#{$iconFontPath}/glyphter.ttf') format('truetype'), url('#{$iconFontPath}/glyphter.svg#glyphter') format('svg');
+	src: url('#{$iconFontPath}/glyphter.eot?#iefix') format('embedded-opentype'), url('#{$iconFontPath}/glyphter.woff') format('woff'),
+		url('#{$iconFontPath}/glyphter.ttf') format('truetype'), url('#{$iconFontPath}/glyphter.svg#glyphter') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -226,6 +227,9 @@ $iconFontPath: '../fonts';
 }
 .icon-arrow-double:before {
 	content: '\002b';
+}
+.icon-storage:before {
+	content: '\002d';
 }
 
 @mixin rawIconFont() {

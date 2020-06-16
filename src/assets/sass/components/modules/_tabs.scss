@@ -17,10 +17,6 @@
 	}
 
 	&__title {
-		@include textStyle(nonSelect);
-		@include textStyle(tiny);
-        @include textStyle(bold);
-        @include textStyle(uppercase);
 		flex: 0 1 auto;
 		color: clr(txt, base);
 		margin: 0;
@@ -45,7 +41,7 @@
         }
 
 		&--is-active {
-			color: clr(clr, base);
+			color: clr(clr, base) !important;
 
 			&:after {
 				transform: scale(1);

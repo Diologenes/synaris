@@ -1,5 +1,4 @@
 .c-panel-section {
-	@include textStyle(nonSelect);
 	min-height: 5rem;
 	align-items: center;
 	padding: 0.5rem 1.5rem;
@@ -9,9 +8,7 @@
     position: relative;
 
 	&__title {
-		@include textStyle(regularUppercase);
 		flex: 1 1 auto;
-		color: clr(txt, alt);
 	}
 
 	&__options {
