@@ -15,6 +15,8 @@ function createWindow() {
 		show: false,
 		width: 800,
 		height: 600,
+		frame: false,
+		titleBarStyle: 'hidden',
 		webPreferences: {
 			nodeIntegration: true
 		}
@@ -67,7 +69,7 @@ app.on('ready', async () => {
 
 if (isDevelopment) {
 	if (process.platform === 'win32') {
-		process.on('message', (data) => {
+		process.on('message', data => {
 			if (data === 'graceful-exit') {
 				app.quit()
 			}
