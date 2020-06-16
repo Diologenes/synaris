@@ -63,6 +63,7 @@
 		}
 
 		&-name {
+			@include textStyle(hyphens);
 			flex: 1 1 auto;
 		}
 
@@ -75,7 +76,7 @@
 
 			&:before {
 				transform: rotate(90deg);
-				margin: .5rem 0 0 .45rem;
+				margin: 0.5rem 0 0 0.45rem;
 				position: absolute;
 			}
 
@@ -130,6 +131,7 @@
 		align-items: center;
 		margin: 0 0;
 		position: relative;
+		@include textStyle(hyphens);
 
 		&:hover,
 		&:focus,
@@ -139,6 +141,7 @@
 		}
 
 		&-title {
+			@include textStyle(hyphens);
 			flex: 1 1 auto;
 			margin-right: 1rem;
 		}

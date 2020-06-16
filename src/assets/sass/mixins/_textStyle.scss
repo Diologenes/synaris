@@ -11,6 +11,12 @@
 		-webkit-user-select: None;
 	}
 
+	@if $style == 'hyphens' {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
 	@if $style == 'canSelect' {
 		-ms-user-select: text;
 		-moz-user-select: text;

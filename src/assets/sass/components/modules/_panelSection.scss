@@ -8,6 +8,8 @@
     position: relative;
 
 	&__title {
+		@include textStyle(hyphens);
+		margin-right: 1rem;
 		flex: 1 1 auto;
 	}
 

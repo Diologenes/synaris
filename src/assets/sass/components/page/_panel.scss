@@ -4,24 +4,13 @@
 	height: 3rem;
 	flex: 0 0 auto;
 	flex-direction: column;
+	border-bottom: 1px solid clr(bg, d-1, 7);
 
 	@include media-breakpoint-up(lg) {
 		flex-direction: row;
 		width: 5rem;
 		height: 100%;
-	}
-
-	&__gradient {
-		display: none;
-		@include media-breakpoint-up(lg) {
-			display: block;
-			position: absolute;
-			right: 0;
-			top: 0;
-			bottom: 0;
-			width: 1.5rem;
-			@include gradientHorizontal(0.025);
-		}
+		border-right: 1px solid clr(bg, d-1, 7);
 	}
 
 	&__list {
@@ -29,7 +18,7 @@
 		flex: 1 1 auto;
 		align-items: center;
 		flex-direction: row;
-		background: clr(bg, d-2);
+		background: clr(bg, d-1);
 		position: relative;
 		@include media-breakpoint-up(lg) {
 			align-items: initial;
@@ -73,7 +62,6 @@
 		@include transitionAll();
 		margin-left: 1rem;
 		border-radius: 100%;
-		background: clr(bg);
 		position: relative;
 		display: flex;
 		align-items: center;
