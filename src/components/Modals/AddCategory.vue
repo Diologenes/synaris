@@ -4,6 +4,7 @@
 		ref="modalCreateNewCategory"
 		centered
 		title="Create new category or collection"
+		size="md"
 		:ok-disabled="isPending"
 		@shown="resetModal"
 		@ok="handleOk"
