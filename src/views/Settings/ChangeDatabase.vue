@@ -16,11 +16,12 @@
 			<div class="row">
 				<div class="col ">
 					<div class="float-right">
-						<button class="c-button c-button--icon-before c-button--secondary u-icon--win-window" @click="openInFinder">Open File Explorer</button>
+						<button class="u-m__l--4 c-button c-button--icon-before c-button--secondary u-icon--more" @click="createDatabase">Create database</button>
+						<button class="u-m__l--4 c-button c-button--icon-before c-button--secondary u-icon--win-window" @click="openInFinder">Open File Explorer</button>
 						<button class="u-m__l--4 c-button c-button--icon-before c-button--secondary u-icon--download" @click="exportDatabase">Export database</button>
 						<label>
-							<div class="u-m__l--4 c-button c-button--icon-before c-button--primary u-icon--refresh">Change database mount</div>
-							<input style="display:none;" type="file" accept=".sqlite,.sqlite3,.db" @change="handleFileChange" />
+							<div class="u-m__l--4 c-button c-button--icon-before c-button--secondary u-icon--refresh">Change mount</div>
+							<input style="display:none;" type="file" accept=".sqlite" @change="handleFileChange" />
 						</label>
 					</div>
 				</div>
@@ -70,7 +71,15 @@
 		data() {
 			return {
 				newDbTimer: null,
-				newDbPath: ''
+				newDbPath: '',
+				sqliteFilter: {
+					filters: [
+						{
+							name: 'sqlite',
+							extensions: ['sqlite']
+						}
+					]
+				}
 			}
 		},
 		components: {},
@@ -103,53 +112,40 @@
 			},
 
 			exportDatabase() {
-				dialog.showSaveDialog(
-					{
-						filters: [
-							{
-								name: 'sqlite',
-								extensions: ['sqlite']
-							}
-						]
-					},
-					fileName => {
-						if (fileName === undefined || fileName === '') {
+				dialog.showSaveDialog(this.sqliteFilter, fileName => {
+					if (fileName === undefined || fileName === '') {
+						return
+					}
+					fs.readFile(this.dbPath, (err, fileContent) => {
+						if (err) {
 							return
 						}
-						fs.readFile(this.dbPath, (err, fileContent) => {
+						this.$root.$emit('bv::show::modal', 'modal-loading-database')
+						fs.writeFile(fileName, fileContent, err => {
+							this.$root.$emit('bv::hide::modal', 'modal-loading-database')
 							if (err) {
 								return
 							}
-							this.$root.$emit('bv::show::modal', 'modal-loading-database')
-							fs.writeFile(fileName, fileContent, err => {
-								this.$root.$emit('bv::hide::modal', 'modal-loading-database')
-								if (err) {
-									return
-								}
-								this.$root.$emit('bv::show::modal', 'modal-database-exported')
-							})
+							this.$root.$emit('bv::show::modal', 'modal-database-exported')
 						})
+					})
+				})
+			},
+
+			createDatabase() {
+				dialog.showSaveDialog(this.sqliteFilter, fileName => {
+					if (fileName === undefined || fileName === '') {
+						return
 					}
-				)
-
-				// dialog.showSaveDialog(fileName => {
-
-				// if (fileName === undefined) {
-				// 	return
-				// }
-				// fs.readFile(this.dbPath, (err, fileContent) => {
-				// 	if (err) {
-				// 		return
-				// 	}
-				// 	fs.writeFile(fileName, fileContent, err => {
-				// 		if (err) {
-				// 			return
-				// 		}
-
-				// 		alert('The file has been succesfully saved')
-				// 	})
-				// })
-				// })
+					this.$root.$emit('bv::show::modal', 'modal-loading-database')
+					fs.writeFile(fileName, '', err => {
+						if (err) {
+							return
+						}
+						this.$electronFileStorage.set('sqlitePath', fileName)
+						this.newDbTimer = setTimeout(() => window.location.reload(), 2000)
+					})
+				})
 			}
 		}
 	}
