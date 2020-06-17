@@ -27,7 +27,7 @@
 				<div v-b-modal.modal-create-new-category class="c-create-button c-button c-button--primary c-button--bullseye u-icon--more"></div>
 
 				<!--  section resizer -->
-				<section-resizer :min="200" :max="1000" bindRef="resizerCategory" dispatchToStore="settings/categoryWindowWidth" />
+				<section-resizer :min="100" :max="1000" bindRef="resizerCategory" dispatchToStore="settings/categoryWindowWidth" />
 			</div>
 		</div>
 

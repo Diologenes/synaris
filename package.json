@@ -1,5 +1,7 @@
 {
-  "name": "braindump",
+  "name": "Synaris",
+  "description": "Local snippets manager",
+  "author": "Gerald Jelitto",
   "version": "1.0.0",
   "private": true,
   "scripts": {

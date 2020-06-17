@@ -1,6 +1,7 @@
 <template>
 	<div class="c-applicationwindow-bar">
-		<div class="c-applicationwindow-bar__title">BrainDump</div>
+		<div class="c-applicationwindow-bar__logo"><img class="c-applicationwindow-bar__logo-icon" src="images/app-logo.svg" /></div>
+		<div class="c-applicationwindow-bar__title">Synaris</div>
 		<div class="c-applicationwindow-bar__controls">
 			<button
 				id="c-applicationwindow-bar-button-minimize"
@@ -27,7 +28,7 @@
 	export default {
 		data() {
 			return {
-				iconWindowModeChange: 'u-icon--win-fullscreen'
+				iconWindowModeChange: 'u-icon--win-fullscreen',
 			}
 		},
 		mounted() {

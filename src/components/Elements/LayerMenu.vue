@@ -3,7 +3,7 @@
 		<ul class="c-layermenu__wrap">
 			<transition v-for="(option, key) in options" :key="key">
 				<li v-if="typeof option.method !== 'undefined'" class="c-layermenu__item" @click="select(option)">
-					<span class="c-layermenu__link"><span v-if="option.icon" :class="itemIcon(option)"></span>{{ option.title }}</span>
+					<span class="c-layermenu__link c-txt c-txt-text-tiny"><span v-if="option.icon" :class="itemIcon(option)"></span>{{ option.title }}</span>
 				</li>
 				<li v-if="option.special === 'divider'" class="c-layermenu__divider"></li>
 			</transition>

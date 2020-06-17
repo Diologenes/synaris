@@ -11,12 +11,21 @@
 	z-index: 100000000;
 	position: relative;
 
+	&__logo {
+		display: flex;
+		margin: 0 0 0 1rem;
+		&-icon {
+			width: 16px;
+			height: 16px;
+		}
+	}
+
 	&__title {
 		@include textStyle(tiny);
 		@include textStyle(bold);
 		color: clr(txt, base);
 		flex: 1 1 auto;
-		margin: 0 0 0 1rem;
+		margin: 0 0 0 .5rem;
 		text-transform: uppercase;
 	}
 

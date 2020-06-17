@@ -11,6 +11,9 @@ module.exports = {
 		electronBuilder: {
 			// noAppProtocol: true,
 			builderOptions: {
+				win: {
+					icon: './icon.ico'
+				},
 				files: ['**/*'],
 				extraFiles: [
 					{
@@ -29,6 +32,11 @@ module.exports = {
 		}
 	},
 	chainWebpack: config => {
+		config.module
+			.rule('images')
+			.use('url-loader')
+			.loader('url-loader')
+			.tap(options => Object.assign(options, { limit: 10240000 }))
 		config.externals({
 			sqlite3: 'commonjs sqlite3'
 		})
