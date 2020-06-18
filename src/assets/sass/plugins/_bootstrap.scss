@@ -36,9 +36,6 @@
 @import "~bootstrap/scss/spinners";
 
 @import '~bootstrap-vue/src/index.scss';
-@import '~quill/dist/quill.core.css';
-@import '~quill/dist/quill.bubble.css';
-@import '~quill/dist/quill.snow.css';
 
 // override styles
 .btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-primary.dropdown-toggle:focus {

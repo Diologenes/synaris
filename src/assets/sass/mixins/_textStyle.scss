@@ -59,6 +59,12 @@
 		text-transform: uppercase;
 	}
 
+	
+	@if $style == 'rte' {
+		line-height: 160%;
+		font-size: 1rem;
+	}
+
 	@if $style == 'regular' {
 		font-weight: 600;
 		line-height: 130%;

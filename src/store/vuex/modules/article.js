@@ -78,7 +78,7 @@ const actions = {
 		context.commit('currentArticle', null)
 	},
 
-	setCurrentArticle(context, articleId) {
+	setCurrentArticleById(context, articleId) {
 		return new Promise(resolve => {
 			db.Article.findOne({
 				where: { id: articleId }
@@ -92,6 +92,15 @@ const actions = {
 				.catch(err => {
 					window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
 				})
+		})
+	},
+
+	setCurrentArticle(context, article) {
+		return new Promise(resolve => {
+			article.save().then(response => {
+				context.commit('currentArticle', article)
+				resolve(response)
+			})
 		})
 	},
 

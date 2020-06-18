@@ -1,19 +1,28 @@
 <template>
 	<div class="c-page c-page__default">
-		<div class="c-article-show">
-			<div id="editor">{{ article.content }}</div>
+		<div class="c-article-show" v-if="article">
+
+			<div class="c-article-show__header">
+				<div class="c-article-show__date">{{ article.updatedAt | formatDate('DateTime') }} ({{ article.updatedAt | formatDate('fromNow') }})</div>
+				<div contenteditable class="c-article-show__title">{{ article.title }}</div>
+				<div contenteditable class="c-article-show__description">{{ article.description }}</div>
+			</div>
+
+			<text-editor @change="saveChanges" :content="article.content" />
 		</div>
 	</div>
 </template>
 
 <script>
-	import Quill from 'quill'
+	import textEditor from '@/components/Elements/TextEditor'
+	import _ from 'lodash'
 
 	export default {
+		components: {
+			textEditor
+		},
 		data() {
-			return {
-				editor: null
-			}
+			return {}
 		},
 		computed: {
 			category() {
@@ -32,46 +41,17 @@
 		},
 		mounted() {
 			this.getArticle()
-			this.initEditor()
 		},
 		methods: {
 			async getArticle() {
-				await this.$store.dispatch('article/setCurrentArticle', this.$route.params.article)
+				await this.$store.dispatch('article/setCurrentArticleById', this.$route.params.article)
 			},
 
-			initEditor() {
-				var toolbarOptions = [
-					['bold', 'italic', 'underline', 'strike'], // toggled buttons
-					['blockquote', 'code-block'],
+			saveChanges: _.debounce(function(params) {
+				this.article.content = params.html
+				this.$store.dispatch('article/setCurrentArticle', this.article)
+			}, 1000)
 
-					[{ header: 1 }, { header: 2 }], // custom button values
-					[{ list: 'ordered' }, { list: 'bullet' }],
-					[{ script: 'sub' }, { script: 'super' }], // superscript/subscript
-					[{ indent: '-1' }, { indent: '+1' }], // outdent/indent
-					[{ direction: 'rtl' }], // text direction
-
-					[{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
-					[{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-					[{ color: [] }, { background: [] }], // dropdown with defaults from theme
-					[{ font: [] }],
-					[{ align: [] }],
-
-					['clean'] // remove formatting button
-				]
-
-				const options = {
-					debug: 'info',
-					modules: {
-						toolbar: toolbarOptions
-					},
-					placeholder: 'Compose an epic...',
-					readOnly: false,
-					theme: 'snow'
-				}
-
-				this.editor = new Quill(document.getElementById('editor'), options)
-			}
 		}
 	}
 </script>
