@@ -1,14 +1,15 @@
 <template>
 	<div class="c-page c-page__default">
 		<div class="c-article-show" v-if="article">
-
 			<div class="c-article-show__header">
 				<div class="c-article-show__date">{{ article.updatedAt | formatDate('DateTime') }} ({{ article.updatedAt | formatDate('fromNow') }})</div>
 				<div contenteditable class="c-article-show__title">{{ article.title }}</div>
 				<div contenteditable class="c-article-show__description">{{ article.description }}</div>
 			</div>
 
-			<text-editor @change="saveChanges" :content="article.content" />
+			<div class="c-article-show__content">
+				<text-editor @change="saveChanges" :content="article.content" />
+			</div>
 		</div>
 	</div>
 </template>
@@ -51,7 +52,6 @@
 				this.article.content = params.html
 				this.$store.dispatch('article/setCurrentArticle', this.article)
 			}, 1000)
-
 		}
 	}
 </script>

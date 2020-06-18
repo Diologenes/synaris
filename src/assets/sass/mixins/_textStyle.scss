@@ -59,7 +59,6 @@
 		text-transform: uppercase;
 	}
 
-	
 	@if $style == 'rte' {
 		line-height: 160%;
 		font-size: 1rem;
@@ -107,5 +106,41 @@
 
 	@if $style == 'monospace' {
 		font-family: monospace;
+	}
+
+	@if $style == 'h1' {
+		font-weight: 600;
+		font-size: 1.25rem;
+		color: clr(txt, alt);
+	}
+
+	@if $style == 'h2' {
+		font-weight: 600;
+		font-size: 1rem;
+		color: clr(txt, alt);
+	}
+
+	@if $style == 'h3' {
+		font-weight: 600;
+		font-size: 1rem;
+		color: clr(txt, alt);
+	}
+
+	@if $style == 'h4' {
+		font-weight: 600;
+		font-size: 1rem;
+		color: clr(txt, alt);
+	}
+
+	@if $style == 'h5' {
+		font-weight: 600;
+		font-size: 1rem;
+		color: clr(txt, alt);
+	}
+
+	@if $style == 'h6' {
+		font-weight: 600;
+		font-size: 1rem;
+		color: clr(txt, alt);
 	}
 }

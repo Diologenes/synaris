@@ -58,6 +58,7 @@
 				}
 
 				this.quill = new Quill(this.$refs.editor, options)
+				console.log('INIT QUILL')
 				this.quill.enable(false)
 				if (this.content) {
 					this.quill.pasteHTML(this.content)
@@ -75,6 +76,11 @@
 				this.quill.on('text-change', (delta, oldDelta, source) => {
 					let html = this.$refs.editor.children[0].innerHTML
 					const quill = this.quill
+					console.log(quill.getLength())
+					if (quill.getLength() > 131072) {
+						quill.deleteText(131050, quill.getLength())
+						window.EventBus.fire('notification', { title: 'Warning', variant: 'danger', msg: 'Max. article length reached. Content will be cropped!' })
+					}
 					if (html === '<p><br></p>') html = ''
 					this._content = html
 					this.$emit('input', this._content)

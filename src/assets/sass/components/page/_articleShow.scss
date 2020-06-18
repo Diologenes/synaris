@@ -4,6 +4,7 @@
 	flex-direction: column;
 
 	&__header {
+		flex: 0 1 auto;
 		padding: 2rem 1.5rem;
 		border-bottom: 1px solid clr(bg, d-2);
 	}
@@ -15,14 +16,20 @@
 	}
 
 	&__title {
-		@include textStyle(regular);
+		@include textStyle(h1);
 		color: clr(txt, alt);
 	}
 
 	&__description {
 		@include textStyle(small);
 		color: clr(txt, base);
-		margin-top: 1rem;
+		margin-top: .5rem;
+	}
+
+	&__content {
+		flex: 1 1 auto;
+		height: 100%;
+		margin-bottom: 2rem;
 	}
 
 }
