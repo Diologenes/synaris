@@ -7,15 +7,19 @@
 
 	export default {
 		data() {
-			return {}
+			return {
+				// eslint-disable-next-line vue/no-reserved-keys
+				_content: ''
+			}
 		},
 		props: {
 			content: String
 		},
 		watch: {
-			content(newVal, oldVal) {
+			content(newVal) {
 				if (this.quill) {
-					if (newVal) {
+					if (newVal && newVal !== this._content) {
+						this._content = newVal
 						this.quill.pasteHTML(newVal)
 					} else if (!newVal) {
 						this.quill.setText('')
@@ -71,11 +75,10 @@
 				this.quill.on('text-change', (delta, oldDelta, source) => {
 					let html = this.$refs.editor.children[0].innerHTML
 					const quill = this.quill
-					const text = this.quill.getText()
 					if (html === '<p><br></p>') html = ''
 					this._content = html
 					this.$emit('input', this._content)
-					this.$emit('change', { html, text, quill })
+					this.$emit('change', { html, quill })
 				})
 
 				this.$emit('ready', this.quill)
