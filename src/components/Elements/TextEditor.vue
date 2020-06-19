@@ -4,12 +4,14 @@
 
 <script>
 	import Quill from 'quill'
+	import PerfectScrollbar from 'perfect-scrollbar'
 
 	export default {
 		data() {
 			return {
 				// eslint-disable-next-line vue/no-reserved-keys
-				_content: ''
+				_content: '',
+				perfectScrollbar: null
 			}
 		},
 		props: {
@@ -24,6 +26,7 @@
 					} else if (!newVal) {
 						this.quill.setText('')
 					}
+					this.perfectScrollbar.update()
 				}
 			}
 		},
@@ -52,18 +55,18 @@
 					modules: {
 						toolbar: toolbarOptions
 					},
-					placeholder: 'Compose an epic...',
 					readOnly: false,
 					theme: 'snow'
 				}
 
 				this.quill = new Quill(this.$refs.editor, options)
-				console.log('INIT QUILL')
 				this.quill.enable(false)
 				if (this.content) {
 					this.quill.pasteHTML(this.content)
 				}
 				this.quill.enable(true)
+
+				this.perfectScrollbar = new PerfectScrollbar(document.querySelector('.ql-container'))
 
 				this.quill.on('selection-change', range => {
 					if (!range) {
@@ -76,7 +79,6 @@
 				this.quill.on('text-change', (delta, oldDelta, source) => {
 					let html = this.$refs.editor.children[0].innerHTML
 					const quill = this.quill
-					console.log(quill.getLength())
 					if (quill.getLength() > 131072) {
 						quill.deleteText(131050, quill.getLength())
 						window.EventBus.fire('notification', { title: 'Warning', variant: 'danger', msg: 'Max. article length reached. Content will be cropped!' })
@@ -91,6 +93,8 @@
 			}
 		},
 		beforeDestroy() {
+			this.perfectScrollbar.destroy()
+			this.perfectScrollbar = null
 			this.quill = null
 			delete this.quill
 		}

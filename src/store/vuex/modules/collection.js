@@ -66,7 +66,6 @@ const actions = {
 					['sorting', 'ASC'], // order Collections.sorting first
 					[db.Category, 'sorting', 'ASC'] // order Categories.sorting second
 				],
-				group: ['Categories.id'], // group by Categories.id
 				include: [
 					{
 						model: db.Category, // join Categories
