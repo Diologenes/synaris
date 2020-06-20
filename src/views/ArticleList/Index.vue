@@ -49,6 +49,9 @@
 				</perfect-scrollbar>
 				<!-- scrollbar -->
 
+				<!--  create new article button -->
+				<div class="c-create-button c-button c-button--primary c-button--bullseye u-icon--more" @click="createArticle"></div>
+
 				<section-resizer :min="200" :max="1000" bindRef="resizerArticleList" dispatchToStore="settings/articleListWindowWidth" />
 			</div>
 		</div>
@@ -130,6 +133,14 @@
 					vm.loading = false
 					scrollToActiveArticle ? this.scrollToActiveArticle() : false
 				})
+			},
+
+			// create new article
+			async createArticle() {
+				let newArticle = await this.$store.dispatch('article/addArticle', this.category.id)
+				await this.$store.dispatch('collection/getAll')
+				await this.getArticles(false, true)
+				this.$router.push({ path: `/categories/${this.category.id}/${newArticle.id}` })
 			},
 
 			// draging the article to categoryList view for reassigning the belonging category

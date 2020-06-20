@@ -3,12 +3,14 @@
 		<div class="c-article-show" v-if="article">
 			<div class="c-article-show__header">
 				<div class="c-article-show__date">{{ article.updatedAt | formatDate('DateTime') }} ({{ article.updatedAt | formatDate('fromNow') }})</div>
-				<div contenteditable class="c-article-show__title">{{ article.title }}</div>
-				<div contenteditable class="c-article-show__description">{{ article.description }}</div>
+				<div contenteditable ref="articleTitleField" class="c-article-show__title" @input="saveTitle">{{ article.title }}</div>
+				<div contenteditable ref="articleDescriptionField" class="c-article-show__description" @input="saveDescription">
+					{{ article.description }}
+				</div>
 			</div>
 
 			<div class="c-article-show__content">
-				<text-editor @change="saveChanges" :content="article.content" />
+				<text-editor @change="saveContent" :content="article.content" />
 			</div>
 		</div>
 	</div>
@@ -16,6 +18,7 @@
 
 <script>
 	import textEditor from '@/components/Elements/TextEditor'
+	import { placeCaretAtEnd } from '@/services/DomHelpers'
 	import _ from 'lodash'
 
 	export default {
@@ -23,11 +26,13 @@
 			textEditor
 		},
 		data() {
-			return {}
+			return {
+				enableDescriptionField: false
+			}
 		},
 		computed: {
 			category() {
-				return this.$store.getters['article/currentCategory']
+				return this.$store.getters['collection/currentCategory']
 			},
 			article() {
 				return this.$store.getters['article/currentArticle']
@@ -48,10 +53,37 @@
 				await this.$store.dispatch('article/setCurrentArticleById', this.$route.params.article)
 			},
 
-			saveChanges: _.debounce(function(params) {
+			saveDescription: _.debounce(function($event) {
+				let description = $event.target.innerText
+				description.length === 0 ? (this.enableDescriptionField = false) : (this.enableDescriptionField = true)
+				if (this.article.description === description) {
+					return
+				}
+				this.article.description = description
+				this.dispatchArticle().then(() => {
+					this.$store.dispatch('article/getByCategory', { category: this.category.id })
+				})
+				$event.preventDefault()
+			}, 1000),
+
+			saveTitle: _.debounce(function($event) {
+				let title = $event.target.innerText
+				this.article.title = title
+				placeCaretAtEnd(this.$refs.articleTitleField)
+				this.dispatchArticle().then(() => {
+					this.$store.dispatch('article/getByCategory', { category: this.category.id })
+				})
+				$event.preventDefault()
+			}, 1000),
+
+			saveContent: _.debounce(function(params) {
 				this.article.content = params.html
-				this.$store.dispatch('article/setCurrentArticle', this.article)
-			}, 1000)
+				this.dispatchArticle()
+			}, 1000),
+
+			async dispatchArticle() {
+				this.$store.dispatch('article/setCurrentArticle', this.article).then(response => ({ response }))
+			}
 		}
 	}
 </script>

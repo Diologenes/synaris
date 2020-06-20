@@ -1,0 +1,10 @@
+.c-link {
+    color: clr(clr, base);
+    cursor: pointer;
+
+    &--underlined-on-hover {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

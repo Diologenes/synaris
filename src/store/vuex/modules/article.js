@@ -74,6 +74,26 @@ const actions = {
 		context.commit('articles', value)
 	},
 
+	addArticle(context, categoryId) {
+		return new Promise((resolve, reject) => {
+			if (typeof categoryId === undefined || categoryId === null) {
+				reject()
+				return
+			}
+			db.Article.create({ title: 'New article', categoryId: categoryId })
+				.then(response => {
+					setTimeout(function() {
+						context.commit('currentArticle', response)
+						resolve(response)
+					}, 0)
+				})
+				.catch(err => {
+					reject()
+					window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
+				})
+		})
+	},
+
 	resetCurrentArticle(context) {
 		context.commit('currentArticle', null)
 	},
