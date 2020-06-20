@@ -122,6 +122,10 @@
 	position: relative;
 	flex: 1 1 auto;
 	padding: 2rem 1rem;
+
+	&--no-frame {
+		padding: 0;
+	}
 }
 
 .modal-footer {

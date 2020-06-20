@@ -44,6 +44,30 @@ const actions = {
 		context.commit('collections', value)
 	},
 
+	addCollectionByTitle(context, title) {
+		return new Promise(resolve => {
+			db.Collection.create({ title: title })
+				.then(response => {
+					resolve(response)
+				})
+				.catch(err => {
+					window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
+				})
+		})
+	},
+
+	addCategoryByTitle(context, payload) {
+		return new Promise(resolve => {
+			db.Category.create({ title: payload.title, collectionId: payload.collectionId })
+				.then(response => {
+					resolve(response)
+				})
+				.catch(err => {
+					window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
+				})
+		})
+	},
+
 	setCurrentCategoryById(context, categoryId) {
 		return new Promise(resolve => {
 			db.Category.findOne({
@@ -53,7 +77,7 @@ const actions = {
 					context.commit('currentCategory', response)
 					resolve(response)
 				})
-				.catch((err) => {
+				.catch(err => {
 					window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
 				})
 		})
@@ -83,7 +107,7 @@ const actions = {
 					context.commit('collections', response)
 					resolve(response)
 				})
-				.catch((err) => {
+				.catch(err => {
 					window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
 				})
 		})

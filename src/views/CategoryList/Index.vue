@@ -35,6 +35,7 @@
 		<router-view />
 
 		<!--  modal section -->
+		<modal-init-wizard-collection />
 		<modal-add-category />
 		<modal-delete-category :item="contextObject" />
 		<modal-rename-category :item="contextObject" />
@@ -54,6 +55,7 @@
 <script>
 	import _ from 'lodash'
 	import { mapGetters as vuexStore } from 'vuex'
+	import modalInitWizardCollection from '@/components/Modals/InitWizardCollection'
 	import modalAddCategory from '@/components/Modals/AddCategory'
 	import modalDeleteCategory from '@/components/Modals/DeleteCategory'
 	import modalRenameCategory from '@/components/Modals/RenameCategory'
@@ -61,6 +63,7 @@
 
 	export default {
 		components: {
+			modalInitWizardCollection,
 			modalAddCategory,
 			modalDeleteCategory,
 			modalRenameCategory,
@@ -77,6 +80,13 @@
 				categoryWindowWidth: 'settings/categoryWindowWidth'
 			})
 		},
+		watch: {
+			collections(newVal) {
+				if (newVal.length === 0) {
+					this.initCreateCollection()
+				}
+			}
+		},
 		mounted() {
 			this.$store.dispatch('collection/getAll')
 
@@ -91,6 +101,10 @@
 			})
 		},
 		methods: {
+			initCreateCollection() {
+				this.$root.$emit('bv::show::modal', 'modal-init-wizard-collection')
+			},
+
 			showCategoryDropzones: _.debounce((ignoreEmptyDropzones = false) => {
 				const identifierClass = 'c-category__dropzone'
 				const activeClass = 'c-category__dropzone--is-active'
@@ -158,16 +172,15 @@
 								where: {
 									id: payload.article.id
 								}
+							}).then(article => {
+								if (article.categoryId !== category.id) {
+									article.categoryId = category.id
+									article.save().then(() => {
+										vm.$store.dispatch('article/getByCategory', { category: vm.$store.getters['collection/currentCategory'].id })
+										vm.$store.dispatch('collection/getAll')
+									})
+								}
 							})
-								.then(article => {
-									if (article.categoryId !== category.id) {
-										article.categoryId = category.id
-										article.save().then(() => {
-											vm.$store.dispatch('article/getByCategory', { category: vm.$store.getters['collection/currentCategory'].id })
-											vm.$store.dispatch('collection/getAll')
-										})
-									}
-								})
 						}
 						break
 					}

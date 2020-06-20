@@ -1,0 +1,17 @@
+.mdl-initwizardcollection {
+
+    &__key-collection {
+        background: clr(clr, base);
+        height: 30rem;
+        border-top-left-radius: .25rem;
+        border-bottom-left-radius: .25rem;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+
+        img {
+            width: 100%;
+        }
+    }
+
+}
