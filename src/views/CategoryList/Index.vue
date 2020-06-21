@@ -10,16 +10,16 @@
 
 				<!-- scrollbar -->
 				<perfect-scrollbar class="c-category__content">
-					<transition v-for="(collection, collectionIndex) in collections" :key="collection.id">
-						<collection-item
-							@dragStart="dragStart"
-							@dragEnd="dragEnd"
-							@dragFinish="dragFinish"
-							@contextmenu="openContextMenu"
-							:collection="collection"
-							:collectionIndex="collectionIndex"
-						/>
-					</transition>
+					<collection-item
+						@dragStart="dragStart"
+						@dragEnd="dragEnd"
+						@dragFinish="dragFinish"
+						@contextmenu="openContextMenu"
+						:collection="collection"
+						:collectionIndex="collectionIndex"
+						v-for="(collection, collectionIndex) in collections"
+						:key="collection.id"
+					/>
 				</perfect-scrollbar>
 				<!-- scrollbar -->
 
