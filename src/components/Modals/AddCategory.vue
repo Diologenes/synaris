@@ -5,6 +5,7 @@
 		centered
 		title="Create new category or collection"
 		size="md"
+		:hide-header="true"
 		:ok-disabled="isPending"
 		@shown="resetModal"
 		@ok="handleOk"
@@ -14,7 +15,25 @@
 			<b-alert variant="danger" :show="error === 'noCollection'">Select a collection for your category</b-alert>
 		</div>
 
-		<b-form-group label="Type">
+		<tab-container>
+			<tab-item title="category">
+				<b-form-group label="Enter title">
+					<b-form-input v-model="title" placeholder="New title ..." autofocus></b-form-input>
+				</b-form-group>
+				<b-form-group label="Select a collection">
+					<b-dropdown id="dropdown-dropup" :text="valCollection" variant="primary">
+						<b-dropdown-item @click="changeFolder(collection)" v-for="collection in collections" :key="collection.id">{{ collection.text }}</b-dropdown-item>
+					</b-dropdown>
+				</b-form-group>
+			</tab-item>
+			<tab-item title="Collection">
+				<b-form-group label="Enter title">
+					<b-form-input v-model="title" placeholder="New title ..." autofocus></b-form-input>
+				</b-form-group>
+			</tab-item>
+		</tab-container>
+
+		<!-- <b-form-group label="Type">
 			<b-form-radio-group
 				id="btn-radios-1"
 				v-model="selectedType"
@@ -23,18 +42,7 @@
 				name="radios-btn-default"
 				button-variant="outline-primary"
 			></b-form-radio-group>
-		</b-form-group>
-		<b-form-group label="Enter title">
-			<b-form-input v-model="title" placeholder="New title ..." autofocus></b-form-input>
-		</b-form-group>
-
-		<b-form-group v-if="selectedType == 'category'" label="Select a collection">
-			<b-dropdown id="dropdown-dropup" :text="valCollection" variant="primary">
-				<b-dropdown-item @click="changeFolder(collection)" v-for="collection in collections" :key="collection.id">{{
-					collection.text
-				}}</b-dropdown-item>
-			</b-dropdown>
-		</b-form-group>
+		</b-form-group> -->
 	</b-modal>
 </template>
 

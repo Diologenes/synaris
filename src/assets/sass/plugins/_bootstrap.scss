@@ -46,5 +46,9 @@
     box-shadow: none;
 }
 
-
+.col-form-label {
+    @include textStyle(tiny);
+    @include textStyle(bold);
+    @include textStyle(uppercase);
+}
 

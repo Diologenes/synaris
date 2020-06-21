@@ -8,7 +8,6 @@
 		:no-close-on-esc="true"
 		:no-close-on-backdrop="true"
 		body-class="modal-body--no-frame"
-		title="Create your first collection and category"
 		size="lg"
 		:ok-disabled="isPending"
 		@shown="resetModal"
@@ -54,20 +53,20 @@
 										<button class="c-button c-button--primary" @click="finishStep(2)">Complete setup</button>
 									</div>
 								</div>
+								<div v-if="step == 3">
+									<p class="u-m__t--5 c-txt-title-base u-m__b--2">You're done</p>
+									<div class="u-m__b--4 c-txt-head-base">First steps completed</div>
+									<p class="c-txt-title-base u-m__b--5">Well done! You have created your first collection and category. <br><br>Feel free to add more categories or start creating your articles.</p>
+									<div>
+										<button class="c-button c-button--primary" @click="finishStep(3)">Close wizard</button>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- <div v-for="error in errors" :key="error">
-			<b-alert variant="danger" :show="error === 'title'">Enter title</b-alert>
-			<b-alert variant="danger" :show="error === 'noCollection'">Select a collection for your category</b-alert>
-		</div>
-
-		<b-form-group label="Enter title">
-			<b-form-input v-model="title" placeholder="New title ..." autofocus></b-form-input>
-		</b-form-group> -->
 	</b-modal>
 </template>
 
@@ -92,8 +91,12 @@
 					}
 					case 2: {
 						if (this.categoryTitle !== '') {
-							this.finishSetup()
+							this.createRecords()
 						}
+						break
+					}
+					case 3: {
+						this.finishWizard()
 						break
 					}
 				}
@@ -105,11 +108,14 @@
 				this.step = 1
 			},
 
-			// submit the create channel
-			async finishSetup() {
+			async createRecords() {
 				let newCollection = await this.$store.dispatch('collection/addCollectionByTitle', this.collectionTitle)
 				await this.$store.dispatch('collection/addCategoryByTitle', { title: this.categoryTitle, collectionId: newCollection.id })
 				await this.$store.dispatch('collection/getAll')
+				this.step = 3
+			},
+
+			finishWizard() {
 				this.handleClose()
 			},
 
