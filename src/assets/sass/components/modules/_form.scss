@@ -1,87 +1,103 @@
-$dimensions-height: 2.75rem;
+// $dimensions-height: 2.75rem;
+
+// .c-form {
+//   position: relative;
+
+//   &__fieldwrap {
+//     position: relative;
+//     display: flex;
+//     flex-direction: column;
+
+//     &--charcount {
+//       margin-bottom: 2rem;
+//     }
+
+//     &--input {
+//       &:after {
+//         position: absolute;
+//         top: 100%;
+//         content: '';
+//         height: 1px;
+//         width: 0;
+//         margin: 0 auto;
+//         left: 0;
+//         right: 0;
+//         @include transitionAll();
+//       }
+
+//       &.active {
+
+//         .c-form__input {
+//           border-bottom-left-radius: 0;
+//           border-bottom-right-radius: 0;
+//         }
+
+//         &:after {
+//           width: 100%;
+//           background: clr(clr);
+//         }
+//       }
+//     }
+//   }
+
+//   &__field {
+
+//     &--is-placeholder-mandatory {
+//       @include placeholder(clr(txt), true);
+//     }
+//   }
+
+//   &__input {
+//     border: 0;
+//     outline: 0;
+//     @include transitionAll();
+//     @include textStyle(small);
+//     @include placeholder(clr(txt));
+//     background: clr(bg, d-1, 5);
+//     color: clr(txt);
+//     height: $dimensions-height;
+//     border-radius: $border-radius-1;
+//     min-width: 4rem;
+//     padding: .75rem 1rem;
+//   }
+
+//   &__textarea {
+//     border: 0;
+//     outline: 0;
+//     @include transitionAll();
+//     @include textStyle(small);
+//     @include placeholder(clr(txt));
+//     background: clr(bg, d-1, 5);
+//     color: clr(txt);
+//     height: $dimensions-height;
+//     border-radius: $border-radius-1;
+//     min-width: 4rem;
+//     min-height: 7rem;
+//     padding: .75rem 1rem;
+//     resize: none;
+//   }
+
+//   &__label {
+//     @include textStyle(smallUppercase);
+//     @include textStyle(nonSelect);
+//     display: block;
+//     margin-bottom: .25rem;
+//   }
+// }
 
 .c-form {
-  position: relative;
+	&__input {
+		width: 100%;
 
-  &__fieldwrap {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+		&--inherit-style {
+			color: inherit;
+			font-size: inherit;
+			font-weight: inherit;
+		}
 
-    &--charcount {
-      margin-bottom: 2rem;
-    }
-
-    &--input {
-      &:after {
-        position: absolute;
-        top: 100%;
-        content: '';
-        height: 1px;
-        width: 0;
-        margin: 0 auto;
-        left: 0;
-        right: 0;
-        @include transitionAll();
-      }
-
-
-      &.active {
-
-        .c-form__input {
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-
-        &:after {
-          width: 100%;
-          background: clr(clr);
-        }
-      }
-    }
-  }
-
-  &__field {
-
-    &--is-placeholder-mandatory {
-      @include placeholder(clr(txt), true);
-    }
-  }
-
-  &__input {
-    border: 0;
-    outline: 0;
-    @include transitionAll();
-    @include textStyle(small);
-    @include placeholder(clr(txt));
-    background: clr(bg, d-1, 5);
-    color: clr(txt);
-    height: $dimensions-height;
-    border-radius: $border-radius-1;
-    min-width: 4rem;
-    padding: .75rem 1rem;
-  }
-
-  &__textarea {
-    border: 0;
-    outline: 0;
-    @include transitionAll();
-    @include textStyle(small);
-    @include placeholder(clr(txt));
-    background: clr(bg, d-1, 5);
-    color: clr(txt);
-    height: $dimensions-height;
-    border-radius: $border-radius-1;
-    min-width: 4rem;
-    min-height: 7rem;
-    padding: .75rem 1rem;
-    resize: none;
-  }
-
-  &__label {
-    @include textStyle(smallUppercase);
-    @include textStyle(nonSelect);
-    display: block;
-    margin-bottom: .25rem;
-  }
+		&--transparent {
+			border: 0px solid transparent;
+			background: transparent;
+		}
+	}
 }

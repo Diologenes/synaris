@@ -15,6 +15,7 @@ import TabContainer from '@/components/Elements/TabContainer'
 import TabItem from '@/components/Elements/TabItem'
 import FormToggle from '@/components/Elements/FormToggle'
 import FormRadio from '@/components/Elements/FormRadio'
+import ClickToEdit from '@/components/Elements/ClickToEdit'
 
 Vue.component('PanelBox', PanelBox)
 Vue.component('PanelBoxToggle', PanelBoxToggle)
@@ -31,3 +32,4 @@ Vue.component('TabContainer', TabContainer)
 Vue.component('TabItem', TabItem) 
 Vue.component('FormToggle', FormToggle) 
 Vue.component('FormRadio', FormRadio) 
+Vue.component('ClickToEdit', ClickToEdit) 

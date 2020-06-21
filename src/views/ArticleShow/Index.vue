@@ -3,7 +3,11 @@
 		<div class="c-article-show" v-if="article">
 			<div class="c-article-show__header">
 				<div class="c-article-show__date">{{ article.updatedAt | formatDate('DateTime') }} ({{ article.updatedAt | formatDate('fromNow') }})</div>
-				<div contenteditable ref="articleTitleField" class="c-article-show__title" @input="saveTitle">{{ article.title }}</div>
+
+				<div class="c-article-show__title">
+					<click-to-edit @input="saveTitle" v-model.trim="article.title" />
+				</div>
+
 				<div contenteditable ref="articleDescriptionField" class="c-article-show__description" @input="saveDescription">
 					{{ article.description }}
 				</div>
@@ -18,7 +22,6 @@
 
 <script>
 	import textEditor from '@/components/Elements/TextEditor'
-	import { placeCaretAtEnd } from '@/services/DomHelpers'
 	import _ from 'lodash'
 
 	export default {
@@ -27,7 +30,7 @@
 		},
 		data() {
 			return {
-				enableDescriptionField: false
+				enableDescriptionField: false,
 			}
 		},
 		computed: {
@@ -66,14 +69,10 @@
 				$event.preventDefault()
 			}, 1000),
 
-			saveTitle: _.debounce(function($event) {
-				let title = $event.target.innerText
-				this.article.title = title
-				placeCaretAtEnd(this.$refs.articleTitleField)
+			saveTitle: _.debounce(function() {
 				this.dispatchArticle().then(() => {
 					this.$store.dispatch('article/getByCategory', { category: this.category.id })
 				})
-				$event.preventDefault()
 			}, 1000),
 
 			saveContent: _.debounce(function(params) {
