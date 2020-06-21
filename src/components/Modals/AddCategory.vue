@@ -7,6 +7,7 @@
 		size="md"
 		:hide-header="true"
 		:ok-disabled="isPending"
+		ok-title="Create"
 		@shown="resetModal"
 		@ok="handleOk"
 	>
@@ -15,34 +16,21 @@
 			<b-alert variant="danger" :show="error === 'noCollection'">Select a collection for your category</b-alert>
 		</div>
 
-		<tab-container>
-			<tab-item title="category">
+		<tab-container @change="changeSelectedType">
+			<tab-item title="Category" value="category">
 				<b-form-group label="Enter title">
-					<b-form-input v-model="title" placeholder="New title ..." autofocus></b-form-input>
+					<b-form-input v-model.trim="categoryTitle" placeholder="New Category ..." autofocus></b-form-input>
 				</b-form-group>
 				<b-form-group label="Select a collection">
-					<b-dropdown id="dropdown-dropup" :text="valCollection" variant="primary">
-						<b-dropdown-item @click="changeFolder(collection)" v-for="collection in collections" :key="collection.id">{{ collection.text }}</b-dropdown-item>
-					</b-dropdown>
+					<form-select-box @change="changeSelectedCollection" :options="collections" />
 				</b-form-group>
 			</tab-item>
-			<tab-item title="Collection">
+			<tab-item title="Collection" value="collection">
 				<b-form-group label="Enter title">
-					<b-form-input v-model="title" placeholder="New title ..." autofocus></b-form-input>
+					<b-form-input v-model.trim="collectionTitle" placeholder="New collection ..." autofocus></b-form-input>
 				</b-form-group>
 			</tab-item>
 		</tab-container>
-
-		<!-- <b-form-group label="Type">
-			<b-form-radio-group
-				id="btn-radios-1"
-				v-model="selectedType"
-				:options="options"
-				buttons
-				name="radios-btn-default"
-				button-variant="outline-primary"
-			></b-form-radio-group>
-		</b-form-group> -->
 	</b-modal>
 </template>
 
@@ -50,15 +38,11 @@
 	export default {
 		data() {
 			return {
-				title: '',
+				categoryTitle: '',
+				collectionTitle: '',
 				selectedType: 'category',
 				collections: [],
-				selectedCollection: '',
-				valCollection: 'Select a collection ...',
-				options: [
-					{ text: 'Category', value: 'category' },
-					{ text: 'Collection', value: 'collection' }
-				],
+				selectedCollection: null,
 				isPending: false,
 				errors: []
 			}
@@ -66,16 +50,12 @@
 		methods: {
 			// this method is used if modal is shown
 			resetModal() {
-				this.title = ''
+				this.categoryTitle = ''
+				this.collectionTitle = ''
 				this.selectedType = 'category'
-				this.valCollection = 'Select a collection ...'
+				this.selectedCollection = null
 				this.removeErrors()
 				this.collections = this.getFolders()
-			},
-
-			changeFolder(collection) {
-				this.valCollection = collection.text
-				this.selectedCollection = collection.id
 			},
 
 			// get groups
@@ -85,7 +65,7 @@
 				vm.$db.Collection.findAll({})
 					.then(response => {
 						response.forEach(element => {
-							tmpVal.push({ id: element.dataValues.id, text: element.dataValues.title })
+							tmpVal.push({ value: element.id, label: element.title })
 						})
 						vm.collections = tmpVal
 					})
@@ -94,44 +74,48 @@
 					})
 			},
 
+			changeSelectedCollection(option) {
+				this.selectedCollection = option.value
+			},
+
+			changeSelectedType(option) {
+				this.selectedType = option.value
+			},
+
 			// submit the create channel
 			handleOk(evt) {
 				let vm = this
 				vm.removeErrors()
-
-				if (vm.title === '') {
-					vm.errors.push('title')
-				}
-				if (vm.selectedType === 'category' && vm.selectedCollection === '') {
-					vm.errors.push('noCollection')
+				if (vm.isPending === true) {
+					return
 				}
 
-				if (vm.isPending === false) {
-					if (vm.errors.length === 0) {
-						vm.isPending = true
-						if (vm.selectedType === 'category') {
-							vm.$db.Category.create({ title: vm.title, collectionId: vm.selectedCollection, sorting: 999 })
-								.then(() => {
-									vm.isPending = false
-									vm.$store.dispatch('collection/getAll')
-									vm.handleClose()
-								})
-								.catch(err => {
-									window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
-								})
-						} else if (vm.selectedType === 'collection') {
-							vm.$db.Collection.create({ title: vm.title, sorting: 999 })
-								.then(() => {
-									vm.isPending = false
-									vm.$store.dispatch('collection/getAll')
-									vm.handleClose()
-								})
-								.catch(err => {
-									window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
-								})
-						}
-					}
+				if (this.selectedType === 'collection' && this.collectionTitle !== '') {
+					vm.isPending = true
+					vm.$db.Collection.create({ title: vm.collectionTitle, sorting: 999 })
+						.then(() => {
+							vm.isPending = false
+							vm.$store.dispatch('collection/getAll')
+							vm.handleClose()
+						})
+						.catch(err => {
+							window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
+						})
 				}
+
+				if (this.selectedType === 'category' && this.categoryTitle !== '' && this.selectedCollection !== null) {
+					vm.isPending = true
+					vm.$db.Category.create({ title: vm.categoryTitle, collectionId: vm.selectedCollection, sorting: 999 })
+						.then(() => {
+							vm.isPending = false
+							vm.$store.dispatch('collection/getAll')
+							vm.handleClose()
+						})
+						.catch(err => {
+							window.EventBus.fire('notification', { title: 'Error', variant: 'danger', msg: err.original.message })
+						})
+				}
+
 				evt.preventDefault()
 			},
 

@@ -1,143 +1,66 @@
 <template>
-
-	<div :id="'fieldwrap-' + hash" class="c-form__fieldwrap c-form__fieldwrap--input" :class="computedWrapperClass">
-		<label class="c-form__label" :class="{'is-mandatory': isMandatory}" :for="hash" v-if="label" v-html="computedLabel"></label>
-
-		<div
-			v-click-outside="boxClose"
-			class="c-panelbox c-panelbox--color-dark c-panelbox--size-large c-panelbox--has-prefix c-panelbox--clickable c-contextmenu"
-			:class="{'c-contextmenu--active active': isFoldout}">
-			<div class="c-panelbox__prefix c-panelbox__prefix--size-md " @click="boxClick()" v-text="selectedLabel"></div>
-			<div class="c-panelbox__item u-icon--burger" @click="boxClick()"></div>
-			<div v-if="options" class="c-contextmenu__container">
-				<div class="c-contextmenu__container-inner">
-					<ul class="c-contextmenu__list">
-						<perfect-scrollbar class="c-contextmenu__scrollbar">
-							<transition v-for="(option, key) in options" :key="key">
-								<li class="c-contextmenu__list-item c-contextmenu__list-link" @click="itemClick(option, key)">
-									{{ option[optionLabelField] }}
-									<span class="c-contextmenu__list-tooltip u-icon--info" v-if="option.tooltip" v-b-tooltip.hover :title="option.tooltip"></span>
-								</li>
-							</transition>
-						</perfect-scrollbar>
-					</ul>
-				</div>
-			</div>
+	<div class="c-selectbox" v-click-outside="close" :class="{ 'c-selectbox--is-active': isFoldout }">
+		<div class="c-selectbox__field" @click="open" @keypress.space="open" tabindex="0">
+			<span class="c-selectbox__selected-value">{{ selectedValue }}</span>
+			<span class="c-selectbox__arrow"><span class="u-icon--arrow-left"></span></span>
 		</div>
 
+		<div class="c-selectbox__container c-layermenu" :class="{ 'c-layermenu--is-active c-layermenu--is-foldout': isFoldout }">
+			<perfect-scrollbar class="c-layermenu__scrollbar">
+				<div class="c-layermenu__wrap">
+					<div class="c-layermenu__item" v-if="options.length === 0">
+						<div class="c-layermenu__no-items c-txt c-txt-text-tiny">No items to select!</div>
+					</div>
+					<div class="c-layermenu__item" v-for="(option, optionKey) in options" :key="optionKey">
+						<div class="c-layermenu__link c-txt c-txt-text-tiny" @click="selectItem(option, $event)" @keypress.space="selectItem(option, $event)" tabindex="0">
+							<div class="c-layermenu__text">{{ option.label }}</div>
+						</div>
+					</div>
+				</div>
+			</perfect-scrollbar>
+		</div>
 	</div>
-
 </template>
 
 <script>
+	import ClickOutside from 'vue-click-outside'
 
 	export default {
-
 		props: {
-			options: Array,
-			optionLabelField: {
-				type: String,
-				default: 'label'
-			},
-			optionValueField: {
-				type: String,
-				default: 'value'
-			},
-			selected: String | Number,
-			label: String,
-			errorMessage: String,
-			errorBag: Object | Array,
-			isMandatory: Boolean,
-			wrapperClass: String,
-			disabled: Boolean
+			options: {
+				type: Array,
+				default: function () { return [] }
+			}
 		},
-
+		directives: {
+			ClickOutside
+		},
 		data() {
 			return {
 				isFoldout: false,
-				selectedLabel: ''
+				selectedValue: 'Select ...'
 			}
 		},
 
-		watch: {
-			'selected'(newVal, oldVal) {
-				if (newVal !== oldVal) {
-					this.getSelected()
-				}
-			}
-		},
+		watch: {},
 
-		computed: {
+		computed: {},
 
-			computedWrapperClass() {
-				let classArray = []
-				if (this.errorBag !== undefined) {
-					if (this.errorBag !== null && this.errorBag !== '') {
-						classArray.push('error')
-					}
-				}
-				if (this.wrapperClass !== undefined) {
-					classArray.push(this.wrapperClass)
-				}
-				if (classArray.length) {
-					return classArray.join(' ')
-				} else {
-					return ''
-				}
-			},
-
-			computedLabel() {
-				if (this.errorMessage !== undefined && this.errorBag !== undefined) {
-					if (this.errorBag !== '' && this.errorBag !== null) {
-						return this.label + ' <span>(' + this.errorMessage + ')</span>'
-					} else {
-						return this.label
-					}
-				} else {
-					return this.label
-				}
-			},
-
-			hash() {
-				return Math.random().toString(36).substring(2)
-			},
-		},
-
-		mounted() {
-			this.getSelected()
-		},
+		mounted() {},
 
 		methods: {
-
-			getSelected() {
-				if (this.selected === undefined) {
-					this.selectedLabel = this.options[0][this.optionLabelField]
-					this.$emit('input', this.options[0]) // emitting for v-model
-				} else {
-					let selectedOption = _.find(this.options, {[this.optionValueField]: this.selected})
-					this.selectedLabel = selectedOption[this.optionLabelField]
-					this.$emit('input', selectedOption) // emitting for v-model
-				}
+			open() {
+				this.isFoldout = !this.isFoldout
 			},
 
-			// on box clicked
-			boxClick() {
-				if (this.options !== 'undefined' && this.options.length && this.disabled === false) {
-					this.isFoldout = !this.isFoldout
-				}
-			},
-
-			// on box close
-			boxClose() {
+			close() {
 				this.isFoldout = false
 			},
 
-			// on item in options clicked
-			itemClick(option, key) {
-				this.selectedLabel = option[this.optionLabelField]
-				this.$emit('input', option) // emitting for v-model
-				this.$emit('change', option, key)
-				this.boxClose()
+			selectItem(option, $event) {
+				this.close()
+				this.selectedValue = option.label
+				this.$emit('change', option, $event)
 			}
 		}
 	}

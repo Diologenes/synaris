@@ -1,34 +1,62 @@
 .c-selectbox {
-  @include textStyle(nonSelect);
-  position: relative;
+	@include textStyle(nonSelect);
+	position: relative;
 
-  &.active {
+	&--is-active {
+		.c-selectbox__arrow span:before {
+			transform: rotate(-90deg);
+		}
 
-	.c-selectbox__item {
-	  &:after {
-		transform: rotate(-90deg);
-	  }
-	}
-  }
-
-  &__item {
-	@include textStyle(smallUppercase);
-	@include transitionAll();
-	color: clr(txt);
-	cursor: pointer;
-	padding-right: 1.5rem;
-
-	&:hover {
-	  text-decoration: underline;
+		.c-selectbox__field {
+			border: 1px solid clr(clr, base);
+		}
+		
 	}
 
-	&:after {
-	  @include iconFontFree('\0042');
-	  position: absolute;
-	  right: 0;
-	  top: 0.25rem;
-	  transform: rotate(90deg);
-	}
-  }
+	&__field {
+		@include transitionAll();
+		background: clr(bg, d-2);
+		width: 100%;
+		min-height: 3rem;
+		border-radius: 0.25rem;
+		border: 1px solid transparent;
+		display: flex;
+		align-items: center;
+		cursor: pointer;
 
+		&:focus {
+			border: 1px solid clr(clr, base);
+		}
+	}
+
+	&__selected-value {
+		flex: 1 1 auto;
+		padding: 0 1rem;
+	}
+
+	
+	&__arrow {
+		flex: 0 1 1.5rem;
+		width: 1rem;
+		height: 1rem;
+		position: relative;
+		margin-right: 1rem;
+
+		span {
+			&:before {
+				@include transitionAll();
+				position: absolute;
+				width: 1rem;
+				transform: rotate(90deg);
+			}
+		}
+	}
+
+	&__container {
+		top: 100%;
+        position: absolute;
+        width: 100%;
+		z-index: 10;
+		margin-top: .25rem;
+	}
 }
