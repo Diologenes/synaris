@@ -9,6 +9,7 @@ import BootstrapVue from 'bootstrap-vue'
 import PerfectScrollbar from 'vue2-perfect-scrollbar'
 require('./services/EventBus')
 require('./filters/formatDate')
+require('./filters/formatInt')
 require('./filters/textCrop')
 require('./components')
 

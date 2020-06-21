@@ -39,7 +39,7 @@
 					<div class="c-category__link-title c-txt-text-base" :title="category.title">{{ category.title }}</div>
 					<div class="c-category__link-indicator">
 						<div class="c-panelbox">
-							<div class="c-panelbox__item">{{ category.dataValues.articleCount }}</div>
+							<div class="c-panelbox__item">{{ category.dataValues.articleCount | formatInt }}</div>
 						</div>
 					</div>
 				</b-link>
