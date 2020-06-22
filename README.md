@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/Status-development-blue" alt="Status Alpha">
+  <img src="https://img.shields.io/badge/Status-development-blue" alt="Status Development">
 </p>
 
 # synaris - get your shit (or snippets) together
