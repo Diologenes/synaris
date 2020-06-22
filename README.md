@@ -1,15 +1,29 @@
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# synaris - get your shit (or snippets) together
 
-### SQLite3
-npm install --global --production windows-build-tools
-npm install --global node-gyp
+## Description
+Organize your code snippets, articles and thoughts in a desktop app (Windows & MacOS). Data is persisted locally in a SQLite database. Based on vuejs and electron. Uses Sequelize ORM.
+Only in dark-mode available since all developers love it!
 
-In CLI: 
-setx PYTHON "%USERPROFILE%\.windows-build-tools\python27\python.exe"
+### Development
+`npm i` (node v10)
 
-Remove node_modules and reinstall via npm i
+##### SQLite3 / sequelize prerequisites on windows 
+`npm install --global --production windows-build-tools`
+`npm install --global node-gyp`
+`setx PYTHON "%USERPROFILE%\.windows-build-tools\python27\python.exe"`
+Remove node_modules and reinstall via `npm i`
 
-## Install empty db
-cd src/database
-sequelize db:migrate
+What also helps with sqlite issues
+`npm run electron:postinstall`
+
+### Run the application
+`npm run electron:serve`
+
+### Build the application
+`npm run electron:build`
+
+### Based on
+* Electron
+* vueJs
+* SQLite (Sequelize ORM)
+* bootstrap-vue
