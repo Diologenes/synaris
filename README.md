@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Alpha-blue" alt="Status Alpha">
+  <img alt="Libraries.io dependency status for GitHub repo" src="https://img.shields.io/librariesio/github/Diologenes/synaris">
+</p>
+
 # synaris - get your shit (or snippets) together
 
 ## Description
