@@ -2,7 +2,8 @@
   "name": "Synaris",
   "description": "Local snippets manager",
   "author": "Gerald Jelitto",
-  "version": "1.0.0",
+  "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
