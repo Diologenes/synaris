@@ -5,11 +5,11 @@
 				<div class="c-article-show__date">{{ article.updatedAt | formatDate('DateTime') }} ({{ article.updatedAt | formatDate('fromNow') }})</div>
 
 				<div class="c-article-show__title">
-					<click-to-edit @input="saveTitle" v-model.trim="article.title" />
+					<click-to-edit :allowEmptyValue="false" @input="saveTitle" v-model.trim="article.title" />
 				</div>
 
-				<div contenteditable ref="articleDescriptionField" class="c-article-show__description" @input="saveDescription">
-					{{ article.description }}
+				<div class="c-article-show__description">
+					<click-to-edit :editButtonEnabled="true" editButtonLabel="Add description" editButtonIcon="edit" @input="saveDescription" v-model.trim="article.description" />
 				</div>
 			</div>
 
@@ -30,7 +30,7 @@
 		},
 		data() {
 			return {
-				enableDescriptionField: false,
+				enableDescriptionField: false
 			}
 		},
 		computed: {
@@ -56,20 +56,13 @@
 				await this.$store.dispatch('article/setCurrentArticleById', this.$route.params.article)
 			},
 
-			saveDescription: _.debounce(function($event) {
-				let description = $event.target.innerText
-				description.length === 0 ? (this.enableDescriptionField = false) : (this.enableDescriptionField = true)
-				if (this.article.description === description) {
-					return
-				}
-				this.article.description = description
+			saveTitle: _.debounce(function() {
 				this.dispatchArticle().then(() => {
 					this.$store.dispatch('article/getByCategory', { category: this.category.id })
 				})
-				$event.preventDefault()
 			}, 1000),
 
-			saveTitle: _.debounce(function() {
+			saveDescription: _.debounce(function() {
 				this.dispatchArticle().then(() => {
 					this.$store.dispatch('article/getByCategory', { category: this.category.id })
 				})
