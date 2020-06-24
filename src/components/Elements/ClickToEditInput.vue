@@ -1,14 +1,13 @@
 <template>
 	<div>
-		<input :class="inputClasses" type="text" v-if="edit" :value="valueLocal" @blur="change" @keyup.enter="change" v-focus="" />
-		<div :class="divClasses" v-else="" @click="edit = true">
+		<input :class="inputClasses" type="text" v-if="edit" :value="valueLocal" @blur="emitChange" @keyup.enter="emitChange" v-focus="" />
+		<div :class="divClasses" v-if="!edit" @click="edit = true">
 			{{ valueLocal }}
 			<div :class="editButtonClasses" v-if="(typeof valueLocal === 'undefined' || valueLocal === null || valueLocal === '') && editButtonEnabled === true">
 				{{ editButtonLabel }}
 			</div>
 		</div>
 	</div>
-	
 </template>
 
 <script>
@@ -99,12 +98,15 @@
 			}
 		},
 		methods: {
-			change($event) {
+			emitChange($event) {
 				let newValue = $event.target.value
 				if (newValue === '' && this.allowEmptyValue === false) newValue = this.originalValue
 				this.valueLocal = newValue
 				this.edit = false
 				this.$emit('input', this.valueLocal, this.originalValue)
+				if (this.valueLocal !== this.originalValue) {
+					this.$emit('change', this.valueLocal)
+				}
 			}
 		}
 	}

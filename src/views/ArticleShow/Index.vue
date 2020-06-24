@@ -5,11 +5,11 @@
 				<div class="c-article-show__date">{{ article.updatedAt | formatDate('DateTime') }} ({{ article.updatedAt | formatDate('fromNow') }})</div>
 
 				<div class="c-article-show__title">
-					<click-to-edit :allowEmptyValue="false" @input="saveTitle" v-model.trim="article.title" />
+					<click-to-edit-input :allowEmptyValue="false" @change="saveTitle" v-model.trim="article.title" />
 				</div>
 
 				<div class="c-article-show__description">
-					<click-to-edit :editButtonEnabled="true" editButtonLabel="Add description" editButtonIcon="edit" @input="saveDescription" v-model.trim="article.description" />
+					<click-to-edit-textarea :editButtonEnabled="true" editButtonLabel="Add description" editButtonIcon="edit" @change="saveDescription" v-model="article.description" />
 				</div>
 			</div>
 
@@ -60,13 +60,13 @@
 				this.dispatchArticle().then(() => {
 					this.$store.dispatch('article/getByCategory', { category: this.category.id })
 				})
-			}, 1000),
+			}, 10),
 
 			saveDescription: _.debounce(function() {
 				this.dispatchArticle().then(() => {
 					this.$store.dispatch('article/getByCategory', { category: this.category.id })
 				})
-			}, 1000),
+			}, 10),
 
 			saveContent: _.debounce(function(params) {
 				this.article.content = params.html
