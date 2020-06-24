@@ -23,12 +23,6 @@
 		border: 0;
 		display: block;
 		width: 100%;
-		padding: .25rem;
-		margin-left: -.25rem;
-
-		&:hover {
-			background: clr(bg, d-1);
-		}
 	}
 
 	&__description {
@@ -36,12 +30,6 @@
 		@include textStyle(small);
 		color: clr(txt, base);
 		margin-top: .5rem;
-		padding: .25rem;
-		margin-left: -.25rem;
-
-		&:hover {
-			background: clr(bg, d-1);
-		}
 	}
 
 	&__content {

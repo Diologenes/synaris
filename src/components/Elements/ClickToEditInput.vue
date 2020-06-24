@@ -59,7 +59,7 @@
 			},
 			inputClasses() {
 				const classes = []
-				classes.push('c-form__input c-form__input--inherit-style c-form__input--transparent')
+				classes.push('c-form__cte c-form__cte--edit-field c-form__cte--input')
 				if (this.inputClass) {
 					classes.push(this.inputClass)
 				}
@@ -67,7 +67,7 @@
 			},
 			divClasses() {
 				const classes = []
-				classes.push('c-form__click-to-edit')
+				classes.push('c-form__cte c-form__cte--text')
 				if (this.divClass) {
 					classes.push(this.divClass)
 				}
