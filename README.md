@@ -4,6 +4,8 @@
 
 # synaris - get your shit (or snippets) together
 
+### PRE-ALPHA-IN-DEVELOPMENT-AND-BY-FAR-NOT-READY-FOR-PRODUCTION-VERSION
+
 ## Description
 Organize your code snippets, articles and thoughts in a desktop app (Windows & MacOS). Data is persisted locally in a SQLite database. Based on vuejs and electron. Uses Sequelize ORM.
 Only in dark-mode available since all developers love it!
