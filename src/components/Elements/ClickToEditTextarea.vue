@@ -1,14 +1,6 @@
 <template>
 	<div>
-		<textarea
-			ref="cteTextarea"
-			:style="textAreaStyle"
-			:class="inputClasses"
-			v-show="edit"
-			:value="valueLocal"
-			@keydown.enter="emitChange"
-			@blur="emitChange"
-		></textarea>
+		<textarea ref="cteTextarea" :style="textAreaStyle" :class="inputClasses" v-show="edit" :value="valueLocal" @keydown.enter="emitChange" @blur="emitChange"></textarea>
 		<div :class="divClasses" v-if="!edit" @click="toggleEdit">
 			{{ valueLocal }}
 			<div

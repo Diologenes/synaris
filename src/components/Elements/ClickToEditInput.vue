@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<input :class="inputClasses" type="text" v-if="edit" :value="valueLocal" @blur="emitChange" @keyup.enter="emitChange" v-focus="" />
-		<div :class="divClasses" v-if="!edit" @click="edit = true">
+		<input ref="cteInput" :class="inputClasses" type="text" v-if="edit" :value="valueLocal" @blur="emitChange" @keyup.enter="emitChange" v-focus="" />
+		<div :class="divClasses" v-if="!edit" @click="toggleEdit">
 			{{ valueLocal }}
 			<div :class="editButtonClasses" v-if="(typeof valueLocal === 'undefined' || valueLocal === null || valueLocal === '') && editButtonEnabled === true">
 				{{ editButtonLabel }}
@@ -16,6 +16,10 @@
 			value: {
 				type: String,
 				default: ''
+			},
+			selectOnClick: {
+				type: Boolean,
+				default: false
 			},
 			allowEmptyValue: {
 				type: Boolean,
@@ -98,6 +102,15 @@
 			}
 		},
 		methods: {
+			toggleEdit() {
+				this.edit = !this.edit
+				this.$nextTick(() => {
+					if (this.edit) {
+						this.selectOnClick ? this.$refs.cteInput.setSelectionRange(0, this.valueLocal.length) : this.$refs.cteInput.focus()
+					}
+				})
+			},
+
 			emitChange($event) {
 				let newValue = $event.target.value
 				if (newValue === '' && this.allowEmptyValue === false) newValue = this.originalValue

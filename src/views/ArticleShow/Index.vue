@@ -5,11 +5,11 @@
 				<div class="c-article-show__date">{{ article.updatedAt | formatDate('DateTime') }} ({{ article.updatedAt | formatDate('fromNow') }})</div>
 
 				<div class="c-article-show__title">
-					<click-to-edit-input :allowEmptyValue="false" @change="saveTitle" v-model.trim="article.title" />
+					<click-to-edit-input :selectOnClick="true" :allowEmptyValue="false" @change="saveTitle" v-model.trim="article.title" />
 				</div>
 
 				<div class="c-article-show__description">
-					<click-to-edit-textarea :editButtonEnabled="true" editButtonLabel="Add description" editButtonIcon="edit" @change="saveDescription" v-model="article.description" />
+					<click-to-edit-textarea :selectOnClick="true" editButtonLabel="Add description" editButtonIcon="edit" @change="saveDescription" v-model="article.description" />
 				</div>
 			</div>
 
