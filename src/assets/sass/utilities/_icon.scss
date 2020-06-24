@@ -178,5 +178,8 @@
   &--refresh {
     @include iconFont('\0059');
   }
+  &--note {
+    @include iconFont('\006e');
+  }
 }
 

@@ -32,6 +32,10 @@
 			className: {
 				type: String,
 				default: ''
+			},
+			hasBorder: {
+				type: Boolean,
+				default: true
 			}
 		},
 		computed: {
@@ -47,10 +51,14 @@
 				return classArray.join(' ')
 			},
 			wrapperClass() {
-				if (this.className) {
-					return this.className
+				let classArray = []
+				if (this.hasBorder) {
+					classArray.push('c-prominent-message--has-border')
 				}
-				return ''
+				if (this.className) {
+					classArray.push(this.className)
+				}
+				return classArray.join(' ')
 			}
 		}
 	}

@@ -19,7 +19,7 @@
 
 				<!-- if no articles -->
 				<div class="c-article-list__no-content" v-if="!loading && articles && articles.length === 0">
-					<prominent-message :active="true" title="No articles found" description="Let's create something new" icon="stop" iconSize="sm" />
+					<prominent-message :active="true" :hasBorder="false" title="No articles found" icon="note" iconSize="sm" />
 				</div>
 				<!-- if no articles -->
 

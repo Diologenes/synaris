@@ -36,6 +36,10 @@
 		flex: 1 1 auto;
 		position: relative;
 		padding: 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
 	}
 
 	&__item {
