@@ -1,5 +1,5 @@
 .c-article-show {
-    display: flex;
+	display: flex;
 	flex: 1 1 auto;
 	flex-direction: column;
 
@@ -12,7 +12,7 @@
 	&__date {
 		@include textStyle(tiny);
 		color: clr(txt, base);
-		margin-bottom: .5rem;
+		margin-bottom: 0.5rem;
 	}
 
 	&__title {
@@ -29,14 +29,14 @@
 		@include transitionAll();
 		@include textStyle(small);
 		color: clr(txt, base);
-		margin-top: .5rem;
+		margin-top: 0.5rem;
 	}
 
 	&__tags {
 		@include transitionAll();
 		@include textStyle(small);
 		color: clr(txt, base);
-		margin-top: .5rem;
+		margin-top: 0.5rem;
 	}
 
 	&__content {
@@ -46,5 +46,4 @@
 		display: flex;
 		flex-direction: column;
 	}
-
 }
