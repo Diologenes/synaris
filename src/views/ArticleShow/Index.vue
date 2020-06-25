@@ -12,7 +12,7 @@
 					<click-to-edit-textarea editButtonLabel="Add description" editButtonIcon="edit" @change="saveDescription" v-model="article.description" />
 				</div>
 
-				<div class="c-article-show__tag-list">
+				<div class="c-article-show__tags">
 					<tag-list @change="saveTags($event)" :value="article.tags" />
 				</div>
 			</div>

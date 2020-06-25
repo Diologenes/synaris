@@ -1,15 +1,22 @@
 <template>
 	<div class="c-tag-list">
-		<div class="c-tag-list__tags">
+		<div class="c-tag-list__tags" v-show="tags.length > 0 || edit">
 			<div class="c-tag">
 				<div class="c-tag__item c-tag__item--clickable c-tag__item--editable" v-for="(tag, index) in tags" :key="index">
-					{{ tag }} <span @click="removeTag(index)">XXXX</span>
+					<span>{{ tag }}</span> <span @click="removeTag(index)" class=" c-tag__item-close u-icon--close"></span>
 				</div>
+				<input
+					ref="tagInput"
+					class="c-tag-list__form"
+					placeholder="Add tag ..."
+					type="text"
+					v-model.trim="tag"
+					@blur="toggleActivation()"
+					@keypress.prevent.stop.enter="addTag"
+				/>
 			</div>
 		</div>
-		<div class="c-tag-list__form">
-			<input type="text" v-model.trim="tag" @keypress.prevent.stop.enter="addTag" />
-		</div>
+		<div class="c-link--pointer" @click="toggleActivation()" v-if="!edit && tags.length === 0"><span class="u-icon u-icon--label"> Add tags</span></div>
 	</div>
 </template>
 
@@ -24,6 +31,7 @@
 
 		data() {
 			return {
+				edit: false,
 				tag: '',
 				tags: this.value !== null ? this.value.split(',') : []
 			}
@@ -39,7 +47,17 @@
 		},
 
 		methods: {
+			toggleActivation() {
+				this.edit = !this.edit
+				if (this.edit) {
+					this.$nextTick(() => {
+						this.$refs.tagInput.focus()
+					})
+				}
+			},
+
 			addTag() {
+				if (this.tag === '' || this.tags.includes(this.tag)) return
 				this.tags.push(this.tag)
 				this.tag = ''
 				this.changeEmitter()

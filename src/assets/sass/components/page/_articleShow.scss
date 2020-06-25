@@ -32,6 +32,13 @@
 		margin-top: .5rem;
 	}
 
+	&__tags {
+		@include transitionAll();
+		@include textStyle(small);
+		color: clr(txt, base);
+		margin-top: .5rem;
+	}
+
 	&__content {
 		flex: 1 1 auto;
 		height: 100%;

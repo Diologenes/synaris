@@ -1,0 +1,16 @@
+.c-tag-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    &__tags {
+       flex: 0 1 auto;
+    }
+
+    &__form {
+        @include placeholder(clr(txt, base));
+        flex: 1 1 auto;
+        background: transparent;
+        border: 0;
+        color: clr(txt, base);
+    }
+}

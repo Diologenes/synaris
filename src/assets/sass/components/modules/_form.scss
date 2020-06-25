@@ -34,5 +34,11 @@
 		&--edit-field {
 	
 		}
+
+		&--text {
+			display: inline-flex;
+			width: auto;
+			cursor: pointer;
+		}
 	}
 }
