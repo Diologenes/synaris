@@ -17,6 +17,7 @@ import FormToggle from '@/components/Elements/FormToggle'
 import FormRadio from '@/components/Elements/FormRadio'
 import ClickToEditInput from '@/components/Elements/ClickToEditInput'
 import ClickToEditTextarea from '@/components/Elements/ClickToEditTextarea'
+import TagList from '@/components/Elements/TagList'
 
 Vue.component('PanelBox', PanelBox)
 Vue.component('PanelBoxToggle', PanelBoxToggle)
@@ -35,3 +36,4 @@ Vue.component('FormToggle', FormToggle)
 Vue.component('FormRadio', FormRadio) 
 Vue.component('ClickToEditInput', ClickToEditInput) 
 Vue.component('ClickToEditTextarea', ClickToEditTextarea) 
+Vue.component('TagList', TagList) 

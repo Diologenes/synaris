@@ -5,11 +5,15 @@
 				<div class="c-article-show__date">{{ article.updatedAt | formatDate('DateTime') }} ({{ article.updatedAt | formatDate('fromNow') }})</div>
 
 				<div class="c-article-show__title">
-					<click-to-edit-input :selectOnClick="true" :allowEmptyValue="false" @change="saveTitle" v-model.trim="article.title" />
+					<click-to-edit-input :allowEmptyValue="false" @change="saveTitle" v-model.trim="article.title" />
 				</div>
 
 				<div class="c-article-show__description">
-					<click-to-edit-textarea :selectOnClick="true" editButtonLabel="Add description" editButtonIcon="edit" @change="saveDescription" v-model="article.description" />
+					<click-to-edit-textarea editButtonLabel="Add description" editButtonIcon="edit" @change="saveDescription" v-model="article.description" />
+				</div>
+
+				<div class="c-article-show__tag-list">
+					<tag-list @change="saveTags($event)" :value="article.tags" />
 				</div>
 			</div>
 
@@ -39,6 +43,13 @@
 			},
 			article() {
 				return this.$store.getters['article/currentArticle']
+			},
+			articleTags() {
+				if (this.article && this.article.tags) {
+					return this.article.tags.split(',')
+				} else {
+					return []
+				}
 			}
 		},
 		watch: {
@@ -67,6 +78,13 @@
 					this.$store.dispatch('article/getByCategory', { category: this.category.id })
 				})
 			}, 10),
+
+			saveTags(tags) {
+				this.article.tags = tags
+				this.dispatchArticle().then(() => {
+					this.$store.dispatch('article/getByCategory', { category: this.category.id })
+				})
+			},
 
 			saveContent: _.debounce(function(params) {
 				this.article.content = params.html

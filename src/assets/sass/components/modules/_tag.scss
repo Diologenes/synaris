@@ -12,5 +12,13 @@
         background: clr(bg, l-1);
         color: clr(txt, base);
         border-radius: .25rem;
+
+        &--editable {
+
+        }
+
+        &--clickable {
+            cursor: pointer;
+        }
     }
 }
