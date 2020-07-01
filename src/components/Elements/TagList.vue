@@ -7,11 +7,13 @@
 				</div>
 				<input
 					ref="tagInput"
+					style="text-transform: uppercase"
 					class="c-tag-list__form"
 					placeholder="Add tag ..."
 					type="text"
 					v-model.trim="tag"
-					@blur="toggleActivation()"
+					@blur="toggleActivation"
+					@keyup="sanitizeCharacters"
 					@keypress.prevent.stop.enter="addTag"
 				/>
 			</div>
@@ -54,6 +56,10 @@
 						this.$refs.tagInput.focus()
 					})
 				}
+			},
+
+			sanitizeCharacters() {
+				this.tag = this.tag.split(' ').join('-').toUpperCase()
 			},
 
 			addTag() {
