@@ -163,6 +163,8 @@
 			// emit via eventbus to deactivate the active drag classes
 			dragEnd() {
 				window.EventBus.fire('method/categoryList', { method: 'hideCategoryDropzones' })
+				var elem = document.querySelector('.c-dnd__ghost')
+				elem.parentNode.removeChild(elem)
 			},
 
 			// opens the contextMenu with dynamic options
