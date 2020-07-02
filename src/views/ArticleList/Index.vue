@@ -152,7 +152,7 @@
 					article: article
 				})
 
-				var ghostElement = document.createElement('p')
+				let ghostElement = document.createElement('p')
 				ghostElement.classList.add('c-dnd__ghost')
 				ghostElement.innerHTML = article.title
 				document.body.appendChild(ghostElement)
@@ -163,7 +163,7 @@
 			// emit via eventbus to deactivate the active drag classes
 			dragEnd() {
 				window.EventBus.fire('method/categoryList', { method: 'hideCategoryDropzones' })
-				var elem = document.querySelector('.c-dnd__ghost')
+				let elem = document.querySelector('.c-dnd__ghost')
 				elem.parentNode.removeChild(elem)
 			},
 

@@ -136,7 +136,7 @@
 					collectionIndex: collectionIndex
 				})
 
-				var ghostElement = document.createElement('p')
+				let ghostElement = document.createElement('p')
 				ghostElement.classList.add('c-dnd__ghost')
 				ghostElement.innerHTML = object.title
 				document.body.appendChild(ghostElement)
@@ -154,7 +154,7 @@
 			},
 
 			dragEnd() {
-				var elem = document.querySelector('.c-dnd__ghost')
+				let elem = document.querySelector('.c-dnd__ghost')
 				elem.parentNode.removeChild(elem)
 				this.hideCategoryDropzones()
 			},
