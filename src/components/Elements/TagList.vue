@@ -1,6 +1,6 @@
 <template>
 	<div class="c-tag-list">
-		<div class="c-tag-list__tags" v-show="tags.length > 0 || edit">
+		<div class="c-tag-list__tags">
 			<div class="c-tag">
 				<div class="c-tag__item c-tag__item--clickable c-tag__item--editable" v-for="(tag, index) in tags" :key="index">
 					<span>{{ tag }}</span> <span @click="removeTag(index)" class=" c-tag__item-close u-icon--close"></span>
@@ -12,19 +12,22 @@
 					placeholder="Add tag ..."
 					type="text"
 					v-model.trim="tag"
-					@blur="toggleActivation"
+					@blur="blurInput"
 					@keyup="sanitizeCharacters"
 					@keypress.prevent.stop.enter="addTag"
 				/>
 			</div>
 		</div>
-		<div class="c-link--pointer" @click="toggleActivation()" v-if="!edit && tags.length === 0"><span class="u-icon u-icon--label"> Add tags</span></div>
 	</div>
 </template>
 
 <script>
 	export default {
 		props: {
+			active: {
+				type: Boolean,
+				default: false
+			},
 			value: {
 				type: String,
 				default: ''
@@ -33,12 +36,16 @@
 
 		data() {
 			return {
-				edit: false,
 				tag: '',
 				tags: this.value !== null ? this.value.split(',') : []
 			}
 		},
 		watch: {
+			active(newValue) {
+				if (newValue) {
+					this.focusInput()
+				}
+			},
 			value() {
 				if (this.value === '' || this.value === null) {
 					this.tags = []
@@ -47,23 +54,31 @@
 				}
 			}
 		},
-
+		mounted() {
+			if (this.active) {
+				this.focusInput()
+			}
+		},
 		methods: {
-			toggleActivation() {
-				this.edit = !this.edit
-				if (this.edit) {
-					this.$nextTick(() => {
-						this.$refs.tagInput.focus()
-					})
-				}
+			blurInput() {
+				this.$emit('blur', false)
+			},
+
+			focusInput() {
+				this.$nextTick(() => {
+					this.$refs.tagInput.focus()
+				})
 			},
 
 			sanitizeCharacters() {
-				this.tag = this.tag.split(' ').join('-').toUpperCase()
+				this.tag = this.tag
+					.replace(/,/g, '.')
+					.replace(/ /g, '-')
+					.toUpperCase()
 			},
 
 			addTag() {
-				if (this.tag === '' || this.tags.includes(this.tag)) return
+				if (this.tag === '' || this.tag.length <= 1 || this.tags.includes(this.tag)) return
 				this.tags.push(this.tag)
 				this.tag = ''
 				this.changeEmitter()

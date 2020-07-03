@@ -17,6 +17,10 @@
 <script>
 	export default {
 		props: {
+			active: {
+				type: Boolean,
+				default: false
+			},
 			value: {
 				type: String,
 				default: ''
@@ -35,7 +39,7 @@
 			},
 			editButtonEnabled: {
 				type: Boolean,
-				default: true
+				default: false
 			},
 			editButtonLabel: {
 				type: String,
@@ -103,6 +107,12 @@
 			}
 		},
 		watch: {
+			active(newValue) {
+				if (newValue) {
+					this.edit = true
+					this.focusInput()
+				}
+			},
 			value: function() {
 				this.valueLocal = this.value
 			}
@@ -115,7 +125,18 @@
 				}
 			}
 		},
+		mounted() {
+			console.log('mounted triggered')
+			this.edit = true
+			this.focusInput()
+		},
 		methods: {
+			focusInput() {
+				this.$nextTick(() => {
+					this.$refs.cteTextarea.focus()
+				})
+			},
+
 			toggleEdit() {
 				this.edit = !this.edit
 				this.$nextTick(() => {
@@ -132,6 +153,7 @@
 				if (this.valueLocal !== this.originalValue) {
 					this.$emit('change', this.valueLocal)
 				}
+				this.$emit('blur')
 				$event.preventDefault()
 			}
 		}

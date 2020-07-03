@@ -4,6 +4,7 @@ import PanelBox from '@/components/Elements/PanelBox'
 import PanelBoxToggle from '@/components/Elements/PanelBoxToggle'
 import PanelBoxRadio from '@/components/Elements/PanelBoxRadio'
 import PanelBoxHeader from '@/components/Elements/PanelBoxHeader'
+import PanelBoxLink from '@/components/Elements/PanelBoxLink'
 import PanelBoxDivider from '@/components/Elements/PanelBoxDivider'
 import SelectBox from '@/components/Elements/SelectBox'
 import Loader from '@/components/Elements/Loader'
@@ -23,6 +24,7 @@ Vue.component('PanelBox', PanelBox)
 Vue.component('PanelBoxToggle', PanelBoxToggle)
 Vue.component('PanelBoxRadio', PanelBoxRadio)
 Vue.component('PanelBoxHeader', PanelBoxHeader)
+Vue.component('PanelBoxLink', PanelBoxLink)
 Vue.component('PanelBoxDivider', PanelBoxDivider)
 Vue.component('FormSelectBox', SelectBox) 
 Vue.component('Loader', Loader)

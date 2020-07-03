@@ -1,14 +1,13 @@
 .c-link {
-    color: clr(clr, base);
-    cursor: pointer;
+	cursor: pointer;
 
-    &--underlined-on-hover {
-        &:hover {
-            text-decoration: underline;
-        }
-    }
+	&--primary {
+		color: clr(clr, base);
+	}
 
-    &--pointer {
-        cursor: pointer;
-    }
+	&--underlined-on-hover {
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }

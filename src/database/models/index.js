@@ -6,7 +6,8 @@ import electronFileStorage from '@/store/electron/Index'
 
 const sequelize = new Sequelize({
 	dialect: electronFileStorage.get('databaseDialect'),
-	storage: electronFileStorage.get('sqlitePath')
+	storage: electronFileStorage.get('sqlitePath'),
+	logging: false
 })
 
 sequelize

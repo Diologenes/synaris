@@ -1,5 +1,14 @@
 .u-icon {
 
+  &--m {
+    &-r {
+      &:before {
+        margin-right: .5rem;
+      }
+      
+    }
+  }
+
   &--arrow-left {
     @include iconFont('\0042');
     &:before {

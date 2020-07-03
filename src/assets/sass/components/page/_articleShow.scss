@@ -5,7 +5,10 @@
 
 	&__header {
 		flex: 0 1 auto;
-		padding: 2rem 1.5rem;
+	}
+
+	&__meta {
+		padding: 2rem 1.5rem 1.5rem 2rem;
 		border-bottom: 1px solid clr(bg, d-2);
 		background: clr(bg, d-1);
 	}
@@ -13,7 +16,7 @@
 	&__date {
 		@include textStyle(tiny);
 		color: clr(txt, base);
-		margin-bottom: 0.5rem;
+		margin-bottom: 0.25rem;
 	}
 
 	&__title {
@@ -24,20 +27,23 @@
 		border: 0;
 		display: block;
 		width: 100%;
+		margin-bottom: 0.5rem;
 	}
 
 	&__description {
 		@include transitionAll();
 		@include textStyle(small);
 		color: clr(txt, base);
-		margin-top: 0.5rem;
+		margin-bottom: .5rem;
 	}
 
 	&__tags {
 		@include transitionAll();
 		@include textStyle(small);
 		color: clr(txt, base);
-		margin-top: 0.5rem;
+		background: clr(bg, d-1);
+		padding: .5rem 1.5rem .5rem 2rem;
+		border-bottom: 1px solid clr(bg, d-2);
 	}
 
 	&__content {
