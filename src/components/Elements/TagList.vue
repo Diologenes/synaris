@@ -9,9 +9,11 @@
 					ref="tagInput"
 					style="text-transform: uppercase"
 					class="c-tag-list__form"
+					:class="{'c-tag-list__form--active': isFocused}"
 					placeholder="Add tag ..."
 					type="text"
 					v-model.trim="tag"
+					@focus="isFocused = true"
 					@blur="blurInput"
 					@keyup="sanitizeCharacters"
 					@keypress.prevent.stop.enter="addTag"
@@ -37,7 +39,8 @@
 		data() {
 			return {
 				tag: '',
-				tags: this.value !== null ? this.value.split(',') : []
+				tags: this.value !== null ? this.value.split(',') : [],
+				isFocused: false
 			}
 		},
 		watch: {
@@ -61,6 +64,7 @@
 		},
 		methods: {
 			blurInput() {
+				this.isFocused = false
 				this.$emit('blur', false)
 			},
 

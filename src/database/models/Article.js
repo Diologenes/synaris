@@ -11,7 +11,7 @@ class Article extends Sequelize.Model {
 					}
 				},
 				description: {
-					type: DataTypes.STRING
+					type: DataTypes.STRING,
 				},
 				content: {
 					type: DataTypes.TEXT

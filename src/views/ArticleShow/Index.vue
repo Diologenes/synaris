@@ -20,7 +20,7 @@
 						</div>
 					</div>
 
-					<div class="c-article-show__description" v-if="editDescription || article.description !== ''">
+					<div class="c-article-show__description" v-if="editDescription || (article.description !== '' && article.description !== null)">
 						<click-to-edit-textarea  @blur="editDescription = false" @change="saveDescription" v-model="article.description" :active="editDescription" />
 					</div>
 					

@@ -126,9 +126,10 @@
 			}
 		},
 		mounted() {
-			console.log('mounted triggered')
-			this.edit = true
-			this.focusInput()
+			if (this.active) {
+				this.edit = true
+				this.focusInput()
+			}
 		},
 		methods: {
 			focusInput() {

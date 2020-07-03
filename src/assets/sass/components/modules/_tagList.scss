@@ -14,5 +14,10 @@
         color: clr(txt, base);
         margin-bottom: .5rem;
         height: 26px;
+        opacity: .3;
+        
+        &--active {
+            opacity: 1;
+        }
     }
 }
