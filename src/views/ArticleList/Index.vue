@@ -4,7 +4,7 @@
 			<div class="c-article-list__wrap" ref="resizerArticleList" :style="{ width: articleListWindowWidth }">
 				<!-- panel section -->
 				<header-panel
-					@change="getArticles"
+					@change="getResult"
 					:category="category"
 					:filterOptionsOrderBy="filterOptionsOrderBy"
 					:filterOptionsReverseOrder="filterOptionsReverseOrder"
@@ -99,12 +99,12 @@
 		watch: {
 			$route(to, from) {
 				if (to.params.category !== from.params.category) {
-					this.getArticles()
+					this.activateFirstOnMounted()
 				}
 			}
 		},
 		mounted() {
-			this.getArticles()
+			this.activateFirstOnMounted()
 		},
 		methods: {
 			// scroll to current article if set (e.g. coming from search route back to articleShow view)
@@ -116,22 +116,30 @@
 				}
 			},
 
+			activateFirstOnMounted() {
+				this.getResult().then(() => {
+					if (this.articles.length > 0 && this.$route.params.redirectToFirstMatch === true) {
+						if (parseInt(this.$route.params.article) !== this.articles[0].id) {
+							this.$router.push({ name: 'articleShow', params: { article: this.articles[0].id } })
+						}
+					}
+				})
+			},
+
 			// get article list and current category if entering or modifying this route
-			async getArticles(resetArticles = true, scrollToActiveArticle = true) {
+			async getResult(resetArticles = false, scrollToActiveArticle = true) {
 				let vm = this
-				let promises = []
 				let loadTimer = _.delay(function() {
 					vm.loading = true
 				}, 500)
-				if (resetArticles) {
-					vm.$store.dispatch('article/resetArticles')
-				}
-				await promises.push(vm.$store.dispatch('article/getByCategory', { category: vm.$route.params.category }))
-				await promises.push(vm.$store.dispatch('collection/setCurrentCategoryById', vm.$route.params.category))
-				Promise.all(promises).then(() => {
-					clearTimeout(loadTimer)
-					vm.loading = false
-					scrollToActiveArticle ? this.scrollToActiveArticle() : false
+				if (resetArticles) vm.$store.dispatch('article/resetArticles')
+				let articles = await vm.$store.dispatch('article/getByCategory', { category: vm.$route.params.category })
+				await vm.$store.dispatch('collection/setCurrentCategoryById', vm.$route.params.category)
+				clearTimeout(loadTimer)
+				vm.loading = false
+				scrollToActiveArticle ? this.scrollToActiveArticle() : false
+				return new Promise(resolve => {
+					resolve(articles)
 				})
 			},
 
@@ -139,7 +147,7 @@
 			async createArticle() {
 				let newArticle = await this.$store.dispatch('article/addArticle', this.category.id)
 				await this.$store.dispatch('collection/getAll')
-				await this.getArticles(false, true)
+				await this.getResult(false, true)
 				this.$router.push({ path: `/categories/${this.category.id}/${newArticle.id}` })
 			},
 
@@ -196,7 +204,7 @@
 			toggleFavourites(article) {
 				article.isFavourite = !article.isFavourite
 				article.save({ silent: true, fields: ['isFavourite'] }).then(() => {
-					this.getArticles(false, false)
+					this.getResult(false, false)
 				})
 			}
 		}

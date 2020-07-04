@@ -32,7 +32,7 @@
 					@click="resetCurrentArticle()"
 					draggable="true"
 					router-tag="a"
-					:to="{ name: 'articleList', params: { category: category.id } }"
+					:to="{ name: 'articleList', params: { category: category.id, redirectToFirstMatch: false } }"
 					class="c-category__link"
 					active-class="c-category__link--is-active"
 				>
