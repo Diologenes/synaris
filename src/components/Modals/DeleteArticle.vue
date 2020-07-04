@@ -8,30 +8,44 @@
 </template>
 
 <script>
-export default {
-	props: {
-		item: Object
-	},
-	methods: {
-		async handleOk(evt) {
-			let vm = this
-			let categoryId = vm.item.categoryId
-			let promises = []
-			await vm.item.destroy().then(() => {
-				promises.push(vm.$store.dispatch('article/getByCategory', { category: categoryId }))
-				promises.push(vm.$store.dispatch('collection/getAll'))
-			})
-			Promise.all(promises).then(() => {
-				vm.handleClose()
-			})
-			evt.preventDefault()
+	export default {
+		props: {
+			item: Object
 		},
+		data() {
+			return {
+				articleId: null,
+				categoryId: null
+			}
+		},
+		methods: {
+			async handleOk(evt) {
+				let vm = this
+				vm.articleId = vm.item.id
+				vm.categoryId = vm.item.categoryId
+				let promises = []
+				await vm.item.destroy().then(() => {
+					promises.push(vm.$store.dispatch('article/getByCategory', { category: vm.categoryId }))
+					promises.push(vm.$store.dispatch('collection/getAll'))
+				})
+				Promise.all(promises).then(() => {
+					vm.redirectOnSelfDelete()
+					vm.handleClose()
+				})
+				evt.preventDefault()
+			},
 
-		handleClose() {
-			this.$nextTick(() => {
-				this.$bvModal.hide('modal-delete-article')
-			})
+			redirectOnSelfDelete() {
+				if (this.articleId === this.$route.params.article) {
+					this.$router.push({ name: 'articleList', params: { category: this.categoryId } })
+				}
+			},
+
+			handleClose() {
+				this.$nextTick(() => {
+					this.$bvModal.hide('modal-delete-article')
+				})
+			}
 		}
 	}
-}
 </script>
