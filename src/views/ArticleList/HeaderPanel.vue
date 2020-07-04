@@ -1,19 +1,14 @@
 <template>
 	<div class="c-panel-section">
 		<div class="c-panel-section__title c-txt c-txt-head-base">
-			<span class="u-hash" v-if="category">{{ category.title }}</span>
+			<transition name="transition-title">
+				<div :key="category.title" class="u-hash" v-if="category">{{ category.title }}</div>
+			</transition>
 		</div>
 		<div class="c-panel-section__options">
 			<panel-box :clickable="true" icon="filter">
 				<panel-box-header title="Order by" />
-				<panel-box-radio
-					@select="updateParent"
-					value="title"
-					title="Title"
-					icon="move"
-					:group="filterOptionsOrderBy"
-					dispatchToStore="settings/filterOrderBy"
-				/>
+				<panel-box-radio @select="updateParent" value="title" title="Title" icon="move" :group="filterOptionsOrderBy" dispatchToStore="settings/filterOrderBy" />
 				<panel-box-radio
 					@select="updateParent"
 					value="updatedAt"
@@ -31,22 +26,11 @@
 					dispatchToStore="settings/filterOrderBy"
 				/>
 				<panel-box-divider />
-				<panel-box-toggle
-					@select="updateParent"
-					title="Reverse order"
-					icon="change"
-					:active="filterOptionsReverseOrder"
-					dispatchToStore="settings/filterReverseOrder"
-				/>
+				<panel-box-toggle @select="updateParent" title="Reverse order" icon="change" :active="filterOptionsReverseOrder" dispatchToStore="settings/filterReverseOrder" />
 				<panel-box-divider />
 				<panel-box-header title="Show extra fields" />
 				<panel-box-toggle title="Show date" icon="calendar" :active="filterOptionsShowDate" dispatchToStore="settings/filterShowDate" />
-				<panel-box-toggle
-					title="Show description"
-					icon="text"
-					:active="filterOptionsShowDescription"
-					dispatchToStore="settings/filterShowDescription"
-				/>
+				<panel-box-toggle title="Show description" icon="text" :active="filterOptionsShowDescription" dispatchToStore="settings/filterShowDescription" />
 				<panel-box-toggle title="Show tags" icon="label" :active="filterOptionsShowTags" dispatchToStore="settings/filterShowTags" />
 			</panel-box>
 		</div>
@@ -55,6 +39,11 @@
 
 <script>
 	export default {
+		data() {
+			return {
+				show: false
+			}
+		},
 		props: {
 			category: Object,
 			filterOptionsOrderBy: String,
@@ -70,3 +59,36 @@
 		}
 	}
 </script>
+
+<style scoped>
+	.transition-title-enter-active,
+	.transition-title-leave-active {
+		transition: opacity 100ms ease-in-out, transform 100ms ease;
+	}
+
+	.transition-title-enter-active {
+		transition-delay: 100ms;
+	}
+
+	.transition-title-enter {
+		opacity: 0;
+		transform: translateX(-10px);
+	}
+
+	.transition-title-enter-to {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+
+	.transition-title-leave {
+		opacity: 1;
+		transform: translateX(0px);
+		position: absolute;
+	}
+
+	.transition-title-leave-to {
+		opacity: 0;
+		transform: translateX(10px);
+		position: absolute;
+	}
+</style>

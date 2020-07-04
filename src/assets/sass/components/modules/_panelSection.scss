@@ -6,6 +6,7 @@
 	border-bottom: 1px solid clr(bg, d-2);
     flex: 0 0 auto;
     position: relative;
+	overflow: hidden;
 
 	&__title {
 		@include textStyle(hyphens);
