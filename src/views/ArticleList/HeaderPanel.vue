@@ -72,23 +72,23 @@
 
 	.transition-title-enter {
 		opacity: 0;
-		transform: translateX(-10px);
+		transform: translateY(-10px);
 	}
 
 	.transition-title-enter-to {
 		opacity: 1;
-		transform: translateX(0px);
+		transform: translateY(0px);
 	}
 
 	.transition-title-leave {
 		opacity: 1;
-		transform: translateX(0px);
+		transform: translateY(0px);
 		position: absolute;
 	}
 
 	.transition-title-leave-to {
 		opacity: 0;
-		transform: translateX(10px);
+		transform: translateY(10px);
 		position: absolute;
 	}
 </style>
