@@ -3,7 +3,7 @@
   "description": "Local snippets manager",
   "author": "Gerald Jelitto",
   "version": "0.1.0",
-  "license": "MIT",
+  "license": "GNU General Public License v3.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
