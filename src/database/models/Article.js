@@ -11,7 +11,7 @@ class Article extends Sequelize.Model {
 					}
 				},
 				description: {
-					type: DataTypes.STRING,
+					type: DataTypes.STRING
 				},
 				content: {
 					type: DataTypes.TEXT
@@ -23,7 +23,12 @@ class Article extends Sequelize.Model {
 					type: DataTypes.INTEGER
 				},
 				isFavourite: {
-					type: DataTypes.INTEGER
+					type: DataTypes.BOOLEAN,
+					defaultValue: false
+				},
+				isPrototype: {
+					type: DataTypes.BOOLEAN,
+					defaultValue: false
 				},
 				visitedAt: {
 					type: DataTypes.DATE

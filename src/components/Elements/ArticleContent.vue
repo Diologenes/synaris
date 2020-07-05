@@ -47,7 +47,7 @@ export default {
 			return false
 		},
 		isFavourite() {
-			if (this.article.isFavourite === 1) {
+			if (this.article.isFavourite === true) {
 				return true
 			}
 			return false

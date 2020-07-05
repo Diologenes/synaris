@@ -7,7 +7,7 @@ import electronFileStorage from '@/store/electron/Index'
 const sequelize = new Sequelize({
 	dialect: electronFileStorage.get('databaseDialect'),
 	storage: electronFileStorage.get('sqlitePath'),
-	logging: false
+	logging: true
 })
 
 sequelize
@@ -29,7 +29,10 @@ Object.values(models)
 	.filter(model => typeof model.associate === 'function')
 	.forEach(model => model.associate(models))
 
-sequelize.sync()
+const syncOptions = {
+	// alter: true
+}	
+sequelize.sync(syncOptions)
 
 const db = {
 	...models,

@@ -80,7 +80,7 @@ const actions = {
 				reject()
 				return
 			}
-			db.Article.create({ title: 'New article', categoryId: categoryId })
+			db.Article.create({ title: '[New article]', categoryId: categoryId, isPrototype: true })
 				.then(response => {
 					setTimeout(function() {
 						context.commit('currentArticle', response)
@@ -181,6 +181,7 @@ const actions = {
 			db.Article.findAll({
 				where: query,
 				order: [
+					['isPrototype', 'DESC'],
 					['isFavourite', 'DESC'],
 					[orderColumn, orderDirection]
 				]

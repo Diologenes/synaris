@@ -88,17 +88,17 @@
 				await this.$store.dispatch('article/setCurrentArticleById', this.$route.params.article)
 			},
 
-			saveTitle: _.debounce(function() {
+			saveTitle() {
 				this.dispatchArticle().then(() => {
 					this.$store.dispatch('article/getByCategory', { category: this.category.id })
 				})
-			}, 10),
+			},
 
-			saveDescription: _.debounce(function() {
+			saveDescription() {
 				this.dispatchArticle().then(() => {
 					this.$store.dispatch('article/getByCategory', { category: this.category.id })
 				})
-			}, 10),
+			},
 
 			saveTags(tags) {
 				this.article.tags = tags
@@ -113,6 +113,7 @@
 			}, 1000),
 
 			async dispatchArticle() {
+				this.article.isPrototype = null
 				this.$store.dispatch('article/setCurrentArticle', this.article).then(response => ({ response }))
 			}
 		}

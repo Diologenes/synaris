@@ -53,14 +53,6 @@
 										<button class="c-button c-button--primary" @click="finishStep(2)">Complete setup</button>
 									</div>
 								</div>
-								<div v-if="step == 3">
-									<p class="u-m__t--5 c-txt-title-base u-m__b--2">You're done</p>
-									<div class="u-m__b--4 c-txt-head-base">First steps completed</div>
-									<p class="c-txt-title-base u-m__b--5">Well done! You have created your first collection and category. <br><br>Feel free to add more categories or start creating your articles.</p>
-									<div>
-										<button class="c-button c-button--primary" @click="finishStep(3)">Close wizard</button>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -92,11 +84,8 @@
 					case 2: {
 						if (this.categoryTitle !== '') {
 							this.createRecords()
+							this.finishWizard()
 						}
-						break
-					}
-					case 3: {
-						this.finishWizard()
 						break
 					}
 				}
