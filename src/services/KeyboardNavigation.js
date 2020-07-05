@@ -21,7 +21,11 @@ const KeyboardNavigation = {
 				e.preventDefault()
 				this.$root.$emit('bv::show::modal', 'modal-global-settings')
 			}
-		}
+			if (e.key === 'g' && (e.ctrlKey || e.metaKey)) {
+				e.preventDefault()
+				this.$root.$emit('bv::show::modal', 'modal-create-new-category')
+			}
+		} 
 		document.addEventListener('keydown', this._keyListener.bind(this))
 	},
 	beforeDestroy() {

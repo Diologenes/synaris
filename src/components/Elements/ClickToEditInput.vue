@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<input ref="cteInput" :class="inputClasses" type="text" v-if="edit" :value="valueLocal" @blur="emitChange" @keyup.enter="emitChange" v-focus="" />
+		<input ref="cteInput" :class="inputClasses" type="text" v-if="edit" :value="valueLocal" @blur="emitChange" @keyup.enter="emitChange" @focus="isFocus = true" />
 		<div :class="divClasses" v-if="!edit" @click="toggleEdit">
 			{{ valueLocal }}
 			<div :class="editButtonClasses" v-if="(typeof valueLocal === 'undefined' || valueLocal === null || valueLocal === '') && editButtonEnabled === true">
@@ -54,6 +54,7 @@
 		data() {
 			return {
 				edit: false,
+				isFocus: false,
 				valueLocal: this.value
 			}
 		},
@@ -66,6 +67,9 @@
 				classes.push('c-form__cte c-form__cte--edit-field c-form__cte--input')
 				if (this.inputClass) {
 					classes.push(this.inputClass)
+				}
+				if (this.isFocus) {
+					classes.push('c-form__cte--input--is-focus')
 				}
 				return classes.join(' ')
 			},
@@ -116,6 +120,7 @@
 				if (newValue === '' && this.allowEmptyValue === false) newValue = this.originalValue
 				this.valueLocal = newValue
 				this.edit = false
+				this.focus = false
 				this.$emit('input', this.valueLocal, this.originalValue)
 				if (this.valueLocal !== this.originalValue) {
 					this.$emit('change', this.valueLocal)

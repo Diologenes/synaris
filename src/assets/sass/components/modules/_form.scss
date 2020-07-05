@@ -38,5 +38,13 @@
 			width: auto;
 			cursor: pointer;
 		}
+
+		&--input {
+			background: clr(bg, d-2);
+		}
+
+		&--textarea {
+			background: clr(bg, d-2);
+		}
 	}
 }
