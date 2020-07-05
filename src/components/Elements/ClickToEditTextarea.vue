@@ -25,6 +25,10 @@
 				type: String,
 				default: ''
 			},
+			nullOnEmpty: {
+				type: Boolean,
+				default: true
+			},
 			minHeight: {
 				type: String,
 				default: '5rem'
@@ -146,8 +150,9 @@
 			},
 
 			emitChange($event) {
-				let newValue = $event.target.value
-				if (newValue === '' && this.allowEmptyValue === false) newValue = this.originalValue
+				let newValue = $event.target.value.trim()
+				if (newValue === '' && this.nullOnEmpty) newValue = null
+				if ((newValue === null || newValue === '') && this.allowEmptyValue === false) newValue = this.originalValue
 				this.valueLocal = newValue
 				this.edit = false
 				this.$emit('input', this.valueLocal)

@@ -21,8 +21,8 @@
 		methods: {
 			async handleOk(evt) {
 				let vm = this
-				vm.articleId = vm.item.id
-				vm.categoryId = vm.item.categoryId
+				vm.articleId = parseInt(vm.item.id)
+				vm.categoryId = parseInt(vm.item.categoryId)
 				let promises = []
 				await vm.item.destroy().then(() => {
 					promises.push(vm.$store.dispatch('article/getByCategory', { category: vm.categoryId }))
@@ -36,7 +36,7 @@
 			},
 
 			redirectOnSelfDelete() {
-				if (this.articleId === this.$route.params.article) {
+				if (this.articleId === parseInt(this.$route.params.article)) {
 					this.$router.push({ name: 'articleList', params: { category: this.categoryId } })
 				}
 			},
