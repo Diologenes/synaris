@@ -34,7 +34,7 @@
     "babel-eslint": "^10.1.0",
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
-    "electron": "^6.1.12",
+    "electron": "^8.4.0",
     "electron-rebuild": "^1.11.0",
     "eslint": "^7.4.0",
     "eslint-plugin-vue": "^6.2.2",
